@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, } from 'react-native';
+import { View, } from 'react-native';
 import NewLP from './Components/NewLP';
+import styles from './Styles/style';
 
 
 export default function App() {
@@ -10,11 +11,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+

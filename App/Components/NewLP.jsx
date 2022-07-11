@@ -1,6 +1,7 @@
 import { Text, View,  } from 'react-native';
 import { Button, Input, Chip } from "@rneui/themed";
 import { useState } from 'react';
+import styles from '../Styles/style';
 
 export default function NewLP() {
   const [stampCount, setStampCount] = useState(0);
@@ -26,7 +27,7 @@ export default function NewLP() {
       </View>
       <View>
       <Text>Valid for</Text>
-      {timeframeOptions.map((time,index) => <Chip buttonStyle={{backgroundColor: selected == index ? 'green' : 'blue'}} key={time} title={time} value={index} onPress={() => handleTimeFrameSelection(index)} ></Chip>)}
+      {timeframeOptions.map((time,index) => <Chip buttonStyle={selected == index ? styles.chipBtnSelected : styles.chipBtn}  key={time} title={time} value={index} onPress={() => handleTimeFrameSelection(index)} ></Chip>)}
       </View>
       <Button title='Preview card' />
     </View>
