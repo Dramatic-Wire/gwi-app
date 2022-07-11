@@ -13,13 +13,37 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
+    height: '100%'
   },
 
+
+  count: {
+    
+  },
+
+  pageTitle: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: 15,
+  },
+
+  sectionTitle: {
+    fontSize:18
+  },
+
+  section: {
+    marginBottom: 10,
+  },
+
+  btn: {},
+
   chipBtn: {
-    backgroundColor: colors.blue
+    backgroundColor: colors.blue,
+    marginRight:10,
   },
   chipBtnSelected: {
-    backgroundColor: colors.yellow
+    backgroundColor: colors.yellow,
+    marginRight:10,
   }
 
 });
