@@ -4,21 +4,25 @@ import { StyleSheet, Text, View, } from 'react-native';
 const colors = {
   white: '#fbf2e6',
   blue: '#1cadc6',
-  yellow:'#e2c943'
+  yellow: '#e2c943',
+  mint: '#a6d4b6'
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%'
+    backgroundColor: colors.blue,
   },
 
-
-  count: {
-    
+  loyaltyCard: {
+     marginBottom: 10,
+    backgroundColor: colors.mint,
+    padding: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 10,
   },
 
   pageTitle: {
@@ -33,19 +37,32 @@ const styles = StyleSheet.create({
 
   section: {
     marginBottom: 10,
+    backgroundColor: colors.white,
+    padding: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 10,
+
   },
 
   btn: {},
 
   chipBtn: {
-    backgroundColor: colors.blue,
-    marginRight:10,
+    borderRadius:20
   },
   chipBtnSelected: {
     backgroundColor: colors.yellow,
-    marginRight:10,
+    margin: 5,
+    border: 'solid',
+    borderColor: colors.yellow,
+    borderWidth: 2
+  },
+  chipText: {
+    color: colors.blue
+  },
+  chipSelectedText: {
+    color: colors.blue
   }
-
 });
 
 export default styles
