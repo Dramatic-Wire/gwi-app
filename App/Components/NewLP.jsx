@@ -1,5 +1,5 @@
 import { View, } from 'react-native';
-import { Button, Input, Text, IconButton, Heading, Box } from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, HStack} from "native-base";
 import { useState } from 'react';
 import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
@@ -17,34 +17,41 @@ export default function NewLP() {
     setSelected(index);
   }
 
+  const missingInfo = stampCount > 0 && reward != '' && selected ? false : true;
+
+  const handleSave = () => {}
 
   return (
     <View>
+      <Box variant='pageTitle'>
       <Heading size='md'>Create a new loyalty programme</Heading>
-      <Box style={styles.section}>
-        <Text style={styles.sectionTitle}>Number of stamps on each card</Text>
-        <View style={{flexDirection:'row' , justifyContent:'center', alignItems:'center'}} >
+      </Box>
+      <Box variant='section'>
+        <Text variant='section' >Number of stamps on each card</Text>
+        <Box style={{flexDirection:'row' , justifyContent:'center', alignItems:'center'}} >
           <IconButton icon={<Icon name='minus-circle' size={20} color='black'/> } onPress={() => {if(stampCount > 0) setStampCount(stampCount - 1)}}  disabled={stampCount == 0 ? true : false} />
           <Text style={{ margin: 5, fontSize: 20 }}>{stampCount}</Text>
           <IconButton icon={<Icon name='plus-circle' size={20} color='black'/> } onPress={() => {setStampCount(stampCount + 1)}}/>
-        </View>
+        </Box>
       </Box>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Customer reward</Text>
+      <Box variant='section'>
+        <Text variant='section'>Customer reward</Text>
       <Input style={{width:'auto'}} placeholder='A free item or discount' onChangeText={text => setReward(text)} />
-      </View>
+      </Box>
 
-      <View style={styles.section} >
-        <Text style={styles.sectionTitle}>Valid for</Text>
+      <Box variant='section' >
+        <Text variant='section'>Valid for</Text>
         <Button.Group >
           {timeframeOptions.map((time, index) => <Button style={styles.chipBtn} size='sm' key={time} value={index} onPress={() => handleTimeFrameSelection(index)} variant={selected == index ? 'solid' : 'outline'} >{time}</Button>)}
         </Button.Group>
      
-      </View>
-      <Button onPress={() => setPreview(true)}>Preview</Button>
+      </Box>
+      <HStack space={3} justifyContent="center" >
+      <Button disabled={missingInfo} onPress={() => setPreview(true)}>Preview</Button>
+      <Button disabled={missingInfo} onPress={handleSave}>Save</Button>
+      </HStack>
       {preview == true && <LoyaltyCard stampCount={stampCount} validFor={timeframeOptions[selected]} reward={reward} onClose={setPreview} open={preview} />}
     </View>
   );
 }
-

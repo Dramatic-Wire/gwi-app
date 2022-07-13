@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
 
   loyaltyCard: {
-     marginBottom: 10,
+    marginBottom: 10,
     backgroundColor: colors.mint,
     padding: 10,
     marginLeft: 10,
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 10,
     marginRight: 10,
-    borderRadius: 10,
 
   },
 
