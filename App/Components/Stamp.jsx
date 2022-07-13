@@ -1,11 +1,13 @@
 import { View, Text, Image } from "react-native";
+import { Box } from 'native-base'
 
 
 
-export default function Stamp() {
+export default function Stamp({stamped = false}) {
+
   return (
-    <View style={{backgroundColor: 'hsl(34, 72%, 94%)', width:60, height:60, margin:10, alignItems:'center', justifyContent:'center', borderRadius:10, shadowColor:'black', shadowOffset:{width: 5, height:5}, shadowRadius:4 , shadowOpacity: 0.3, }}>
-      <Image style={{resizeMode:'contain', width:40, height:40}} source={require('../Imgs/coffee-stamp.png')}/>
-    </View>
+    <Box variant={stamped ? 'stamped':'unstamped'}>
+      <Image style={{resizeMode:'contain', width:40, height:40, tintColor: stamped ? undefined : '#a3a3a3' }} source={require('../Imgs/coffee-stamp.png')}/>
+    </Box>
   )
 }
