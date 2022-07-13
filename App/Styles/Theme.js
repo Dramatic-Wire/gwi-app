@@ -58,6 +58,11 @@ const Theme = extendTheme({
     },
   },
   components: {
+    Button: {
+      _disabled: {
+        
+      }
+    },
     Box: {
       variants: {
         section: {

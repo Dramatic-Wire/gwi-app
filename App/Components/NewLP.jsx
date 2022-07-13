@@ -16,7 +16,7 @@ export default function NewLP() {
     setSelected(index);
   }
 
-  const missingInfo = stampCount > 0 && reward != '' && selected ? false : true;
+  const missingInfo = stampCount > 0 && reward != '' && selected >= 0 ? false : true;
 
   const handleSave = () => {}
 
@@ -47,8 +47,8 @@ export default function NewLP() {
      
       </Box>
       <HStack space={3} justifyContent="center" >
-      <Button disabled={missingInfo} onPress={() => setPreview(true)}>Preview</Button>
-      <Button disabled={missingInfo} onPress={handleSave}>Save</Button>
+      <Button isDisabled={missingInfo}  onPress={() => setPreview(true)}>Preview</Button>
+      <Button isDisabled={missingInfo} onPress={handleSave}>Save</Button>
       </HStack>
       {preview == true && <LoyaltyCard stampCount={stampCount} validFor={timeframeOptions[selected]} reward={reward} onClose={setPreview} open={preview} />}
     </View>

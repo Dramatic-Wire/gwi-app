@@ -12,8 +12,8 @@ export default function App() {
     
     <NativeBaseProvider theme={Theme}>
     <SafeAreaView style={styles.container}>
-      <NewLP></NewLP>
-      {/* <NewBusiness></NewBusiness> */}
+      {/* <NewLP></NewLP> */}
+      <NewBusiness></NewBusiness>
       {/* <NewUser></NewUser> */}
       {/* <BusinessProfile></BusinessProfile> */}
     </SafeAreaView>
