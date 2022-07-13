@@ -5,7 +5,7 @@ import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-export default function NewBusiness(){
+export default function RegisterBusiness(){
     const [category, setCategory] = useState()
     const categortyList = ['Coffee Shop', 'Beauty', 'Resturant', 'Groceries', 'Clothing', 'Health']
 
