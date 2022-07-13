@@ -3,9 +3,10 @@ import NewLP from './Components/NewLP';
 import styles from './Styles/style';
 import { NativeBaseProvider, Text, Box, Container } from 'native-base';
 import Theme from './Styles/Theme';
-import NewBusiness from './Components/RegisterBusiness';
+import RegisterBusiness from './Components/RegisterBusiness';
 import NewUser from './Components/NewUser';
 import BusinessProfile from './Components/BusinessProfile';
+import UserProfile from './Components/UserProfile';
 
 export default function App() {
   return (
@@ -15,7 +16,8 @@ export default function App() {
       <NewLP></NewLP>
       {/* <NewBusiness></NewBusiness> */}
       {/* <NewUser></NewUser> */}
-      {/* <BusinessProfile></BusinessProfile> */}
+      {/* <RegisterBusiness></RegisterBusiness> */}
+      {/* <UserProfile></UserProfile> */}
     </SafeAreaView>
     </NativeBaseProvider>
   );

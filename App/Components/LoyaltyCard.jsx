@@ -17,7 +17,7 @@ export default function LoyaltyCard({stampCount, validFor, reward, customerName=
         </Text>
         </Box>
         <View style={{ flexDirection: "row", flexWrap: 'wrap',  width:'auto', justifyContent:'center' }}>
-       {[...Array(stampCount)].map((e, i) => <Stamp key={i} stamped={i < stamped ? true : false}></Stamp>)}
+       <Stamp key={i} stamped={i < stamped ? true : false}></Stamp>
           <Box variant='stamped' style={{ paddingLeft:10, paddingRight:10, flexGrow:1, width:'auto' }}>
             <Text fontSize='lg' color='primary.600' bold>
           {reward}

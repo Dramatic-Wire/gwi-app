@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   pageTitle: {
     fontSize: 20,
     textAlign: 'center',
-    marginBottom: 15,
+    // marginBottom: 15,
   },
 
   sectionTitle: {
