@@ -1,4 +1,4 @@
-import { Text, View, } from 'react-native';
+ import { Text, View, } from 'react-native';
 import { Button, Input, Chip, Card, Icon } from "@rneui/themed";
 import { useState } from 'react';
 import styles from '../Styles/style';
