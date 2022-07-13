@@ -1,16 +1,23 @@
-import { View, } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import NewLP from './Components/NewLP';
 import styles from './Styles/style';
-import { ThemeProvider } from '@rneui/themed';
+import { NativeBaseProvider, Text, Box, Container } from 'native-base';
 import Theme from './Styles/Theme';
+import NewBusiness from './Components/RegisterBusiness';
+import NewUser from './Components/NewUser';
+import BusinessProfile from './Components/BusinessProfile';
 
 export default function App() {
   return (
-    <ThemeProvider theme={Theme}>
-    <View style={styles.container}>
+    
+    <NativeBaseProvider theme={Theme}>
+    <SafeAreaView style={styles.container}>
       <NewLP></NewLP>
-    </View>
-    </ThemeProvider>
+      {/* <NewBusiness></NewBusiness> */}
+      {/* <NewUser></NewUser> */}
+      {/* <BusinessProfile></BusinessProfile> */}
+    </SafeAreaView>
+    </NativeBaseProvider>
   );
 }
 
