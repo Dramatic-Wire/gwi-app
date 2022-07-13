@@ -3,6 +3,7 @@ import { Button, Input, Chip, } from "@rneui/themed";
 import { useState } from 'react';
 import styles from '../Styles/style';
 
+
 export default function NewLP() {
   const [stampCount, setStampCount] = useState(0);
   const [selected, setSelected] = useState();
