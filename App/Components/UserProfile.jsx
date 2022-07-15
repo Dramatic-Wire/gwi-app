@@ -27,7 +27,7 @@ export default function UserProfile(){{customerName = 'Sylvia', validFor = '1 mo
         <Text>
           { `valid for: ${validFor}`  }
         </Text>
-        </Box>
+        </Box> 
         <View style={{ flexDirection: "row", flexWrap: 'wrap',  width:'auto', justifyContent:'center' }}>
        {[...Array(stampCount)].map((e, i) => <Stamp key={i} stamped={i < stamped ? true : false}></Stamp>)}
           <Box variant='stamped' style={{ paddingLeft:10, paddingRight:10, flexGrow:1, width:'auto' }}>

@@ -61,7 +61,26 @@ const styles = StyleSheet.create({
   },
   chipSelectedText: {
     color: colors.blue
-  }
+  },
+  barcodebox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 300,
+    width: 300,
+    overflow: 'hidden',
+    borderRadius: 30,
+    backgroundColor: 'white'
+  },
+  camContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  maintext: {
+    fontSize: 16,
+    margin: 20,
+  },
 });
 
 export default styles

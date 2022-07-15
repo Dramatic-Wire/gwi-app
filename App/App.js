@@ -7,6 +7,9 @@ import RegisterBusiness from './Components/RegisterBusiness';
 import NewUser from './Components/NewUser';
 import BusinessProfile from './Components/BusinessProfile';
 import UserProfile from './Components/UserProfile';
+import LoginScreen from './Components/LoginScreen';
+import BarcodeScanner from './Components/BarcodeScanner';
+
 
 export default function App() {
   return (
@@ -14,12 +17,17 @@ export default function App() {
     <NativeBaseProvider theme={Theme}>
     <SafeAreaView style={styles.container}>
       {/* <NewLP></NewLP> */}
-      <NewBusiness></NewBusiness>
       {/* <NewUser></NewUser> */}
       {/* <RegisterBusiness></RegisterBusiness> */}
+      {/* <BusinessProfile></BusinessProfile> */}
       {/* <UserProfile></UserProfile> */}
+      {/* <LoginScreen></LoginScreen> */}
+      <BarcodeScanner></BarcodeScanner>
+
     </SafeAreaView>
     </NativeBaseProvider>
+
+    
   );
 }
 
