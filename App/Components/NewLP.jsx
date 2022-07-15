@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios';
 
 
 export default function NewLP() {
@@ -12,6 +13,7 @@ export default function NewLP() {
   const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
+  const business_id = 4
 
   const handleTimeFrameSelection = (index) => {
     setSelected(index);
@@ -20,6 +22,15 @@ export default function NewLP() {
   const missingInfo = stampCount > 0 && reward != '' && selected >= 0 ? false : true;
 
   const handleSave = () => {}
+
+  const registerLP = (business_id, stamps, reward, validFor) => {
+    axios
+        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`, { business_id, stamps, reward, validFor})
+        .then((result => {
+            const results = result.data
+            console.log(results.message);
+        })).catch(error => console.log(error));
+}
 
   return (
     <View>
@@ -49,7 +60,7 @@ export default function NewLP() {
       </Box>
       <HStack space={3} justifyContent="center" >
       <Button isDisabled={missingInfo}  onPress={() => setPreview(true)}>Preview</Button>
-      <Button isDisabled={missingInfo} onPress={handleSave}>Save</Button>
+      <Button isDisabled={missingInfo} onPress={() => registerLP(business_id, stampCount, reward, timeframeOptions[selected])}>Save</Button>
       </HStack>
       {preview == true && <LoyaltyCard stampCount={stampCount} validFor={timeframeOptions[selected]} reward={reward} onClose={setPreview} open={preview} />}
     </View>
