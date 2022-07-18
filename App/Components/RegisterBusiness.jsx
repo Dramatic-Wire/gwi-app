@@ -16,9 +16,9 @@ export default function RegisterBusiness() {
     const [logo, setLogo] = useState('');
     const owner_id = 1
     const url = `https://gwi22-dramaticwire.herokuapp.com`
-    const registerBusiness = (businessName, owner_id, category, password, logo) => {
+    const registerBusiness = (businessName, owner_id, category, logo) => {
         axios
-            .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, password, logo })
+            .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, logo })
             .then((result => {
                 const results = result.data
                 console.log(results);
@@ -59,7 +59,7 @@ export default function RegisterBusiness() {
                 <Text variant='section'>Business logo</Text>
                 <Input placeholder='Image URL' value={logo} onChangeText={text => setLogo(text)}></Input>
             </Box>
-            <Button onPress={() => { registerBusiness(businessName, owner_id, category, password, logo); validation(businessName, category) }} >Save</Button>
+            <Button onPress={() => { registerBusiness(businessName, owner_id, category, logo); validation(businessName, category) }} >Save</Button>
         </VStack>
 
     );
