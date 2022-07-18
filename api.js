@@ -7,10 +7,10 @@ module.exports = function (app, db) {
 
             await db.none(`INSERT into businesses (business_name, owner_id, category, logo) VALUES ($1, $2, $3, $4)`, [businessName, owner_id, category, logo])
 
-            const { id } = await db.one(`select id from businesses where business_name = $1`, [businessName])
+            // const { id } = await db.one(`select id from businesses where business_name = $1`, [businessName])
             res.json({
                 message: 'success',
-                id
+                // id
 
             })
         } catch (err) {
