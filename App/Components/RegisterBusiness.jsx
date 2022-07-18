@@ -8,7 +8,7 @@ import axios from 'axios';
 
 export default function RegisterBusiness() {
     const [category, setCategory] = useState()
-    const categortyList = ['Coffee Shop', 'Beauty', 'Resturant', 'Groceries', 'Clothing', 'Health']
+    const categortyList = ['Coffee Shop', 'Beauty', 'Restaurant', 'Groceries', 'Clothing', 'Health']
     const [businessName, setBusinessName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
@@ -21,7 +21,7 @@ export default function RegisterBusiness() {
             .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, password, logo })
             .then((result => {
                 const results = result.data
-                console.log(results.message);
+                console.log(results);
             })).catch(error => console.log(error));
     }
     const validation = (field, field2) => {
