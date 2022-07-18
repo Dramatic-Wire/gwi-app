@@ -17,9 +17,9 @@ export default function App() {
     <NativeBaseProvider theme={Theme}>
       <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
         <Box style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}  >
-      <NewLP></NewLP>
+      {/* <NewLP></NewLP> */}
       {/* <NewUser></NewUser> */}
-    {/* <RegisterBusiness></RegisterBusiness> */}
+    <RegisterBusiness></RegisterBusiness>
       {/* <UserProfile></UserProfile> */}
         </Box>
     </Box>
