@@ -35,14 +35,7 @@ module.exports = function (app, db) {
         }
     })
 
-    app.get('/api/LP', async function (req, res) {
-        try {
-            await db.many(`select (stamps, reward, valid_for) from `)
-        } catch (err) {
-            console.log(err);
-            next()
-        }
-    })
+
 
     app.get('/api/users', async function (req, res) {
 
