@@ -1,36 +1,43 @@
 import { View, } from 'react-native';
-import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack } from "native-base";
-import { useState } from 'react';
+import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack, VStack } from "native-base";
+import { useContext } from 'react';
+import BusinessContext from '../Contexts/BusinessContext';
 import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import QRCode from 'react-native-qrcode-svg';
 
-export default function BusinessProfile() {
-    const data = [{ name: 'Test', }]
+
+export default function BusinessProfile({ navigation }) {
+    const { businessName, loyaltyProgramme } = useContext(BusinessContext);
+    
+
     return (
-        <View>
+             <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
+        <Box style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}  >
+        <VStack space={3} safeArea='8'>
             <Box variant='pageTitle'>
-                <Heading style={styles.pageTitle}>George's Coffee Shop</Heading>
+                        <Heading style={styles.pageTitle}>{businessName}</Heading>
             </Box>
-            <Box variant='section'>
+            {!loyaltyProgramme.stampsRequired && <Box variant='section'>
                 <Text variant='section'>You currently have no loyalty programme for your business</Text>
-                <Button>Add Loyalty Programme</Button>
-            </Box>
-            <Box variant='section'>
-                <Heading size="sm">Your Loyalty Programme Details</Heading>
-                <QRCode
-                    value="George's Coffee"
-                />
-                <Text>125 active members on programme</Text>
-                <Text>12 stamps for free item</Text>
-                <HStack space={3} justifyContent="center" >
-                    <Button >Edit</Button>
-                    <Button >Delete</Button>
-                </HStack>
-            </Box>
+                <Button onPress={() => { navigation.navigate('NewLP')}}>Add Loyalty Programme</Button>
+            </Box>}
+        {loyaltyProgramme.stampsRequired && <Box variant='section'>
+            <Heading size="sm">Your Loyalty Programme Details</Heading>
+            <QRCode
+                value={businessName}
+            />
+            <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>
+            <Text>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>
+            <HStack space={3} justifyContent="center" >
+                <Button >Edit</Button>
+                <Button >Delete</Button>
+            </HStack>
+        </Box>}
 
-        </View >
-
+                </VStack>
+            </Box>
+            </Box>
     );
 }
