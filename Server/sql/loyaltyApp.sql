@@ -12,7 +12,6 @@ create table businesses(
 	business_name text,
 	owner_id int,
     category text,
-    password text,
     logo text,
     foreign key (owner_id) references users(id)
 );
