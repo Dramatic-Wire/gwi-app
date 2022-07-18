@@ -15,16 +15,14 @@ export default function App() {
   return (
     
     <NativeBaseProvider theme={Theme}>
-    <SafeAreaView style={styles.container}>
+      <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
+        <Box style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}  >
       <NewLP></NewLP>
       {/* <NewUser></NewUser> */}
-      {/* <RegisterBusiness></RegisterBusiness> */}
-      {/* <BusinessProfile></BusinessProfile> */}
+    {/* <RegisterBusiness></RegisterBusiness> */}
       {/* <UserProfile></UserProfile> */}
-      {/* <LoginScreen></LoginScreen> */}
-      {/* <BarcodeScanner></BarcodeScanner> */}
-
-    </SafeAreaView>
+        </Box>
+    </Box>
     </NativeBaseProvider>
 
     

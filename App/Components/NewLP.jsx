@@ -1,9 +1,11 @@
 import { View, } from 'react-native';
-import { Button, Input, Text, IconButton, Heading, Box, HStack} from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, HStack, VStack} from "native-base";
 import { useState } from 'react';
 import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios';
+
 
 export default function NewLP() {
   const [stampCount, setStampCount] = useState(0);
@@ -11,6 +13,7 @@ export default function NewLP() {
   const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
+  const business_id = 4
 
   const handleTimeFrameSelection = (index) => {
     setSelected(index);
@@ -20,8 +23,17 @@ export default function NewLP() {
 
   const handleSave = () => {}
 
+  const registerLP = (business_id, stamps, reward, validFor) => {
+    axios
+        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`, { business_id, stamps, reward, validFor})
+        .then((result => {
+            const results = result.data
+            console.log(results.message);
+        })).catch(error => console.log(error));
+}
+
   return (
-    <View>
+    <VStack space={3} safeArea='8'>
       <Box variant='pageTitle'>
       <Heading size='md'>Create a new loyalty programme</Heading>
       </Box>
@@ -36,21 +48,21 @@ export default function NewLP() {
 
       <Box variant='section'>
         <Text variant='section'>Customer reward</Text>
-      <Input style={{width:'auto'}} placeholder='A free item or discount' onChangeText={text => setReward(text)} />
+      <Input placeholder='A free item or discount' onChangeText={text => setReward(text)} />
       </Box>
 
       <Box variant='section' >
         <Text variant='section'>Valid for</Text>
-        <Button.Group >
-          {timeframeOptions.map((time, index) => <Button style={styles.chipBtn} size='sm' key={time} value={index} onPress={() => handleTimeFrameSelection(index)} variant={selected == index ? 'solid' : 'outline'} >{time}</Button>)}
-        </Button.Group>
+        <HStack space={2} flexWrap='wrap'>
+          {timeframeOptions.map((time, index) => <Button size={'sm'}  key={time} value={index} onPress={() => handleTimeFrameSelection(index)} variant={selected == index ? 'chipSelected' : 'chip'} >{time}</Button>)}
+        </HStack>
      
       </Box>
-      <HStack space={3} justifyContent="center" >
+      <HStack space={3}  justifyContent="center" >
       <Button isDisabled={missingInfo}  onPress={() => setPreview(true)}>Preview</Button>
-      <Button isDisabled={missingInfo} onPress={handleSave}>Save</Button>
+      <Button isDisabled={missingInfo} onPress={() => registerLP(business_id, stampCount, reward, timeframeOptions[selected])}>Save</Button>
       </HStack>
       {preview == true && <LoyaltyCard stampCount={stampCount} validFor={timeframeOptions[selected]} reward={reward} onClose={setPreview} open={preview} />}
-    </View>
+    </VStack>
   );
 }
