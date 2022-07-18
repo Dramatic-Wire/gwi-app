@@ -16,13 +16,13 @@ export default function App() {
     
     <NativeBaseProvider theme={Theme}>
     <SafeAreaView style={styles.container}>
-      {/* <NewLP></NewLP> */}
+      <NewLP></NewLP>
       {/* <NewUser></NewUser> */}
       {/* <RegisterBusiness></RegisterBusiness> */}
       {/* <BusinessProfile></BusinessProfile> */}
       {/* <UserProfile></UserProfile> */}
       {/* <LoginScreen></LoginScreen> */}
-      <BarcodeScanner></BarcodeScanner>
+      {/* <BarcodeScanner></BarcodeScanner> */}
 
     </SafeAreaView>
     </NativeBaseProvider>
