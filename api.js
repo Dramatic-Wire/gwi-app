@@ -12,7 +12,7 @@ module.exports = function (app, db) {
            
             res.json({
                 message: 'success',
-                id
+                id: id
 
             })
         } catch (err) {
