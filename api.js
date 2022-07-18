@@ -53,7 +53,7 @@ module.exports = function (app, db) {
     app.get('/api/business', async function (req, res, next) {
         try {
             const businessId = req.body
-            const businessData = await db.many(`select (business_name, owner_id, category, logo) from business`, [businessId]);
+            const businessData = await db.many(`select (business_name, owner_id, category, logo) from businesses`, [businessId]);
 
             res.json({
                 data: businessData
