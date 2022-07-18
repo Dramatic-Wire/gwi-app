@@ -12,13 +12,14 @@ export default function App() {
   return (
     
     <NativeBaseProvider theme={Theme}>
-    <SafeAreaView style={styles.container}>
-      {/* <NewLP></NewLP> */}
-      <NewBusiness></NewBusiness>
+      <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
+        <Box style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}  >
+      <NewLP></NewLP>
       {/* <NewUser></NewUser> */}
-      {/* <RegisterBusiness></RegisterBusiness> */}
+    {/* <RegisterBusiness></RegisterBusiness> */}
       {/* <UserProfile></UserProfile> */}
-    </SafeAreaView>
+        </Box>
+    </Box>
     </NativeBaseProvider>
   );
 }

@@ -59,8 +59,32 @@ const Theme = extendTheme({
   },
   components: {
     Button: {
-      _disabled: {
-        
+      defaultProps: {
+        variant: 'subtle',
+        size: 'lg',
+      },
+      variants: {
+        chip: {
+          rounded: 'full',
+          borderColor: 'primary.500',
+          borderWidth: '2',
+          size: 'sm',
+          mt: '1',
+          mb:'1'
+        },
+        chipSelected: {
+          rounded: 'full',
+          borderColor: 'primary.500',
+          backgroundColor: 'primary.500',
+          borderWidth: '2',
+          size: 'sm'
+        }
+      }
+    },
+    Input: {
+      defaultProps: {
+        variant: 'underlined',
+        size: 'lg'
       }
     },
     Box: {
@@ -70,7 +94,6 @@ const Theme = extendTheme({
           bg: `light.50`,
           px: '5',
           py: '2.5',
-          mb: '5',
           borderColor: 'light.100',
           borderWidth: '2',
         },
@@ -79,10 +102,8 @@ const Theme = extendTheme({
           bg: `secondary.400`,
           px: '5',
           py: '2.5',
-          mb: '5',
         },
         stamped: {
-          backgroundColor: 'light.50',
           width: 60,
           height: 60,
           margin: 2,
@@ -92,7 +113,6 @@ const Theme = extendTheme({
           rounded:'lg',
         },
         unstamped: {
-          backgroundColor: 'muted.500',
           width: 60,
           height: 60,
           margin: 2,
@@ -110,6 +130,11 @@ const Theme = extendTheme({
         },
       },
     },
+    Heading: {
+      defaultProps: {
+        textAlign:'center'
+      }
+    }
   },
 });
 
