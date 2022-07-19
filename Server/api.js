@@ -42,6 +42,7 @@ module.exports = function (app, db) {
 
             res.json({
                 data:lpData
+                
             })
 
         } catch (err) {
