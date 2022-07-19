@@ -35,7 +35,7 @@ module.exports = function (app, db) {
         }
     })
 
-    app.get('/api/LP/:id', async function (req, res, next) {
+    app.get('/api/LP', async function (req, res, next) {
         try {
             const { id } = req.query
             const lpData = await db.many(`select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`, [id])
