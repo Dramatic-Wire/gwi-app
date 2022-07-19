@@ -8,26 +8,23 @@ import axios from 'axios';
 
 
 export default function NewLP({ navigation }) {
-  const { setLoyaltyProgramme } = useContext(BusinessContext)
+  const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
   const [stampCount, setStampCount] = useState(0);
   const [validFor, setValidFor] = useState('');
   const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
-  const business_id = 4
 
   const handleTimeFrameSelection = (timeFrame) => {
     setValidFor(timeFrame);
   }
 
   const missingInfo = stampCount > 0 && reward !== '' && validFor !== '';
-  console.log(missingInfo)
 
-  const handleSave = () => {}
 
   const registerLP = () => {
     axios
-        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`, { business_id, stampCount, reward, validFor})
+        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`, { businessID, stampCount, reward, validFor})
         .then((result => {
           const results = result.data
           if (results.message == 'added') {

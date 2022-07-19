@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-270.71,-57.3587)">
+        <g transform="matrix(1.23637,0,0,1.23637,38.6499,-23.2954)">
+            <path d="M212.331,75.283C212.446,74.291 212.567,73.129 213.029,72.369C213.487,71.615 214.753,71.396 215.101,70.722C215.449,70.048 215.115,68.325 215.115,68.325L218.385,68.318C218.385,68.318 218.338,70.202 218.661,70.884C218.983,71.564 219.922,71.818 220.323,72.409C220.724,72.999 220.992,73.714 221.067,74.428C221.201,75.69 221.125,79.982 221.125,79.982L212.159,79.89C212.159,79.89 212.186,76.537 212.331,75.283Z" style="fill:white;stroke:black;stroke-width:0.81px;"/>
+            <path d="M204.089,74.378C204.37,73.568 205.355,72.816 206.206,72.918C208.891,73.238 209.491,75.699 209.491,75.699C209.491,75.699 211.674,74.607 212.96,75.442C213.548,75.824 213.987,76.507 214.119,77.195C214.264,77.95 213.83,79.972 213.83,79.972L203.752,79.985C203.752,79.985 203.68,75.556 204.089,74.378Z" style="fill:white;stroke:black;stroke-width:0.81px;"/>
+            <path d="M194.806,79.894C194.669,72.082 198.329,65.437 199.879,66.099C202.165,67.075 203.628,69.883 204.913,80.05C205.467,84.436 194.893,84.853 194.806,79.894Z" style="fill:white;stroke:black;stroke-width:0.81px;"/>
+            <path d="M192.809,79.876L223.022,79.676L222.921,104.867L192.811,104.705L192.809,79.876Z" style="fill:white;stroke:black;stroke-width:0.81px;"/>
+            <path d="M217.929,80.298L217.977,99.724L222.418,104.489" style="fill:none;stroke:black;stroke-width:0.81px;"/>
+            <path d="M217.977,99.724L212.551,104.55L212.508,80.042" style="fill:none;stroke:black;stroke-width:0.81px;"/>
+            <path d="M200.852,72.449C199.977,73.3 199.103,74.151 198.229,75.002" style="fill:none;stroke:black;stroke-width:0.81px;"/>
+            <path d="M201.105,76.305C200.307,77.096 199.509,77.887 198.711,78.678" style="fill:none;stroke:black;stroke-width:0.81px;"/>
+            <path d="M210.813,70.197C210.977,70.743 211.307,71.836 211.114,72.63C210.897,73.523 209.972,74.878 209.51,75.555" style="fill:none;stroke:black;stroke-width:0.81px;"/>
+            <path d="M214.332,68.415L219.222,68.462L219.168,66.044L214.306,66.051L214.332,68.415Z" style="fill:white;stroke:black;stroke-width:0.81px;"/>
+        </g>
+        <g transform="matrix(1.21869,0,0,1.15817,-397.271,-97.7145)">
+            <rect x="548.115" y="133.895" width="41.028" height="43.172" style="fill:none;"/>
+        </g>
+    </g>
+</svg>

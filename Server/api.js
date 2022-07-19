@@ -9,7 +9,7 @@ module.exports = function (app, db) {
 
             const { id } = await db.one(`select id from businesses where business_name = $1`, [businessName])
 
-           
+
             res.json({
                 message: 'success',
                 id: id
@@ -35,14 +35,13 @@ module.exports = function (app, db) {
         }
     })
 
-    app.get('/api/LP', async function (req, res, next) {
+    app.get('/api/LP/:id', async function (req, res, next) {
         try {
-            const businessId = req.body
-            const lpData = await db.many(`select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`, [businessId])
+            const { id } = req.query
+            const lpData = await db.many(`select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`, [id])
 
             res.json({
-                data:lpData
-                
+                data: lpData
             })
 
         } catch (err) {
@@ -51,10 +50,10 @@ module.exports = function (app, db) {
         }
     })
 
-    app.get('/api/business', async function (req, res, next) {
+    app.get('/api/business/:id', async function (req, res, next) {
         try {
-            const businessId = req.body
-            const businessData = await db.many(`select (business_name, owner_id, category, logo) from businesses`, [businessId]);
+            const { id } = req.query
+            const businessData = await db.many(`select (business_name, owner_id, category, logo) from businesses`, [id]);
 
             res.json({
                 data: businessData
