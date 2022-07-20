@@ -1,3 +1,9 @@
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const axios = require('axios');
+const { json } = require('express');
+
 module.exports = function (app, db) {
 
     app.post('/api/register/business', async function (req, res, next) {
@@ -9,7 +15,7 @@ module.exports = function (app, db) {
 
             const { id } = await db.one(`select id from businesses where business_name = $1`, [businessName])
 
-           
+
             res.json({
                 message: 'success',
                 id: id
@@ -37,11 +43,11 @@ module.exports = function (app, db) {
 
     app.get('/api/LP', async function (req, res, next) {
         try {
-            const businessId = req.body
-            const lpData = await db.many(`select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`, [businessId])
+            const { id } = req.query
+            const lpData = await db.many(`select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`, [id])
 
             res.json({
-                data:lpData
+                data: lpData
             })
 
         } catch (err) {
@@ -52,8 +58,8 @@ module.exports = function (app, db) {
 
     app.get('/api/business', async function (req, res, next) {
         try {
-            const businessId = req.body
-            const businessData = await db.many(`select (business_name, owner_id, category, logo) from businesses`, [businessId]);
+            const { id } = req.query
+            const businessData = await db.many(`select (business_name, owner_id, category, logo) from businesses where id = $1`, [id]);
 
             res.json({
                 data: businessData
@@ -72,5 +78,33 @@ module.exports = function (app, db) {
             users
         })
     })
+
+    //register a user
+    app.post('/api/register/user', async function (req, res){
+        let message
+
+        const {username, first_name, surname, email, password, profile_picture} = req.body
+
+        const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
+
+        if(checkDup == null){
+            bcrypt.hash(password, saltRounds).then(async function (hash) {
+                    await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
+            });
+            message = 'successfully registered'
+
+            res.json({
+                message: success
+            });
+        }
+        else{
+            message = 'user already exisis'
+        }
+    
+
+    })
+
+    //login a user
+    //get stamps
 
 }
