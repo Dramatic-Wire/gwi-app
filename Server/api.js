@@ -127,9 +127,11 @@ module.exports = function (app, db) {
             const user = await db.oneOrNone('select * from users where username = $1', [username])
             const decrypt = await bcrypt.compare(password, user.password)
 
-
-            if(user.username != username){
-                message = 'wrong username'
+            if(username == ''){
+                throw new Error("name required")
+            }
+            if(password == ''){
+                throw new Error("password required")
             }
 
             if (!decrypt) {
@@ -138,7 +140,6 @@ module.exports = function (app, db) {
             else{
                 message = 'logged in'
             }
-
 
             res.json({
                 result: message
