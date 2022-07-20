@@ -133,7 +133,7 @@ module.exports = function (app, db) {
                 message = "password required"
             }
 
-            if(user == null){
+            if(user == undefined){
                 message = 'wrong username'
             }
 
