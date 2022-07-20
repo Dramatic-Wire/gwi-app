@@ -32,7 +32,7 @@ export default function App() {
     <BusinessProvider>
     <NativeBaseProvider theme={Theme}> 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RegisterBusiness" screenOptions={{ headerShown: false }} >
+      <Stack.Navigator initialRouteName="NewUser" screenOptions={{ headerShown: false }} >
         <Stack.Screen name="BusinessProfile" component={BusinessProfile}  />
         <Stack.Screen name="NewLP" component={NewLP} />
         <Stack.Screen name="NewUser" component={NewUser} />
@@ -44,5 +44,6 @@ export default function App() {
     </UserProvider>
   );
 }
+//<Stack.Navigator initialRouteName="RegisterBusiness" screenOptions={{ headerShown: false }} >
 
 
