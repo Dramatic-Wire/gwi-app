@@ -24,7 +24,7 @@ export default function () {
             })).catch(error => console.log(error));
     }
     return (
-        <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
+        <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center'}}>
             <Box variant='pageTitle'>
                 <Heading>Welcome to the{"\n"} Loyalty App!</Heading>
             </Box>
@@ -35,7 +35,7 @@ export default function () {
                 <Text>Username</Text>
                 <Input value={username} onChangeText={value => setUsername(value)} InputLeftElement={<Icon name="user" size={14} mr="2" color="grey"  />} placeholder="Username" />
                 <Text>Password</Text>
-                <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
+                <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={16} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
 
             </Box>
 
