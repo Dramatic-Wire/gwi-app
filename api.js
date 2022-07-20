@@ -128,7 +128,7 @@ module.exports = function (app, db) {
             const decrypt = await bcrypt.compare(password, user.password)
 
 
-            if(user == null){
+            if(user.username != username){
                 message = 'wrong username'
             }
 
