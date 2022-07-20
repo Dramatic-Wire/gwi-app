@@ -123,16 +123,8 @@ module.exports = function (app, db) {
         try {
             let message
             const { username, password } = req.body
-            const checkUsername = await db.oneOrNone('select username from users where username = $1', [username])
             const user = await db.oneOrNone('select * from users where username = $1', [username])
-            const decrypt = await bcrypt.compare(password, user.password)
-
-            if(username == ''){
-                throw new Error("name required")
-            }
-            if(password == ''){
-                throw new Error("password required")
-            }
+            const decrypt = await bcrypt.compare(password, user.password)            
 
             if (!decrypt) {
                 message = "Wrong password"
