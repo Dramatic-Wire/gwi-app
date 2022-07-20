@@ -136,11 +136,16 @@ module.exports = function (app, db) {
             if (!decrypt) {
                 message = "Wrong password or username"
             }
+            else{
+                message = 'logged in'
+            }
+
+            
 
 
             res.json({
                 
-                message: message
+                result: message
 
             });
 
