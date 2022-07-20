@@ -19,6 +19,7 @@ export default function () {
             .then((result => {
                 const results = result.data
                 console.log(result.data);
+                console.log(result.data.result);
 
             })).catch(error => console.log(error));
     }
