@@ -18,7 +18,7 @@ export default function () {
             .post(`https://gwi22-dramaticwire.herokuapp.com/api/login`, { username, password })
             .then((result => {
                 const results = result.data
-                console.log(result.data.result);
+                console.log(result.data);
 
             })).catch(error => console.log(error));
     }
