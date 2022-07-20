@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "dramatic-wire-gwi",
-    "slug": "dramatic-wire-gwi",
+    "name": "dramatic-wire",
+    "slug": "dramatic-wire",
+    "owner": "dramatic-wire",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,13 +19,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dramaticwire.dramaticwire"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.dramaticwire.dramaticwire"
     },
     "web": {
       "favicon": "./assets/favicon.png"

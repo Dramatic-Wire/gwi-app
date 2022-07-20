@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { View, Text, Image } from "react-native";
 import { Box, useTheme } from 'native-base'
 import CoffeeShop from "./Icons/CoffeeShop";
 import Beauty from "./Icons/Beauty";

@@ -1,21 +1,18 @@
-import { View, } from 'react-native';
-import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack, VStack } from "native-base";
+import { Button, Text, Heading, Box, HStack, VStack, useTheme } from "native-base";
 import { useContext } from 'react';
 import BusinessContext from '../Contexts/BusinessContext';
 import styles from '../Styles/style';
-import LoyaltyCard from './LoyaltyCard';
-import Icon from 'react-native-vector-icons/FontAwesome'
 import QRCode from 'react-native-qrcode-svg';
 
 
 export default function BusinessProfile({ navigation }) {
     const { businessName, loyaltyProgramme } = useContext(BusinessContext);
+    const { colors } = useTheme();
     
 
     return (
-             <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
-        <Box style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}  >
-        <VStack space={3} safeArea='8'>
+             <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'start', }}>
+        <VStack space={3} safeArea='8' >
             <Box variant='pageTitle'>
                         <Heading style={styles.pageTitle}>{businessName}</Heading>
             </Box>
@@ -23,11 +20,13 @@ export default function BusinessProfile({ navigation }) {
                 <Text variant='section'>You currently have no loyalty programme for your business</Text>
                 <Button onPress={() => { navigation.navigate('NewLP')}}>Add Loyalty Programme</Button>
             </Box>}
-        {loyaltyProgramme.stampsRequired && <Box variant='section'>
-            <Heading size="sm">Your Loyalty Programme Details</Heading>
-            <QRCode
+        {loyaltyProgramme.stampsRequired && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
+                    <QRCode
+                        color={colors.primary['700']}
+                        backgroundColor={colors.light['50']}
                 value={businessName}
             />
+            <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
             <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>
             <Text>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>
             <HStack space={3} justifyContent="center" >
@@ -37,7 +36,6 @@ export default function BusinessProfile({ navigation }) {
         </Box>}
 
                 </VStack>
-            </Box>
             </Box>
     );
 }
