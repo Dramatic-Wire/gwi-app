@@ -49,16 +49,13 @@ export default function NewUser() {
                 <Text>E-mail:</Text>
                 <Input placeholder='E-mail' value={email} onChangeText={value => setEmail(value)}></Input>
                 <Text>Password</Text>
-                 <Input w={{
-      base: "75%",
-      md: "25%"
-    }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
+                 <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
                 {/* <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<IconButton icon={<Icon name={show ? "eye" : "eye-slash"} />} size={5} mr="2" color="muted.400" onPress={() => setShow(!show)} />} placeholder="Password" /> */}
                 <Text>Profile Picutre:</Text>
                 <Input placeholder='profile pic' value={profile_picture} onChangeText={value => setProfile_picture(value)}></Input>
             </Box>
             
-            <Button onPress={() => {registerUser(username, first_name, surname, email, password, profile_picture); console.log('test');} } >Create Account</Button>
+            <Button onPress={() => {registerUser(username, first_name, surname, email, password, profile_picture); test()} } >Create Account</Button>
 
         </Box>
 
