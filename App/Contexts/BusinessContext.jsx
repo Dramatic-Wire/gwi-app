@@ -7,8 +7,14 @@ export const BusinessProvider = ({ children }) => {
   const [businessName, setBusinessName] = useState();
   const [category, setCategory] = useState()
   const [logo, setLogo] = useState('');
-
   const [loyaltyProgramme, setLoyaltyProgramme] = useState({});
+
+  // useEffect(() => {
+  //   if (businessID > 0) {
+      
+  //   } 
+  // },[businessID])
+
 
   return (
     <BusinessContext.Provider

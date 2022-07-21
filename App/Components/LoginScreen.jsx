@@ -47,7 +47,7 @@ export default function ({ navigation }) {
                     onChangeText={text => setEmail(text)}
                     style={styles.input}></Input>
                 <Text>Password</Text>
-                <Input type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} />} size={14} mr="2" color="grey" onPress={() => setShow(!show)} placeholder="Password" onChangeText={text => setPassword(text)} />
+                <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
             <Button onPress={handleLogin}>Login</Button>
             <Button onPress={() =>  navigation.navigate('NewUser') }>Sign up for an account</Button>
             </Box>

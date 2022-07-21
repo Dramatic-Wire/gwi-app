@@ -18,8 +18,6 @@ export default function RegisterBusiness({ navigation }) {
                 .then((result => {
                     const results = result.data
                     setBusinessID(results.id);
-                    setBusinessName(businessName);
-                    setCategory(category)
                     navigation.navigate('BusinessProfile')
 
                 })).catch(error => console.log(error));

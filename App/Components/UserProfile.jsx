@@ -11,6 +11,7 @@ export default function UserProfile(){{customerName = 'Sylvia', validFor = '1 mo
   const { colors } = useTheme()
   
 
+  
   return (
       <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
         <ScrollView width="100%" h="80" horizontal={false}  alwaysBounceHorizontal={false}>
