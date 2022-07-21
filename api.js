@@ -173,6 +173,19 @@ module.exports = function (app, db) {
 
     })
 
+    // add stamp
+    app.post('/api/add/stamp', async function(req, res){
+
+        const { LPid, UserId, timestamp, redeemed } = req.body
+        //redeemed
+        await db.none('insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)', [LPid, UserId, timestamp, redeemed])
+
+        res.json({
+            message: 'stamp added'
+        })
+
+    });
+
 
     //get stamps
     app.get('/api/stamps', async function(req, res){
