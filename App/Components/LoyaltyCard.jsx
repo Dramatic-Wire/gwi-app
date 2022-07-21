@@ -4,12 +4,12 @@ import styles from '../Styles/style';
 import Stamp from './Stamp';
 
 
-export default function LoyaltyCard({stampCount, validFor, reward, customerName='Suzie Salamandar', onClose, open, stamped = 2, color = 'emerald'}){
+export default function LoyaltyCard({stampCount, validFor, reward, name='Suzie Salamandar', onClose, open, stamped = 2, color = 'emerald'}){
   return (
     <Modal isOpen={open} size='lg' closeOnOverlayClick={true} onClose={() => onClose(false)} backdropVisible={true} overlayVisible={true} _backdrop={{bg:'muted[800]', opacity:0.9}} >
     <Box bgColor={`${color}.300`} rounded='lg' p="5" m='5' shadow='5'>
         <Box>
-        <Heading size='sm' textAlign={'left'}>{customerName}</Heading>
+        <Heading size='sm' textAlign={'left'}>{name}</Heading>
         <Text>
           { `valid for: ${validFor}`  }
         </Text>
