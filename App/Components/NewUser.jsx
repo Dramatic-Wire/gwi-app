@@ -23,7 +23,7 @@ export default function NewUser({ navigation }) {
             .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/user`, { username, first_name, surname, email, password, profile_picture })
             .then((result => {
                 const results = result.data
-                console.log(results);
+                console.log(result.data.result);
 
             })).catch(error => console.log(error));
     }
@@ -60,10 +60,8 @@ export default function NewUser({ navigation }) {
                     onChangeText={text => setEmail(text)}
                     style={styles.input}></Input>
                 <Text>Password</Text>
-                <Input w={{
-                    base: "75%",
-                    md: "25%"
-                }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
+                    <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
+                
                 <Text>Profile Picture</Text>
                 <Input placeholder='Profile Picture' value={profile_picture} onChangeText={value => setProfile_picture(value)}></Input>
             </Box>

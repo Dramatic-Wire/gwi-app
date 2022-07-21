@@ -51,7 +51,6 @@ export default function ({ navigation }) {
                 <Button style={{marginTop: 3}} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
             </Box>
 
-
         </Box >
 
     );

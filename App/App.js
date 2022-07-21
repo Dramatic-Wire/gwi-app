@@ -31,7 +31,6 @@ export default function App() {
         <Stack.Screen name="NewUser" component={NewUser} />
         <Stack.Screen name="RegisterBusiness" component={RegisterBusiness} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
-
       </Stack.Navigator>
     </NavigationContainer>
       </NativeBaseProvider>
