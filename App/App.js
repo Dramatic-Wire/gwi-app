@@ -20,25 +20,17 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    
-    //     <Box style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}  >
-    //   {/* <NewLP></NewLP> */}
-    //   {/* <NewUser></NewUser> */}
-    // {/* <RegisterBusiness></RegisterBusiness> */}
-    //       {/* <UserProfile></UserProfile> */}
-    //       <BusinessProfile></BusinessProfile>
-    // </Box>
     <UserProvider>
     <BusinessProvider>
     <NativeBaseProvider theme={Theme}> 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{ headerShown: false }} >
+      <Stack.Navigator initialRouteName="NewUser" screenOptions={{ headerShown: false }} >
         <Stack.Screen name="BusinessProfile" component={BusinessProfile}  />
+        <Stack.Screen name="UserProfile" component={UserProfile}  />
         <Stack.Screen name="NewLP" component={NewLP} />
         <Stack.Screen name="NewUser" component={NewUser} />
         <Stack.Screen name="RegisterBusiness" component={RegisterBusiness} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="UserProfile" component={UserProfile} />
 
       </Stack.Navigator>
     </NavigationContainer>
@@ -47,5 +39,6 @@ export default function App() {
     </UserProvider>
   );
 }
+//<Stack.Navigator initialRouteName="RegisterBusiness" screenOptions={{ headerShown: false }} >
 
 

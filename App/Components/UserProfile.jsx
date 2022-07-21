@@ -1,5 +1,5 @@
 import { View, } from 'react-native';
-import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack, useTheme } from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack, VStack, useTheme } from "native-base";
 import { useState } from 'react';
 import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
@@ -10,8 +10,10 @@ export default function UserProfile(){{customerName = 'Sylvia', validFor = '1 mo
   const { colors } = useTheme()
   
 
-    return(
-        <View>
+  return (
+      <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
+        <Box style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}  >
+        <VStack space={3} safeArea='8'>
             <Box variant='pageTitle'>
                 <Heading style={styles.pageTitle}>Welcome Sylvia!</Heading>
             </Box>
@@ -40,7 +42,8 @@ export default function UserProfile(){{customerName = 'Sylvia', validFor = '1 mo
                 
                 
             </Box>
-        </View>
-
+        </VStack>
+      </Box>
+      </Box>
     )
 }
