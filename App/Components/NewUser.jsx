@@ -18,7 +18,6 @@ export default function NewUser({ navigation }) {
     const [profile_picture, setProfile_picture] = useState();
 
     const registerUser = () => {
-        console.log('123');
         axios
             .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/user`, { username, first_name, surname, email, password, profile_picture })
             .then((result => {
@@ -55,12 +54,15 @@ export default function NewUser({ navigation }) {
                 <Text>Username</Text>
                 <Input placeholder='Username' value={username}
                     onChangeText={text => setUsername(text)}></Input>
-                <Text>E-mail</Text>
-                <Input placeholder='E-mail' value={email}
+                <Text>Email</Text>
+                <Input placeholder='Email' value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}></Input>
                 <Text>Password</Text>
-                    <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
+                    <Input w={{
+                    base: "85%",
+                    md: "25%"
+                }} value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
                 
                 <Text>Profile Picture</Text>
                 <Input placeholder='Profile Picture' value={profile_picture} onChangeText={value => setProfile_picture(value)}></Input>

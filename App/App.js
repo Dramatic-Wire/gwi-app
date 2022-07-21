@@ -24,7 +24,7 @@ export default function App() {
     <BusinessProvider>
     <NativeBaseProvider theme={Theme}> 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RegisterBusiness" screenOptions={{ headerShown: false }} >
+      <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{ headerShown: false }} >
         <Stack.Screen name="BusinessProfile" component={BusinessProfile}  />
         <Stack.Screen name="UserProfile" component={UserProfile}  />
         <Stack.Screen name="NewLP" component={NewLP} />
