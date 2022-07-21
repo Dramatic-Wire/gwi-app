@@ -1,3 +1,9 @@
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const axios = require('axios');
+const { json } = require('express');
+
 module.exports = function (app, db) {
 
     const verify = (req, res, next) => {
@@ -98,5 +104,33 @@ module.exports = function (app, db) {
         });
     });
 
+
+    //register a user
+    app.post('/api/register/user', async function (req, res){
+        let message
+
+        const {username, first_name, surname, email, password, profile_picture} = req.body
+
+        const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
+
+        if(checkDup == null){
+            bcrypt.hash(password, saltRounds).then(async function (hash) {
+                    await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
+            });
+            message = 'successfully registered'
+
+            res.json({
+                message: success
+            });
+        }
+        else{
+            message = 'user already exisis'
+        }
+    
+
+    })
+
+    //login a user
+    //get stamps
 
 }
