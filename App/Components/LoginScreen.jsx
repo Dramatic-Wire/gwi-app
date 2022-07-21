@@ -1,4 +1,4 @@
-import { View, } from 'react-native';
+import { View, KeyboardAvoidingView } from 'react-native';
 import { Button, Input, Text, IconButton, Heading, Box, Select, HStack, useTheme, Stack } from "native-base";
 import { useState } from 'react';
 import styles from '../Styles/style';
@@ -19,9 +19,7 @@ export default function ({ navigation }) {
         // const token = await firebase.auth().currentUser.getIdToken();
 
         // send token to header
-       // axios.defaults.headers.common['Authorization'] = `Bearer ${token)}`;
-
-
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         auth
             .signInWithEmailAndPassword(email, password)
@@ -34,26 +32,27 @@ export default function ({ navigation }) {
     }
 
     return (
-        <View>
-            <Box variant='pageTitle'>
+        <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center',}}>
+            <Box variant='pageTitle' style={{marginBottom: 3}}>
                 <Heading>Welcome to the{"\n"} Loyalty App!</Heading>
             </Box>
-            <Box variant='section'>
-                <Text>Login as:</Text>
-                <Select selectedValue={user} onValueChange={value => setUser(value)} placeholder='Select user type'>{userType.map((user, index) => <Select.Item label={user} value={user} key={index}/> )}</Select>
 
+            <Box variant='section'>
                 <Text>E-mail</Text>
                 <Input placeholder='E-mail' value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}></Input>
                 <Text>Password</Text>
-                <Input type={show ? "text" : "password"} InputRightElement={<IconButton icon={<Icon name={show ? "eye" : "eye-slash"} />} size={5} mr="2" color="muted.400" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
-            <Button onPress={handleLogin}>Login</Button>
-            <Button onPress={() =>  navigation.navigate('NewUser') }>Sign up for an account</Button>
+                <Input w={{
+                    base: "85%",
+                    md: "25%"
+                }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
+                <Button onPress={handleLogin}>Login</Button>
+                <Button style={{marginTop: 3}} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
             </Box>
-           
 
-        </View >
+
+        </Box >
 
     );
 }

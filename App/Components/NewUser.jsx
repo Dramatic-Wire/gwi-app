@@ -39,14 +39,6 @@ export default function NewUser({ navigation }) {
             })
             .catch(error => alert(error.message))
     }
-    const test = () => {
-        axios.get(`https://gwi22-dramaticwire.herokuapp.com/api/users`)
-            .then((result => {
-                const results = result.data
-                console.log(results);
-
-            })).catch(error => console.log(error));
-    }
     return (
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
             <Box variant='pageTitle'>
@@ -71,9 +63,9 @@ export default function NewUser({ navigation }) {
                 <Input w={{
                     base: "75%",
                     md: "25%"
-                }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={5} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
+                }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
                 <Text>Profile Picture</Text>
-                <Input placeholder='profile picture' value={profile_picture} onChangeText={value => setProfile_picture(value)}></Input>
+                <Input placeholder='Profile Picture' value={profile_picture} onChangeText={value => setProfile_picture(value)}></Input>
             </Box>
             <Button onPress={handleSignUp}>Sign Up</Button>
         </Box>

@@ -1,6 +1,5 @@
 import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack } from "native-base";
 import { useState, useContext } from 'react';
-import { KeyboardAvoidingView } from "native-base";
 import axios from 'axios';
 import BusinessContext from "../Contexts/BusinessContext";
 
@@ -12,6 +11,11 @@ export default function RegisterBusiness({ navigation }) {
     const owner_id = 1
     const url = `https://gwi22-dramaticwire.herokuapp.com`
     const registerBusiness = () => {
+        // get token from current user
+        // const token = await firebase.auth().currentUser.getIdToken();
+
+        // send token to header
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         if (!error && !categoryError) {
             axios
                 .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, logo })
