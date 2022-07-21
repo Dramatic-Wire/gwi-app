@@ -6,42 +6,7 @@ const { json } = require('express');
 
 module.exports = function (app, db) {
 
-    const verify = (req, res, next) => {
-        const idToken = req.headers.authorization && req.headers.authorization.split(" ")[1];
-        if (!req.headers.authorization || !idToken) {
-            res.sendStatus(401);
-            return;
-        }
-        
-        getAuth()
-            .verifyIdToken(idToken)
-            .then((decodedToken) => {
-                const { uid } = decodedToken;
-                if (uid) {
-                    next();
-                } else {
-                    res.status(403).json({
-                        message: 'unauthorized'
-                    });
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
 
-    app.get('/api/test', function (req, res) {
-        res.json({
-            name: 'joe'
-        });
-    });
-    app.get('/api/users', verify, async function (req, res) {
-
-        const users = await db.many(`select * from users`)
-        res.json({
-            users
-        })
-    })
 
 
     app.post('/api/register/business', async function (req, res, next) {
@@ -108,6 +73,20 @@ module.exports = function (app, db) {
             next()
         }
     })
+
+    app.get('/api/users', async function (req, res) {
+
+        const users = await db.many(`select * from users`)
+        res.json({
+            users
+        })
+    })
+    app.get('/api/test', function (req, res) {
+        res.json({
+            name: 'joe'
+        });
+    });
+
 
     //register a user
     app.post('/api/register/user', async function (req, res){
