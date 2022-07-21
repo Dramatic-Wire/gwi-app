@@ -6,6 +6,44 @@ const { json } = require('express');
 
 module.exports = function (app, db) {
 
+    const verify = (req, res, next) => {
+        const idToken = req.headers.authorization && req.headers.authorization.split(" ")[1];
+        if (!req.headers.authorization || !idToken) {
+            res.sendStatus(401);
+            return;
+        }
+        
+        getAuth()
+            .verifyIdToken(idToken)
+            .then((decodedToken) => {
+                const { uid } = decodedToken;
+                if (uid) {
+                    next();
+                } else {
+                    res.status(403).json({
+                        message: 'unauthorized'
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    app.get('/api/test', function (req, res) {
+        res.json({
+            name: 'joe'
+        });
+    });
+
+    app.get('/api/users',  async function (req, res) {
+
+        const users = await db.many(`select * from users`)
+        res.json({
+            users
+        })
+    })
+
+
     app.post('/api/register/business', async function (req, res, next) {
         try {
 
@@ -71,86 +109,35 @@ module.exports = function (app, db) {
         }
     })
 
-    app.get('/api/users', async function (req, res) {
+   
 
-        const users = await db.many(`select * from users`)
-        res.json({
-            users
-        })
-    })
 
     //register a user
-    app.post('/api/register/user', async function (req, res) {
+    app.post('/api/register/user', async function (req, res){
         let message
 
-        const { username, first_name, surname, email, password, profile_picture } = req.body
+        const {username, first_name, surname, email, password, profile_picture} = req.body
 
-        // const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
-        bcrypt.hash(password, saltRounds).then(async function (hash) {
-            await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
-        });
+        const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
 
-        message = 'successfully registered'
+        if(checkDup == null){
+            bcrypt.hash(password, saltRounds).then(async function (hash) {
+                    await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
+            });
+            message = 'successfully registered'
 
             res.json({
-                result: message
+                message: success
             });
-
-
-        // if (checkDup == null) {
-        //     bcrypt.hash(password, saltRounds).then(async function (hash) {
-        //         await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
-        //     });
-        //     message = 'successfully registered'
-
-        //     res.json({
-        //         result: message
-        //     });
-        // }
-        // else {
-        //     message = 'user already exisis'
-        //     res.json({
-        //         result: message
-        //     });
-        // }
-
+        }
+        else{
+            message = 'user already exisis'
+        }
+    
 
     })
 
     //login a user
-    app.post('/api/login', async function (req, res) {
-
-        try {
-            let message
-            const { username, password } = req.body
-            const user = await db.oneOrNone('select * from users where username = $1', [username])
-            const decrypt = await bcrypt.compare(password, user.password)            
-
-            if (!decrypt) {
-                message = "Wrong password"
-            }
-            else{
-                message = 'logged in'
-            }
-
-            res.json({
-                result: message
-
-            });
-
-        } catch (error) {
-            res.json({
-                message: error.message
-            })
-
-        }
-
-    })
-
-
     //get stamps
-    app.get('/api/stamps', async function(req, res){
-
-    })
 
 }
