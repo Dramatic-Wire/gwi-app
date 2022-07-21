@@ -34,26 +34,26 @@ export default function ({ navigation }) {
     }
 
     return (
-        <View>
+        <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center'}}>
             <Box variant='pageTitle'>
                 <Heading>Welcome to the{"\n"} Loyalty App!</Heading>
             </Box>
             <Box variant='section'>
-                <Text>Login as:</Text>
-                <Select selectedValue={user} onValueChange={value => setUser(value)} placeholder='Select user type'>{userType.map((user, index) => <Select.Item label={user} value={user} key={index}/> )}</Select>
+                {/* <Text>Login as:</Text> */}
+                {/* <Select selectedValue={user} onValueChange={value => setUser(value)} placeholder='Select user type'>{userType.map((user, index) => <Select.Item label={user} value={user} key={index}/> )}</Select> */}
 
                 <Text>E-mail</Text>
                 <Input placeholder='E-mail' value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}></Input>
                 <Text>Password</Text>
-                <Input type={show ? "text" : "password"} InputRightElement={<IconButton icon={<Icon name={show ? "eye" : "eye-slash"} />} size={5} mr="2" color="muted.400" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
+                <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
             <Button onPress={handleLogin}>Login</Button>
             <Button onPress={() =>  navigation.navigate('NewUser') }>Sign up for an account</Button>
             </Box>
            
 
-        </View >
+        </Box >
 
     );
 }
