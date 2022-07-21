@@ -7,10 +7,10 @@ import CardIcon from './CardIcon';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Stamp from './Stamp';
 
+
 export default function UserProfile(){{customerName = 'Sylvia', validFor = '1 month', stampCount = 5, stamped = 2, reward = '1 free item'}
   const { colors } = useTheme()
   
-
   
   return (
       <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>

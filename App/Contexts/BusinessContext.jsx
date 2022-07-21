@@ -1,19 +1,26 @@
 import { createContext, useState, useEffect  } from 'react';
+import AxiosInstance from '../Hooks/AxiosInstance';
 
 const BusinessContext = createContext({});
 
 export const BusinessProvider = ({ children }) => {  
+  const axios = AxiosInstance();
   const [businessID, setBusinessID] = useState();
   const [businessName, setBusinessName] = useState();
   const [category, setCategory] = useState()
   const [logo, setLogo] = useState('');
   const [loyaltyProgramme, setLoyaltyProgramme] = useState({});
 
-  // useEffect(() => {
-  //   if (businessID > 0) {
-      
-  //   } 
-  // },[businessID])
+  useEffect(() => {
+    const getBusiness = async () => {
+      await axios.get(`/business/?id=${businessID}`).then(res => {
+        console.log(res.data)
+      })
+    }
+    if (businessID > 0) {
+      getBusiness()
+    } 
+  },[businessID])
 
 
   return (

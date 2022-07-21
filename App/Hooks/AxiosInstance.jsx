@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { DATABASE_URL } from '@env';
 
 function AxiosInstance() {
   
   const axiosInstance = axios.create({
-    baseURL: process.env.DATABASE_URL,
+    baseURL: DATABASE_URL,
     // headers: {
     //   Authorization: `Bearer ${user?.accessToken}`,
     //   'Access-Control-Allow-Origin': import.meta.env.VITE_SERVER_URL,
