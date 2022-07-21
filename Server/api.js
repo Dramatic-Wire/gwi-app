@@ -35,7 +35,7 @@ module.exports = function (app, db) {
         });
     });
 
-    app.get('/api/users',  async function (req, res) {
+    app.get('/api/users', verify,  async function (req, res) {
 
         const users = await db.many(`select * from users`)
         res.json({
