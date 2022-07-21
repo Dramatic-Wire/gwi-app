@@ -6,9 +6,6 @@ const { json } = require('express');
 
 module.exports = function (app, db) {
 
-
-
-
     app.post('/api/register/business', async function (req, res, next) {
         try {
 
@@ -81,39 +78,79 @@ module.exports = function (app, db) {
             users
         })
     })
-    app.get('/api/test', function (req, res) {
-        res.json({
-            name: 'joe'
-        });
-    });
-
 
     //register a user
-    app.post('/api/register/user', async function (req, res){
+    app.post('/api/register/user', async function (req, res) {
         let message
 
-        const {username, first_name, surname, email, password, profile_picture} = req.body
+        const { username, first_name, surname, email, password, profile_picture } = req.body
 
-        const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
+        // const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
+        bcrypt.hash(password, saltRounds).then(async function (hash) {
+            await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
+        });
 
-        if(checkDup == null){
-            bcrypt.hash(password, saltRounds).then(async function (hash) {
-                    await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
-            });
-            message = 'successfully registered'
+        message = 'successfully registered'
 
             res.json({
-                message: success
+                result: message
             });
-        }
-        else{
-            message = 'user already exisis'
-        }
-    
+
+
+        // if (checkDup == null) {
+        //     bcrypt.hash(password, saltRounds).then(async function (hash) {
+        //         await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
+        //     });
+        //     message = 'successfully registered'
+
+        //     res.json({
+        //         result: message
+        //     });
+        // }
+        // else {
+        //     message = 'user already exisis'
+        //     res.json({
+        //         result: message
+        //     });
+        // }
+
 
     })
 
     //login a user
+    app.post('/api/login', async function (req, res) {
+
+        try {
+            let message
+            const { username, password } = req.body
+            const user = await db.oneOrNone('select * from users where username = $1', [username])
+            const decrypt = await bcrypt.compare(password, user.password)            
+
+            if (!decrypt) {
+                message = "Wrong password"
+            }
+            else{
+                message = 'logged in'
+            }
+
+            res.json({
+                result: message
+
+            });
+
+        } catch (error) {
+            res.json({
+                message: error.message
+            })
+
+        }
+
+    })
+
+
     //get stamps
+    app.get('/api/stamps', async function(req, res){
+
+    })
 
 }
