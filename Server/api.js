@@ -6,6 +6,26 @@ const { json } = require('express');
 
 module.exports = function (app, db) {
 
+    const verify = (req, res, next) => {
+        const idToken = req.headers.authorization && req.headers.authorization.split(" ")[1];
+        if (!req.headers.authorization || !idToken) {
+            res.sendStatus(401);
+            return;
+        }
+        
+        getAuth()
+            .verifyIdToken(idToken)
+            .then((decodedToken) => {
+                const { uid } = decodedToken;
+                // ...
+            })
+            .catch((error) => {
+                // Handle error
+            });
+    }
+
+
+
     app.post('/api/register/business', async function (req, res, next) {
         try {
 
@@ -78,6 +98,12 @@ module.exports = function (app, db) {
             users
         })
     })
+    app.get('/api/test', function (req, res) {
+        res.json({
+            name: 'joe'
+        });
+    });
+
 
     //register a user
     app.post('/api/register/user', async function (req, res){
