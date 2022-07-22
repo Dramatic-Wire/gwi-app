@@ -270,7 +270,7 @@ module.exports = function (app, db) {
     app.get('/api/user', async function(req, res){
         const username = req.query
 
-        const user = await db.one('select * from user where username = $1')
+        const user = await db.one('select * from user where username = $1', [username])
 
         res.json(user)
     })
