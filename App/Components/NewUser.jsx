@@ -6,14 +6,10 @@ import { auth } from '../firebase'
 import axios from 'axios';
 
 export default function NewUser({ navigation }) {
+ const { email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture } = useContext(UserContext);
+
     const [show, setShow] = useState(false);
-    // const navigation = useNavigation()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [username, setUsername] = useState();
-    const [first_name, setFirst_name] = useState();
-    const [surname, setSurname] = useState();
-    const [profile_picture, setProfile_picture] = useState();
+    
 
     const registerUser = () => {
         axios
