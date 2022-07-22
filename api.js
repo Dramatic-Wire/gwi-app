@@ -239,7 +239,7 @@ module.exports = function (app, db) {
             const {customer_id } = req.query
             
             const result = await db.many('select stamps.timestamp, stamps.redeemed, stamps.lp_id, loyalty_programmes.stamps as stampsNeeded, loyalty_programmes.reward, loyalty_programmes.valid_for, businesses.business_name, businesses.category from stamps join loyalty_programmes on stamps.lp_id=loyalty_programmes.id join businesses on loyalty_programmes.business_id = businesses.id where stamps.customer_id = $1', [customer_id])
-    
+            console.log(result)
             const userStamps = result.reduce((lpList, stamp) => {
                 const { valid_for, redeemed, stampsneeded, business_name, category, reward, timestamp, lp_id } = stamp
                 const now = moment();
@@ -266,6 +266,14 @@ module.exports = function (app, db) {
         }
     
     });
+
+    app.get('/api/user', async function(req, res){
+        const username = req.query
+
+        const user = await db.one('select * from user where username = $1')
+
+        res.json(user)
+    })
 }
 
 
