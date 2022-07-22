@@ -38,6 +38,7 @@ module.exports = function (app, db) {
 
     app.get('/api/users',  async function (req, res) {
         const users = await db.many(`select * from users`)
+        console.log(users)
         res.json({
             users
         })
