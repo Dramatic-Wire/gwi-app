@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const axios = require('axios');
 const { json } = require('express');
+const moment = require('moment');
 
 module.exports = function (app, db) {
 
@@ -36,8 +37,8 @@ module.exports = function (app, db) {
     });
 
     app.get('/api/users',  async function (req, res) {
-
         const users = await db.many(`select * from users`)
+        console.log(users)
         res.json({
             users
         })
@@ -118,10 +119,10 @@ module.exports = function (app, db) {
         });
 
         message = 'successfully registered'
-
-            res.json({
-                result: message
-            });
+        res.sendStatus(201)
+            // res.json({
+            //     result: message
+            // });
 
 
         // if (checkDup == null) {
@@ -196,24 +197,6 @@ module.exports = function (app, db) {
     });
 
 
-    //get stamps
-    app.get('/api/stamps', async function(req, res){
-
-        try {
-            const {customer_id , lp_id } = req.body
-            
-            const stampInfo = await db.many('select * from stamps where (customer_id , lp_id) = ($1, $2)', [customer_id , lp_id])
-
-            res.json(stampInfo)
-            
-        } catch (error) {
-            res.json({
-                message : error
-            })
-        }
-
-    });
-
     //edit/update loyalty 
     app.post('/api/edit/LP', async function(req, res){
 
@@ -250,3 +233,39 @@ module.exports = function (app, db) {
     })
 
 }
+
+//get stamps
+app.get('/api/stamps', async function(req, res){
+
+    try {
+        const {customer_id } = req.query
+        
+        const result = await db.many('select stamps.timestamp, stamps.redeemed, stamps.lp_id, loyalty_programmes.stamps as stampsNeeded, loyalty_programmes.reward, loyalty_programmes.valid_for, businesses.business_name, businesses.category from stamps join loyalty_programmes on stamps.lp_id=loyalty_programmes.id join businesses on loyalty_programmes.business_id = businesses.id where stamps.customer_id = $1', [customer_id])
+
+        const userStamps = result.reduce((lpList, stamp) => {
+            const { valid_for, redeemed, stampsneeded, business_name, category, reward, timestamp, lp_id } = stamp
+            const now = moment();
+            const expiration = moment(timestamp).add(valid_for[0], valid_for[1])
+            if (moment(expiration).isSameOrAfter(now) && redeemed == false) {
+                const lpIndex = lpList.findIndex((lp) => lp.id == lp_id);
+            
+                if (lpIndex >= 0) {
+                    lpList[lpIndex].stamps++;
+                } else {
+                    lpList = [...lpList, { stampsneeded, reward, business_name, category, stamps:1}]
+                }
+            }
+             return lpList
+        },[])
+        
+
+        res.json(userStamps)
+        
+    } catch (error) {
+        res.json({
+            message : error
+        })
+    }
+
+});
+

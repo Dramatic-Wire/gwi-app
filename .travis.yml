@@ -1,0 +1,15 @@
+
+language: node_js
+
+env:
+  - DATABASE_URL=postgres://postgres@localhost:5432/stampede_tests
+
+node_js:  
+  - 12
+
+before_script:
+  - psql -c 'create database stampede_tests;' -U postgres
+  - psql -U postgres -d stampede_tests -a -f ./sql/loyaltyApp.sql
+
+services:
+  - postgresql
