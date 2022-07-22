@@ -38,7 +38,6 @@ module.exports = function (app, db) {
 
     app.get('/api/users',  async function (req, res) {
         const users = await db.many(`select * from users`)
-        console.log(users)
         res.json({
             users
         })
@@ -117,11 +116,11 @@ module.exports = function (app, db) {
 
         // const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
         bcrypt.hash(password, saltRounds).then(async function (hash) {
-            await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0])
+            await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0]).then(() => res.sendStatus(201)).catch((err) => { console.log(err); res.sendStatus(409)})
         });
 
-        message = 'successfully registered'
-        res.sendStatus(201)
+        // message = 'successfully registered'
+        // res.sendStatus(201)
             // res.json({
             //     result: message
             // });
@@ -198,18 +197,18 @@ module.exports = function (app, db) {
 
 }
 
-const userStamps = result.reduce((lpList, stamp) => {
-    const { valid_for, redeemed, stampsneeded, business_name, category, reward, timestamp, lp_id } = stamp
-    const now = moment();
-    const expiration = moment(timestamp).add(valid_for[0], valid_for[1])
-    if (moment(expiration).isSameOrAfter(now) && redeemed == false) {
-        const lpIndex = lpList.findIndex((lp) => lp.id == lp_id);
+// const userStamps = result.reduce((lpList, stamp) => {
+//     const { valid_for, redeemed, stampsneeded, business_name, category, reward, timestamp, lp_id } = stamp
+//     const now = moment();
+//     const expiration = moment(timestamp).add(valid_for[0], valid_for[1])
+//     if (moment(expiration).isSameOrAfter(now) && redeemed == false) {
+//         const lpIndex = lpList.findIndex((lp) => lp.id == lp_id);
     
-        if (lpIndex >= 0) {
-            lpList[lpIndex].stamps++;
-        } else {
-            lpList = [...lpList, { stampsneeded, reward, business_name, category, stamps:1}]
-        }
-    }
-return lpList
-},[])
+//         if (lpIndex >= 0) {
+//             lpList[lpIndex].stamps++;
+//         } else {
+//             lpList = [...lpList, { stampsneeded, reward, business_name, category, stamps:1}]
+//         }
+//     }
+// return lpList
+// },[])
