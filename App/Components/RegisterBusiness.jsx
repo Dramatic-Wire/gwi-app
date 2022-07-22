@@ -5,7 +5,7 @@ import BusinessContext from "../Contexts/BusinessContext";
 
 export default function RegisterBusiness({ navigation }) {
     const { businessName, setBusinessName, businessID, setBusinessID, category, setCategory, logo, setLogo } = useContext(BusinessContext)
-    const categortyList = ['Coffee Shop', 'Beauty', 'Resturant', 'Groceries', 'Clothing', 'Health']
+    const categortyList = ['Coffee Shop', 'Beauty', 'Restaurant', 'Groceries', 'Clothing', 'Health']
     const [error, setError] = useState(false);
     const [categoryError, setCategoryError] = useState(false);
     const owner_id = 1

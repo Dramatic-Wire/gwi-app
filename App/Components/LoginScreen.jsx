@@ -36,8 +36,8 @@ export default function ({ navigation }) {
             </Box>
 
             <Box variant='section'>
-                <Text>E-mail</Text>
-                <Input placeholder='E-mail' value={email}
+                <Text>Email</Text>
+                <Input placeholder='Email' value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}></Input>
                 <Text>Password</Text>
@@ -45,9 +45,9 @@ export default function ({ navigation }) {
                     base: "85%",
                     md: "25%"
                 }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
+            </Box>
                 <Button onPress={handleLogin}>Login</Button>
                 <Button style={{marginTop: 3}} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
-            </Box>
 
         </Box >
 
