@@ -14,7 +14,7 @@ create table businesses(
     category text,
     logo text,
     foreign key (owner_id) references users(id)
-);
+); 
 create table loyalty_programmes(
 	id serial not null primary key,
 	business_id int,

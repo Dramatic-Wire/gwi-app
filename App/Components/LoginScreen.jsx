@@ -32,26 +32,26 @@ export default function ({ navigation }) {
     }
 
     return (
-        <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center',}}>
-            <Box variant='pageTitle' style={{marginBottom: 3}}>
-                <Heading>Welcome to the{"\n"} Loyalty App!</Heading>
-            </Box>
+        
+            <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Box variant='pageTitle' style={{ marginBottom: 3 }}>
+                    <Heading>Welcome to the{"\n"} Loyalty App!</Heading>
+                </Box>
 
-            <Box variant='section'>
-                <Text>E-mail</Text>
-                <Input placeholder='E-mail' value={email}
-                    onChangeText={text => setEmail(text)}
-                    style={styles.input}></Input>
-                <Text>Password</Text>
-                <Input w={{
-                    base: "85%",
-                    md: "25%"
-                }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
-                <Button onPress={handleLogin}>Login</Button>
-                <Button style={{marginTop: 3}} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
-            </Box>
+                <Box variant='section'>
+                    <Text>E-mail</Text>
+                    <Input placeholder='E-mail' value={email}
+                        onChangeText={text => setEmail(text)}
+                        style={styles.input}></Input>
+                    <Text>Password</Text>
+                    <Input type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
+                    <Button onPress={handleLogin}>Login</Button>
+                    <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
+                </Box>
 
-        </Box >
+            </Box >
+
+        
 
     );
 }

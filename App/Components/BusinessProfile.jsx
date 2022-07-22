@@ -8,10 +8,21 @@ import QRCode from 'react-native-qrcode-svg';
 export default function BusinessProfile({ navigation }) {
     const { businessName, loyaltyProgramme } = useContext(BusinessContext);
     const { colors } = useTheme();
+
+    const editLP = () => {
+        console.log('123');
+        axios
+            .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/LP`, { stamps, reward, valid_for, business_id })
+            .then((result => {
+                const results = result.data
+                console.log(result.data.result);
+
+            })).catch(error => console.log(error));
+    }
     
 
     return (
-             <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'start', }}>
+             <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
         <VStack space={3} safeArea='8' >
             <Box variant='pageTitle'>
                         <Heading style={styles.pageTitle}>{businessName}</Heading>
