@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const axios = require('axios');
 const { json } = require('express');
+const moment = require('moment');
 
 module.exports = function (app, db) {
 
@@ -36,8 +37,8 @@ module.exports = function (app, db) {
     });
 
     app.get('/api/users',  async function (req, res) {
-
         const users = await db.many(`select * from users`)
+        console.log(users)
         res.json({
             users
         })
@@ -120,10 +121,10 @@ module.exports = function (app, db) {
         });
 
         message = 'successfully registered'
-
-            res.json({
-                result: message
-            });
+        res.sendStatus(201)
+            // res.json({
+            //     result: message
+            // });
 
 
         // if (checkDup == null) {
@@ -196,3 +197,19 @@ module.exports = function (app, db) {
     })
 
 }
+
+const userStamps = result.reduce((lpList, stamp) => {
+    const { valid_for, redeemed, stampsneeded, business_name, category, reward, timestamp, lp_id } = stamp
+    const now = moment();
+    const expiration = moment(timestamp).add(valid_for[0], valid_for[1])
+    if (moment(expiration).isSameOrAfter(now) && redeemed == false) {
+        const lpIndex = lpList.findIndex((lp) => lp.id == lp_id);
+    
+        if (lpIndex >= 0) {
+            lpList[lpIndex].stamps++;
+        } else {
+            lpList = [...lpList, { stampsneeded, reward, business_name, category, stamps:1}]
+        }
+    }
+return lpList
+},[])

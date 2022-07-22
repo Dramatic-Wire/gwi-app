@@ -1,6 +1,5 @@
 import { View, SafeAreaView } from 'react-native';
 import NewLP from './Components/NewLP';
-import styles from './Styles/style';
 import { NativeBaseProvider, Text, Box, Container } from 'native-base';
 import Theme from './Styles/Theme';
 import RegisterBusiness from './Components/RegisterBusiness';
@@ -11,7 +10,6 @@ import LoginScreen from './Components/LoginScreen';
 import BarcodeScanner from './Components/BarcodeScanner';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ScreenTitle from './Components/ScreenTitle';
 import { UserProvider } from './Contexts/UserContext';
 import { BusinessProvider } from './Contexts/BusinessContext';
 
@@ -24,7 +22,7 @@ export default function App() {
     <BusinessProvider>
     <NativeBaseProvider theme={Theme}> 
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RegisterBusiness" screenOptions={{ headerShown: false }} >
+      <Stack.Navigator initialRouteName="UserProfile" screenOptions={{ headerShown: false }} >
         <Stack.Screen name="BusinessProfile" component={BusinessProfile}  />
         <Stack.Screen name="UserProfile" component={UserProfile}  />
         <Stack.Screen name="NewLP" component={NewLP} />

@@ -1,8 +1,6 @@
-import { View, } from 'react-native';
-import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack } from "native-base";
+import { Button, Input, Text,  Heading, Box, } from "native-base";
 import { useState } from 'react';
 import styles from '../Styles/style';
-import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { auth } from '../firebase'
 import axios from 'axios';

@@ -1,6 +1,5 @@
-import { View, useState } from 'react-native';
-import { Modal, IconButton, useTheme, Box, Text, Heading } from 'native-base';
-import styles from '../Styles/style';
+import { View,} from 'react-native';
+import { Modal, Box, Text, Heading } from 'native-base';
 import Stamp from './Stamp';
 
 

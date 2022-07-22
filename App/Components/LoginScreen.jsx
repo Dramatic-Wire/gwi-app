@@ -1,10 +1,8 @@
 import { View, KeyboardAvoidingView } from 'react-native';
-import { Button, Input, Text, IconButton, Heading, Box, Select, HStack, useTheme, Stack } from "native-base";
+import { Button, Input, Text, Heading, Box,} from "native-base";
 import { useState } from 'react';
 import styles from '../Styles/style';
-import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import Stamp from './Stamp';
 import { auth } from '../firebase'
 
 export default function ({ navigation }) {
