@@ -103,9 +103,7 @@ module.exports = function (app, db) {
             console.log(err);
             next()
         }
-    })
-
-   
+    });
 
 
     //register a user
@@ -179,36 +177,95 @@ module.exports = function (app, db) {
     // add stamp
     app.post('/api/add/stamp', async function(req, res){
 
-        const { LPid, UserId, timestamp, redeemed } = req.body
-        //redeemed
-        await db.none('insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)', [LPid, UserId, timestamp, redeemed])
+        try {
+            const { LPid, UserId, timestamp, redeemed } = req.body
+            //redeemed
+            await db.none('insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)', [LPid, UserId, timestamp, redeemed])
+    
+            res.json({
+                message: 'stamp added'
+            })
+            
+        } catch (error) {
+            res.json({
+                message: error
+            })
+        }
 
-        res.json({
-            message: 'stamp added'
-        })
 
     });
 
 
-    //get stamps
-    app.get('/api/stamps', async function(req, res){
+    //edit/update loyalty 
+    app.post('/api/edit/LP', async function(req, res){
 
+        try {
+            
+            const {stamps, reward, valid_for, business_id} = req.body
+    
+            await db.none('update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 where business_id = $4', [stamps, reward, valid_for, business_id])
+    
+            res.json('updated')
+
+        } catch (error) {
+            res.json({
+                message : error
+            })
+        }
+
+    });
+
+    //delete loyalty
+    app.delete('/api/delete/LP', async function(req, res){
+        try {
+			const { businessID } = req.query;
+			db.one('delete from loyalty_programmes where business_id = $1', [businessID])
+
+			res.json('success')
+
+		} catch (err) {
+			// console.log(err);
+			res.json({
+				error : err
+			})
+		}
     })
 
+    //get stamps
+    app.get('/api/stamps', async function(req, res){
+    
+        try {
+            const {customer_id } = req.query
+            
+            const result = await db.many('select stamps.timestamp, stamps.redeemed, stamps.lp_id, loyalty_programmes.stamps as stampsNeeded, loyalty_programmes.reward, loyalty_programmes.valid_for, businesses.business_name, businesses.category from stamps join loyalty_programmes on stamps.lp_id=loyalty_programmes.id join businesses on loyalty_programmes.business_id = businesses.id where stamps.customer_id = $1', [customer_id])
+    
+            const userStamps = result.reduce((lpList, stamp) => {
+                const { valid_for, redeemed, stampsneeded, business_name, category, reward, timestamp, lp_id } = stamp
+                const now = moment();
+                const expiration = moment(timestamp).add(valid_for[0], valid_for[1])
+                if (moment(expiration).isSameOrAfter(now) && redeemed == false) {
+                    const lpIndex = lpList.findIndex((lp) => lp.id == lp_id);
+                
+                    if (lpIndex >= 0) {
+                        lpList[lpIndex].stamps++;
+                    } else {
+                        lpList = [...lpList, { stampsneeded, reward, business_name, category, stamps:1}]
+                    }
+                }
+                 return lpList
+            },[])
+            
+    
+            res.json(userStamps)
+            
+        } catch (error) {
+            res.json({
+                message : error
+            })
+        }
+    
+    });
 }
 
-// const userStamps = result.reduce((lpList, stamp) => {
-//     const { valid_for, redeemed, stampsneeded, business_name, category, reward, timestamp, lp_id } = stamp
-//     const now = moment();
-//     const expiration = moment(timestamp).add(valid_for[0], valid_for[1])
-//     if (moment(expiration).isSameOrAfter(now) && redeemed == false) {
-//         const lpIndex = lpList.findIndex((lp) => lp.id == lp_id);
-    
-//         if (lpIndex >= 0) {
-//             lpList[lpIndex].stamps++;
-//         } else {
-//             lpList = [...lpList, { stampsneeded, reward, business_name, category, stamps:1}]
-//         }
-//     }
-// return lpList
-// },[])
+
+//get specific user
