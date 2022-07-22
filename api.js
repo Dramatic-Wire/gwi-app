@@ -103,9 +103,7 @@ module.exports = function (app, db) {
             console.log(err);
             next()
         }
-    })
-
-   
+    });
 
 
     //register a user
@@ -179,13 +177,21 @@ module.exports = function (app, db) {
     // add stamp
     app.post('/api/add/stamp', async function(req, res){
 
-        const { LPid, UserId, timestamp, redeemed } = req.body
-        //redeemed
-        await db.none('insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)', [LPid, UserId, timestamp, redeemed])
+        try {
+            const { LPid, UserId, timestamp, redeemed } = req.body
+            //redeemed
+            await db.none('insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)', [LPid, UserId, timestamp, redeemed])
+    
+            res.json({
+                message: 'stamp added'
+            })
+            
+        } catch (error) {
+            res.json({
+                message: error
+            })
+        }
 
-        res.json({
-            message: 'stamp added'
-        })
 
     });
 
@@ -193,6 +199,54 @@ module.exports = function (app, db) {
     //get stamps
     app.get('/api/stamps', async function(req, res){
 
+        try {
+            const {customer_id , lp_id } = req.body
+            
+            const stampInfo = await db.many('select * from stamps where (customer_id , lp_id) = ($1, $2)', [customer_id , lp_id])
+
+            res.json(stampInfo)
+            
+        } catch (error) {
+            res.json({
+                message : error
+            })
+        }
+
+    });
+
+    //edit/update loyalty 
+    app.post('/api/edit/LP', async function(req, res){
+
+        try {
+            
+            const {stamps, reward, valid_for, business_id} = req.body
+    
+            await db.none('update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 where business_id = $4', [stamps, reward, valid_for, business_id])
+    
+            res.json('updated')
+
+        } catch (error) {
+            res.json({
+                message : error
+            })
+        }
+
+    });
+
+    //delete loyalty
+    app.delete('/api/delete/LP', async function(req, res){
+        try {
+			const { businessID } = req.query;
+			db.one('delete from loyalty_programmes where business_id = $1', [businessID])
+
+			res.json('success')
+
+		} catch (err) {
+			// console.log(err);
+			res.json({
+				error : err
+			})
+		}
     })
 
 }
