@@ -1,7 +1,6 @@
 import { Button, Input, Text, IconButton, Heading, Box, HStack, VStack} from "native-base";
 import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
-import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
