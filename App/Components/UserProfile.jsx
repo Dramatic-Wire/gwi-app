@@ -1,11 +1,8 @@
 import { ScrollView, } from 'react-native';
 import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack, VStack, useTheme } from "native-base";
-import { useState } from 'react';
 import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
 import CardIcon from './CardIcon';
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Stamp from './Stamp';
 
 
 export default function UserProfile() {

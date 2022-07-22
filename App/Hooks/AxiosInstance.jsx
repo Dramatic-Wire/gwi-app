@@ -5,11 +5,11 @@ function AxiosInstance() {
   
   const axiosInstance = axios.create({
     baseURL: DATABASE_URL,
-    // headers: {
-    //   Authorization: `Bearer ${user?.accessToken}`,
-    //   'Access-Control-Allow-Origin': import.meta.env.VITE_SERVER_URL,
-    //   'Content-Type': 'application/json'
-    // },
+    headers: {
+     // Authorization: `Bearer ${user?.accessToken}`,
+      //'Access-Control-Allow-Origin': import.meta.env.VITE_SERVER_URL,
+      'Content-Type': 'application/json'
+    },
     // withCredentials: true
   });
 
