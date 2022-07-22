@@ -272,7 +272,7 @@ module.exports = function (app, db) {
 
         const user = await db.one('select * from user where username = $1', [username])
 
-        res.json(user)
+        res.json({user})
     })
 }
 
