@@ -59,9 +59,9 @@ describe('The Stampede API', function () {
     profile_picture: null
   }
     const result = await supertest(app)
-			.get('/api/user/?=1')
+			.get('/api/user/?username=efurbank0')
       .expect(200);
-    const { user } = result.body
+    const user = result.body
     assert.deepEqual( user1, user);
   })
 
@@ -95,20 +95,20 @@ describe('The Stampede API', function () {
     assert.deepEqual( user9Stamps, result.body);
   })
 
-  // it('should have a route that gets user details from their ID', async () => {
+  it('should have a route that gets user details from their ID', async () => {
 
-  //  await supertest(app)
-	// 		.post('/api/register/user')
-  //    .send({
-  //      username: 'sallysalamandar',
-  //      first_name: 'Sally',
-  //      surname: 'Salamandar',
-  //      email: 'salamandar@aol.com',
-  //      password: '1234',
-  //      profile_picture: '/'
-  //    }).expect(201);
+   await supertest(app)
+			.post('/api/register/user')
+     .send({
+       username: 'sallysalamandar',
+       first_name: 'Sally',
+       surname: 'Salamandar',
+       email: 'salamandar@aol.com',
+       password: '1234',
+       profile_picture: '/'
+     }).expect(201);
     
-  // });
+  });
 
   after(() => {
     db.$pool.end();
