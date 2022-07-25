@@ -18,6 +18,8 @@ const db = pgp(DATABASE_URL);
 
 API(app, db);
 
+
+
 describe('The Stampede API', function () {
   before(async function () {
     this.timeout(5000);
@@ -26,89 +28,76 @@ describe('The Stampede API', function () {
     await db.none(commandText);
   });
 
-  it('should have a register user route', async () => {
-
-   await supertest(app)
-		.post('/api/register/user')
-     .send({
-       username: 'sallysalamandar',
-       first_name: 'Sally',
-       surname: 'Salamandar',
-       email: 'salamandar@aol.com',
-       password: '1234',
-       profile_picture: '/'
-     }).expect(201);
+  it('should have a route to register a user', async () => {
     
+    await supertest(app)
+      .post('/api/register/user')
+      .send({
+        username: 'sallysalamandar',
+        first_name: 'Sally',
+        surname: 'Salamandar',
+        email: 'salamandar@aol.com',
+        password: '1234',
+        profile_picture: '/',
+      })
+      .expect(201);
   });
-
   it('should have a route that returns all users', async () => {
-    const result = await supertest(app)
-			.get('/api/users')
-      .expect(200);
-    const { users } = result.body
+    const result = await supertest(app).get('/api/users').expect(200);
+    const {users} = result.body;
     assert.equal(21, users.length);
-  })
+  });
   it('should have a route that returns a specific user', async () => {
     const user1 = {
-    id: 1,
-    username: 'efurbank0',
-    first_name: 'Eustace',
-    surname: 'Furbank',
-    email: 'efurbank0@tamu.edu',
-    password: null,
-    profile_picture: null
-  }
+      id: 1,
+      username: 'efurbank0',
+      first_name: 'Eustace',
+      surname: 'Furbank',
+      email: 'efurbank0@tamu.edu',
+      password: null,
+      profile_picture: null,
+    };
     const result = await supertest(app)
-			.get('/api/user/?username=efurbank0')
+      .get('/api/user/?username=efurbank0')
       .expect(200);
-    const user = result.body
-    assert.deepEqual( user1, user);
-  })
-
+    const user = result.body;
+    assert.deepEqual(user1, user);
+  });
   it('should have a route that registers a business', async () => {
-      const result = await supertest(app)
-			.post('/api/register/business')
-      .expect(404);
-  })
-
+    const result = await supertest(app)
+      .post('/api/register/business')
+      .send({
+        businessName: 'Realcube',
+        owner_id: 2,
+        category: 'Groceries',
+      })
+      .expect(201);
+  });
   it('should have a route that returns the stamps for a specific user', async () => {
     const user9Stamps = [
-  {
-    lp_id: 2,
-    stampsneeded: '1',
-    reward: 'nisi volutpat',
-    business_name: 'Quimba',
-    category: 'Groceries',
-    stamps: 4
-  },
-  {
-    lp_id: 1,
-    stampsneeded: '4',
-    reward: 'nam dui proin leo',
-    business_name: 'Skyba',
-    category: 'Resturant',
-    stamps: 1
-  }
-]
+      {
+        lp_id: 2,
+        stampsneeded: '1',
+        reward: 'nisi volutpat',
+        business_name: 'Quimba',
+        category: 'Groceries',
+        stamps: 4,
+      },
+      {
+        lp_id: 1,
+        stampsneeded: '4',
+        reward: 'nam dui proin leo',
+        business_name: 'Skyba',
+        category: 'Resturant',
+        stamps: 1,
+      },
+    ];
     const result = await supertest(app)
-      .get('/api/stamps/?customer_id=9').expect(200);
-    assert.deepEqual( user9Stamps, result.body);
-  })
-
-  it('should have a route that gets user details from their ID', async () => {
-
-   await supertest(app)
-			.post('/api/register/user')
-     .send({
-       username: 'sallysalamandar',
-       first_name: 'Sally',
-       surname: 'Salamandar',
-       email: 'salamandar@aol.com',
-       password: '1234',
-       profile_picture: '/'
-     }).expect(201);
-    
+      .get('/api/stamps/?customer_id=9')
+      .expect(200);
+    assert.deepEqual(user9Stamps, result.body);
   });
+
 
   after(() => {
     db.$pool.end();
