@@ -8,8 +8,9 @@ node_js:
   - 12
 
 before_script:
+  - cd Server
   - psql -c 'create database stampede_tests;' -U postgres
-  - psql -U postgres -d stampede_tests -a -f ./Server/sql/loyaltyApp.sql
+  - psql -U postgres -d stampede_tests -a -f ./sql/loyaltyApp.sql
 
 services:
   - postgresql
