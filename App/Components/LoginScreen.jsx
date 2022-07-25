@@ -1,17 +1,20 @@
 import { View, KeyboardAvoidingView } from 'react-native';
 import { Button, Input, Text, Heading, Box, } from "native-base";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { auth } from '../firebase'
 import axios from 'axios';
+import UserContext from "../Contexts/UserContext";
+
 
 export default function ({ navigation }) {
     const [show, setShow] = useState(false);
     const [user, setUser] = useState()
     const userType = ['Business', 'Individual']
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+
+    const { email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture } = useContext(UserContext);
+
 
     const handleLogin = () => {
         // get token from current user
@@ -22,7 +25,9 @@ export default function ({ navigation }) {
         axios
         .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?username=boballen`)
         .then((result => {
-            console.log(result);
+            // boballen@gmail.com
+            // 123456
+            console.log(result.data[0].email);
         }))
         axios
             .post(`https://gwi22-dramaticwire.herokuapp.com/api/login`, { email, password })
