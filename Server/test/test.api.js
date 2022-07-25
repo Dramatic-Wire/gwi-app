@@ -28,19 +28,34 @@ describe('The Stampede API', function () {
     await db.none(commandText);
   });
 
-  it('should have a route to register a user', async () => {
-    
-    await supertest(app)
-      .post('/api/register/user')
-      .send({
-        username: 'sallysalamandar',
-        first_name: 'Sally',
-        surname: 'Salamandar',
-        email: 'salamandar@aol.com',
-        password: '1234',
-        profile_picture: '/',
-      })
-      .expect(201);
+  describe('Registering a user', () => {
+    it('should respond with a 201 Created status if a user is successfully registered', async () => {
+      await supertest(app)
+        .post('/api/register/user')
+        .send({
+          username: 'sallysalamandar',
+          first_name: 'Sally',
+          surname: 'Salamandar',
+          email: 'salamandar@aol.com',
+          password: '1234',
+          profile_picture: '/',
+        })
+        .expect(201);
+  })
+    it('should respond with a  status if a user is successfully registered', async () => {
+      await supertest(app)
+        .post('/api/register/user')
+        .send({
+          username: 'sallysalamandar',
+          first_name: 'Sally',
+          surname: 'Salamandar',
+          email: 'salamandar@aol.com',
+          password: '1234',
+          profile_picture: '/',
+        })
+        .expect(201);
+  })
+
   });
   it('should have a route that returns all users', async () => {
     const result = await supertest(app).get('/api/users').expect(200);
