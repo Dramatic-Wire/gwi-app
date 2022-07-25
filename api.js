@@ -59,24 +59,18 @@ module.exports = function (app, db) {
 
 
     app.post('/api/register/business', async function (req, res, next) {
-        try {
-
-            const { businessName, owner_id, category, logo } = req.body
-
-            await db.none(`INSERT into businesses (business_name, owner_id, category, logo) VALUES ($1, $2, $3, $4)`, [businessName, owner_id, category, logo])
-
-            const { id } = await db.one(`select id from businesses where business_name = $1`, [businessName])
-
-
-            res.json({
-                message: 'success',
-                id: id
-
+        const { businessName, owner_id, category, logo } = req.body
+        if ( !businessName || !owner_id || !category) {res.sendStatus(400)}
+        await db.one(`INSERT into businesses (business_name, owner_id, category, logo) VALUES ($1, $2, $3, $4) RETURNING id`, [businessName, owner_id, category, logo])
+            .then(result => {
+                res.status(201).json(result)
+                next()
             })
-        } catch (err) {
-            console.log(err);
-            next()
-        }
+            .catch(err => {
+                console.log()
+            });
+            
+       
     })
 
     app.post('/api/addLP', async function (req, res, next) {
