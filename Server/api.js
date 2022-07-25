@@ -158,8 +158,8 @@ module.exports = function (app, db) {
 
         try {
             let message
-            const { username, password } = req.body
-            const user = await db.oneOrNone('select * from users where username = $1', [username])
+            const { email, password } = req.body
+            const user = await db.oneOrNone('select * from users where email = $1', [email])
             const decrypt = await bcrypt.compare(password, user.password)            
 
             if (!decrypt) {
