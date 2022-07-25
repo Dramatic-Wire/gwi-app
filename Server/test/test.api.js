@@ -62,7 +62,6 @@ describe('The Stampede API', function () {
 			.get('/api/user/?=1')
       .expect(200);
     const { user } = result.body
-    console.log(user)
     assert.deepEqual( user1, user);
   })
 
@@ -71,10 +70,29 @@ describe('The Stampede API', function () {
 			.post('/api/register/business')
       .expect(404);
   })
-  it('should have a route that registers a business', async () => {
-      const result = await supertest(app)
-			.post('/api/register/business')
-      .expect(404);
+
+  it('should have a route that returns the stamps for a specific user', async () => {
+    const user9Stamps = [
+  {
+    lp_id: 2,
+    stampsneeded: '1',
+    reward: 'nisi volutpat',
+    business_name: 'Quimba',
+    category: 'Groceries',
+    stamps: 4
+  },
+  {
+    lp_id: 1,
+    stampsneeded: '4',
+    reward: 'nam dui proin leo',
+    business_name: 'Skyba',
+    category: 'Resturant',
+    stamps: 1
+  }
+]
+    const result = await supertest(app)
+      .get('/api/stamps/?customer_id=9').expect(200);
+    assert.deepEqual( user9Stamps, result.body);
   })
 
   // it('should have a route that gets user details from their ID', async () => {
