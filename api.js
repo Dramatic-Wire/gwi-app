@@ -13,7 +13,7 @@ module.exports = function (app, db) {
             res.sendStatus(401);
             return;
         }
-        
+
         getAuth()
             .verifyIdToken(idToken)
             .then((decodedToken) => {
@@ -36,18 +36,18 @@ module.exports = function (app, db) {
         });
     });
 
-    app.get('/api/users',  async function (req, res) {
+    app.get('/api/users', async function (req, res) {
         const users = await db.many(`select * from users`)
         res.json({
             users
         })
     })
 
-    
-    app.get('/api/user', async function(req, res) {
-        const username = req.query
 
-        const user = await db.one('select * from users where username = $1', [username])
+    app.get('/api/user', async function (req, res) {
+        const { username } = req.query
+
+        const user = await db.many('select * from users where username = $1', [username])
 
         res.json(user)
     })
@@ -123,14 +123,14 @@ module.exports = function (app, db) {
 
         // const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
         bcrypt.hash(password, saltRounds).then(async function (hash) {
-            await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0]).then(() => res.sendStatus(201)).catch((err) => { console.log(err); res.sendStatus(409)})
+            await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0]).then(() => res.sendStatus(201)).catch((err) => { console.log(err); res.sendStatus(409) })
         });
 
         // message = 'successfully registered'
         // res.sendStatus(201)
-            // res.json({
-            //     result: message
-            // });
+        // res.json({
+        //     result: message
+        // });
 
 
         // if (checkDup == null) {
@@ -160,12 +160,12 @@ module.exports = function (app, db) {
             let message
             const { email, password } = req.body
             const user = await db.oneOrNone('select * from users where email = $1', [email])
-            const decrypt = await bcrypt.compare(password, user.password)            
+            const decrypt = await bcrypt.compare(password, user.password)
 
             if (!decrypt) {
                 message = "Wrong password"
             }
-            else{
+            else {
                 message = 'logged in'
             }
 
@@ -184,17 +184,17 @@ module.exports = function (app, db) {
     })
 
     // add stamp
-    app.post('/api/add/stamp', async function(req, res){
+    app.post('/api/add/stamp', async function (req, res) {
 
         try {
             const { LPid, UserId, timestamp, redeemed } = req.body
             //redeemed
             await db.none('insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)', [LPid, UserId, timestamp, redeemed])
-    
+
             res.json({
                 message: 'stamp added'
             })
-            
+
         } catch (error) {
             res.json({
                 message: error
@@ -206,46 +206,46 @@ module.exports = function (app, db) {
 
 
     //edit/update loyalty 
-    app.post('/api/edit/LP', async function(req, res){
+    app.post('/api/edit/LP', async function (req, res) {
 
         try {
-            
-            const {stamps, reward, valid_for, business_id} = req.body
-    
+
+            const { stamps, reward, valid_for, business_id } = req.body
+
             await db.none('update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 where business_id = $4', [stamps, reward, valid_for, business_id])
-    
+
             res.json('updated')
 
         } catch (error) {
             res.json({
-                message : error
+                message: error
             })
         }
 
     });
 
     //delete loyalty
-    app.delete('/api/delete/LP', async function(req, res){
+    app.delete('/api/delete/LP', async function (req, res) {
         try {
-			const { businessID } = req.query;
-			db.one('delete from loyalty_programmes where business_id = $1', [businessID])
+            const { businessID } = req.query;
+            db.one('delete from loyalty_programmes where business_id = $1', [businessID])
 
-			res.json('success')
+            res.json('success')
 
-		} catch (err) {
-			// console.log(err);
-			res.json({
-				error : err
-			})
-		}
+        } catch (err) {
+            // console.log(err);
+            res.json({
+                error: err
+            })
+        }
     })
 
     //get stamps
-    app.get('/api/stamps', async function(req, res){
+    app.get('/api/stamps', async function (req, res) {
         const { customer_id } = req.query
-        if(!customer_id) res.sendStatus(400)
+        if (!customer_id) res.sendStatus(400)
         try {
-            
+
             const result = await db.many('select stamps.timestamp, stamps.redeemed, stamps.lp_id, loyalty_programmes.stamps as stampsNeeded, loyalty_programmes.reward, loyalty_programmes.valid_for, businesses.business_name, businesses.category from stamps join loyalty_programmes on stamps.lp_id=loyalty_programmes.id join businesses on loyalty_programmes.business_id = businesses.id where stamps.customer_id = $1', [customer_id])
             const userStamps = result.reduce((lpList, stamp) => {
                 const { valid_for, redeemed, stampsneeded, business_name, category, reward, timestamp, lp_id } = stamp
@@ -256,19 +256,19 @@ module.exports = function (app, db) {
                     if (lpIndex >= 0) {
                         lpList[lpIndex].stamps++;
                     } else {
-                        lpList = [...lpList, { lp_id ,stampsneeded, reward, business_name, category, stamps:1}]
+                        lpList = [...lpList, { lp_id, stampsneeded, reward, business_name, category, stamps: 1 }]
                     }
                 }
-                 return lpList
-            },[])
+                return lpList
+            }, [])
             res.json(userStamps)
-            
+
         } catch (error) {
             res.json({
-                message : error
+                message: error
             })
         }
-    
+
     });
 
 
