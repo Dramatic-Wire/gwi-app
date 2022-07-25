@@ -211,9 +211,9 @@ module.exports = function (app, db) {
 
         try {
 
-            const { stamps, reward, valid_for, business_id } = req.body
+            const { businessID, stampCount, reward, validFor } = req.body
 
-            await db.one('update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 where business_id = $4', [stamps, reward, valid_for, business_id])
+            await db.one('update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 where business_id = $4', [stampCount, reward, validFor, businessID])
 
             res.json('updated')
 
