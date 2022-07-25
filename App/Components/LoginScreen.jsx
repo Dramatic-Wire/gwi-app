@@ -10,8 +10,6 @@ import UserContext from "../Contexts/UserContext";
 
 export default function ({ navigation }) {
     const [show, setShow] = useState(false);
-    const [user, setUser] = useState()
-    const userType = ['Business', 'Individual']
 
     const { email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture } = useContext(UserContext);
 
@@ -23,8 +21,9 @@ export default function ({ navigation }) {
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios
-        .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?username=boballen`)
+        .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?username=${username}`)
         .then((result => {
+            console.log(username);
             // boballen@gmail.com
             // 123456
             console.log(result.data[0].email);

@@ -45,10 +45,10 @@ module.exports = function (app, db) {
 
 
     app.get('/api/user', async function (req, res) {
-        const { username } = req.query
-        if (!username) res.sendStatus(400)
+        const { email } = req.query
+        if (!email) res.sendStatus(400)
         try {
-            const user = await db.one('select * from users where username = $1', [username])
+            const user = await db.one('select * from users where email = $1', [email])
             res.json(user)
         } catch (err) {
             console.log(err);
@@ -109,9 +109,11 @@ module.exports = function (app, db) {
     app.get('/api/business', async function (req, res, next) {
         try {
             const { id } = req.query
-            const businessData = await db.many(`select (business_name, owner_id, category, logo) from businesses where id = $1`, [id]);
-
-            res.json(businessData)
+            const checkForOwnerId = await db.oneOrNone(`select * from businesses where owner_id = $1`, [id])
+            if (checkForOwnerId.length > 0) {
+                const businessData = await db.many(`select (business_name, owner_id, category, logo) from businesses where owner_id = $1`, [id]);
+                res.json(businessData)
+            }
 
         } catch (err) {
             console.log(err);
@@ -217,7 +219,7 @@ module.exports = function (app, db) {
 
             const { stamps, reward, valid_for, business_id } = req.body
 
-            await db.none('update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 where business_id = $4', [stamps, reward, valid_for, business_id])
+            await db.one('update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 where business_id = $4', [stamps, reward, valid_for, business_id])
 
             res.json('updated')
 
