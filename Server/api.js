@@ -75,9 +75,9 @@ module.exports = function (app, db) {
 
     app.post('/api/addLP', async function (req, res, next) {
         try {
-            const { business_id, stamps, reward, validFor } = req.body
+            const { businessID, stamps, reward, validFor } = req.body
 
-            await db.none(`INSERT into loyalty_programmes (business_id, stamps, reward, valid_for) VALUES ($1, $2, $3, $4)`, [business_id, stamps, reward, validFor])
+            await db.none(`INSERT into loyalty_programmes (business_id, stamps, reward, valid_for) VALUES ($1, $2, $3, $4)`, [businessID, stamps, reward, validFor])
             res.json({
                 message: 'added'
             })
