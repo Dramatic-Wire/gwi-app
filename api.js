@@ -122,7 +122,7 @@ module.exports = function (app, db) {
 
         // const checkDup = await db.oneOrNone('select username from users where username = $1', [username])
         bcrypt.hash(password, saltRounds).then(async function (hash) {
-            await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0]).then(() => res.sendStatus(201)).catch((err) => { console.log(err); res.sendStatus(409) })
+            await db.none('insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)', [username, first_name, surname, email, hash, profile_picture, 0]).then(() => res.sendStatus(201)).catch((err) => { console.log(err); res.sendStatus(400) })
         });
 
         // message = 'successfully registered'
