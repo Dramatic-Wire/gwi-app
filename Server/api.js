@@ -43,6 +43,14 @@ module.exports = function (app, db) {
         })
     })
 
+    app.get('/api/user/', async function(req, res) {
+        const username = req.query
+
+        const user = await db.one('select * from users where id = $1', [username])
+
+        res.json(user)
+    })
+
 
     app.post('/api/register/business', async function (req, res, next) {
         try {
@@ -261,6 +269,8 @@ module.exports = function (app, db) {
         }
     
     });
+
+
 }
 
 
