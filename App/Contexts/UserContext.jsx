@@ -14,12 +14,14 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const getUserInfo = async () => {
-      await axios.get(``).then(res => {
+      await axios.get(`/api/user?username=${username}`).then(res => {
         console.log(res.data)
       })
     }
-
-  })
+    if (username > 0) {
+      getUserInfo()
+    } 
+  },[username])
 
   // customerName = 'Sylvia', validFor = '1 month', stampCount = 5, stamped = 2, reward = '1 free item'
 
