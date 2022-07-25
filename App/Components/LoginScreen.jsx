@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { auth } from '../firebase'
+import axios from 'axios';
 
 export default function ({ navigation }) {
     const [show, setShow] = useState(false);
@@ -18,23 +19,29 @@ export default function ({ navigation }) {
 
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios
+        .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?username=boballen`)
+        .then((result => {
+            console.log(result);
+        }))
+        axios
+            .post(`https://gwi22-dramaticwire.herokuapp.com/api/login`, { email, password })
+            .then((result => {
+                const status = result.status
+                if (status == 200) {
 
-        auth
-            .signInWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
+                    auth
+                        .signInWithEmailAndPassword(email, password)
+                        .then(userCredentials => {
+                            const user = userCredentials.user;
 
-                axios
-                    .post(`https://gwi22-dramaticwire.herokuapp.com/login`, { email, password })
-                    .then((result => {
-                        const results = result.data
-                        if (results.message == 'logged in'){
                             navigation.navigate('UserProfile')
-                        }
-        
-                    })).catch(error => console.log(error));
-            })
-            .catch(error => alert(error.message))
+
+                        })
+                        .catch(error => alert(error.message))
+                }
+
+            })).catch(error => console.log(error));
     }
 
     return (

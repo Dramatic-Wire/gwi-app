@@ -1,12 +1,14 @@
 import { ScrollView, } from 'react-native';
-import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack, VStack, useTheme } from "native-base";
+import { useState, useContext } from 'react';
+import UserContext from '../Contexts/UserContext';
+import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack, VStack, useTheme, } from "native-base";
 import styles from '../Styles/style';
 import LoyaltyCard from './LoyaltyCard';
 import CardIcon from './CardIcon';
 
 
 export default function UserProfile() {
-  { customerName = 'Sylvia', validFor = '1 month', stampCount = 5, stamped = 2, reward = '1 free item' }
+  const { email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture } = useContext(UserContext);
   // const { customerName, validFor, stampCount, stamped, reward } = useContext(UserContext);
 
   const { colors } = useTheme()
@@ -17,7 +19,7 @@ export default function UserProfile() {
       <ScrollView width="100%" h="80" horizontal={false} alwaysBounceHorizontal={false}>
         <VStack space={3} safeArea='8' justifyContent='center'>
           <Box variant='pageTitle'>
-            <Heading style={styles.pageTitle}>Welcome {customerName}!</Heading>
+            <Heading style={styles.pageTitle}>Welcome {first_name}!</Heading>
           </Box>
           {/* <Box variant='section'>
                 <Text variant='section'>You are currently not part of any loyalty programmes</Text>
