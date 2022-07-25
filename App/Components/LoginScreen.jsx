@@ -28,7 +28,7 @@ export default function ({ navigation }) {
                     .post(`https://gwi22-dramaticwire.herokuapp.com/login`, { email, password })
                     .then((result => {
                         const results = result.data
-                        if (results.message == 'success'){
+                        if (results.message == 'logged in'){
                             navigation.navigate('UserProfile')
                         }
         
