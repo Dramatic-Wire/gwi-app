@@ -46,10 +46,15 @@ module.exports = function (app, db) {
 
     app.get('/api/user', async function (req, res) {
         const { username } = req.query
+        if (!username) res.sendStatus(400)
+        try {
+            const user = await db.one('select * from users where username = $1', [username])
+            res.json(user)
+        } catch (err) {
+            console.log(err);
+            res.sendStatus(401)
+        }
 
-        const user = await db.many('select * from users where username = $1', [username])
-
-        res.json(user)
     })
 
 

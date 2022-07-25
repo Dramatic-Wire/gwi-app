@@ -9,6 +9,7 @@ node_js:
 
 before_script:
   - cd Server
+  - npm install mocha
   - psql -c 'create database stampede_tests;' -U postgres
   - psql -U postgres -d stampede_tests -a -f ./sql/loyaltyApp.sql
 
