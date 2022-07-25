@@ -1,9 +1,9 @@
 create table users(
 	id serial not null primary key,
-	username text not null unique,
+	username text unique not null,
 	first_name text not null,
     surname text not null,
-    email text not null unique,
+    email text unique not null,
 	password text not null,
     profile_picture text
 );
@@ -27,9 +27,9 @@ create table loyalty_programmes(
 create table stamps(
 	id serial not null primary key,
 	customer_id int not null,
-	lp_id int not null,
+	lp_id int not null ,
     timestamp text not null,
     redeemed text,
-    foreign key (customer_id) references users(id),
-    foreign key (lp_id) references loyalty_programmes(id)
+    foreign key (customer_id) references users(id) on delete cascade,
+    foreign key (lp_id) references loyalty_programmes(id) on delete cascade
 );
