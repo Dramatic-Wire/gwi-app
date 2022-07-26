@@ -35,8 +35,8 @@ export default function BarcodeScanner({ navigation }) {
     axios
       .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${data}`)
       .then((result => {
-        console.log(result.data.row);
-        const LP_id = result.data
+        console.log(result.data.id);
+        const LP_id = result.data.id
         axios
           .post(`https://gwi22-dramaticwire.herokuapp.com/api/add/stamp`, {UserId: customer_id, LPid: LP_id, timestamp:new Date(), redeemed: false})
           .then((result => { 

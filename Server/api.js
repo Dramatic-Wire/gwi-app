@@ -98,10 +98,10 @@ module.exports = function (app, db) {
         [id],
       );
 
+      next();
       res.json(lpData);
     } catch (err) {
       console.log(err);
-      next();
     }
   });
 
