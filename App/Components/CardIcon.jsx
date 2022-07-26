@@ -23,11 +23,12 @@ export default function CardIcon({ color = 'emerald' }) {
     .get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${customer_id}`)
     .then((result => {
 
-      setStampCount(result.data.stamps)
+      setStampCount(result.data.stampsneeded)
       setReward(result.data.reward)
       setName(result.data.business_name)
       setStamped(result.data.length)
       setCategory(result.data.category)
+      console.log(name);
 
     })).catch(error => console.log(error));
 

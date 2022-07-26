@@ -24,8 +24,8 @@ export default function UserProfile({ navigation }) {
   axios
     .get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${customer_id}`)
     .then((result => {
-      results = result
-
+      results = result.data
+      console.log(results);
     })).catch(error => console.log(error));
 
   return (
@@ -38,7 +38,7 @@ export default function UserProfile({ navigation }) {
           {results == undefined && <Box variant='section'>
             <Box variant='section'>
               <Text variant='section'>You are currently not part of any loyalty programmes</Text>
-              <Button onPress={() => { navigation.navigate('Barcode')}}>Join a Loyalty Programme</Button>
+              <Button onPress={() => { navigation.navigate('BarcodeScanner')}}>Join a Loyalty Programme</Button>
             </Box>
           </Box>}
 
