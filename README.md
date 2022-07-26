@@ -1,0 +1,1 @@
+[![Build Status](https://app.travis-ci.com/Dramatic-Wire/gwi-app.svg?branch=main)](https://app.travis-ci.com/Dramatic-Wire/gwi-app)
