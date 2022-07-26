@@ -60,7 +60,7 @@ module.exports = function (app, db) {
 
     app.post('/api/register/business', async function (req, res, next) {
         const { businessName, owner_id, category, logo } = req.body
-        if ( !businessName || !owner_id || !category) {res.sendStatus(400)}
+        if (!businessName || !owner_id || !category) { res.sendStatus(400) }
         await db.one(`INSERT into businesses (business_name, owner_id, category, logo) VALUES ($1, $2, $3, $4) RETURNING id`, [businessName, owner_id, category, logo])
             .then(result => {
                 res.status(201).json(result)
@@ -69,8 +69,8 @@ module.exports = function (app, db) {
             .catch(err => {
                 console.log()
             });
-            
-       
+
+
     })
 
     app.post('/api/addLP', async function (req, res, next) {
@@ -91,7 +91,6 @@ module.exports = function (app, db) {
         try {
             const { id } = req.query
             const lpData = await db.many(`select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`, [id])
-
             res.json(lpData)
 
         } catch (err) {
@@ -188,9 +187,9 @@ module.exports = function (app, db) {
     app.post('/api/add/stamp', async function (req, res) {
 
         try {
-            const { LPid, UserId, timestamp, redeemed } = req.body
+            const { UserId, LPid, timestamp, redeemed } = req.body
             //redeemed
-            await db.none('insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)', [LPid, UserId, timestamp, redeemed])
+            await db.none('insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)', [UserId, LPid, timestamp, redeemed])
 
             res.json({
                 message: 'stamp added'

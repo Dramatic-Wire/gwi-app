@@ -6,7 +6,7 @@ import QRCode from 'react-native-qrcode-svg';
 
 
 export default function BusinessProfile({ navigation }) {
-    const { businessName, loyaltyProgramme } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, business_id } = useContext(BusinessContext);
     const { colors } = useTheme();
 
     const editLP = () => {
@@ -19,34 +19,34 @@ export default function BusinessProfile({ navigation }) {
 
             })).catch(error => console.log(error));
     }
-    
+
 
     return (
-             <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
-        <VStack space={3} safeArea='8' >
-            <Box variant='pageTitle'>
-                        <Heading style={styles.pageTitle}>{businessName}</Heading>
-            </Box>
-            {!loyaltyProgramme.stampsRequired && <Box variant='section'>
-                <Text variant='section'>You currently have no loyalty programme for your business</Text>
-                <Button onPress={() => { navigation.navigate('NewLP')}}>Add Loyalty Programme</Button>
-            </Box>}
-        {loyaltyProgramme.stampsRequired && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
+        <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+            <VStack space={3} safeArea='8' >
+                <Box variant='pageTitle'>
+                    <Heading style={styles.pageTitle}>{businessName}</Heading>
+                </Box>
+                {!loyaltyProgramme.stampsRequired && <Box variant='section'>
+                    <Text variant='section'>You currently have no loyalty programme for your business</Text>
+                    <Button onPress={() => { navigation.navigate('NewLP') }}>Add Loyalty Programme</Button>
+                </Box>}
+                {loyaltyProgramme.stampsRequired && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
                     <QRCode
                         color={colors.primary['700']}
                         backgroundColor={colors.light['50']}
-                value={businessName}
-            />
-            <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
-            <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>
-            <Text>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>
-            <HStack space={3} justifyContent="center" >
-                <Button >Edit</Button>
-                <Button >Delete</Button>
-            </HStack>
-        </Box>}
+                        value={business_id}
+                    />
+                    <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
+                    <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>
+                    <Text>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>
+                    <HStack space={3} justifyContent="center" >
+                        <Button >Edit</Button>
+                        <Button >Delete</Button>
+                    </HStack>
+                </Box>}
 
-                </VStack>
-            </Box>
+            </VStack>
+        </Box>
     );
 }

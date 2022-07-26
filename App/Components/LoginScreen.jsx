@@ -20,14 +20,7 @@ export default function ({ navigation }) {
 
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        axios
-        .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?username=${username}`)
-        .then((result => {
-            console.log(username);
-            // boballen@gmail.com
-            // 123456
-            console.log(result.data[0].email);
-        }))
+  
         axios
             .post(`https://gwi22-dramaticwire.herokuapp.com/api/login`, { email, password })
             .then((result => {

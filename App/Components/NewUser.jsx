@@ -8,10 +8,11 @@ import UserContext from "../Contexts/UserContext";
 
 
 export default function NewUser({ navigation }) {
- const { email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture } = useContext(UserContext);
+ const { password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture } = useContext(UserContext);
 
     const [show, setShow] = useState(false);
-    
+    const [email, setEmail] = useState(false);
+
 
     const registerUser = () => {
         axios
