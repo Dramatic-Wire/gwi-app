@@ -93,15 +93,15 @@ module.exports = function (app, db) {
   app.get('/api/LP', async function (req, res, next) {
     try {
       const {id} = req.query;
-      const lpData = await db.many(
-        `select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`,
+      const lpData = await db.one(
+        `select * from loyalty_programmes where business_id = $1`,
         [id],
       );
 
       res.json(lpData);
+      next();
     } catch (err) {
       console.log(err);
-      next();
     }
   });
 
@@ -133,9 +133,9 @@ module.exports = function (app, db) {
         );
         res.json(businessData);
       }
+      next();
     } catch (err) {
       console.log(err);
-      next();
     }
   });
 
@@ -211,11 +211,11 @@ module.exports = function (app, db) {
   // add stamp
   app.post('/api/add/stamp', async function (req, res) {
     try {
-      const {LPid, UserId, timestamp, redeemed} = req.body;
+      const {UserId, LPid, timestamp, redeemed} = req.body;
       //redeemed
       await db.none(
         'insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)',
-        [LPid, UserId, timestamp, redeemed],
+        [UserId, LPid, timestamp, redeemed],
       );
       res.sendStatus(201);
     } catch (error) {
