@@ -176,23 +176,18 @@ describe('The Stampede API', function () {
         .delete('/api/delete/LP/?businessID=3')
         .expect(200, 'deleted');
     });
-    // it('should return the number of users participating in the loyalty programme', async () => {
-    //   assert.equal(editedLP, result.body);
-    // });
+    it('should return the number of users participating in the loyalty programme', async () => {
+      const result = await supertest(app)
+        .get('/api/LP/4/users')
+        .expect(200);
+      assert.equal(4, result.body.count);
+    });
   });
 
   describe('Adding stamps and getting user stamps', () => {
     it('return the stamps from all the loyalty programmes a user participates in', async () => {
       const user9Stamps = [
-        {
-          lp_id: 2,
-          stampsneeded: '1',
-          reward: 'nisi volutpat',
-          business_name: 'Quimba',
-          category: 'Groceries',
-          stamps: 4,
-        },
-        {
+      {
           lp_id: 1,
           stampsneeded: '4',
           reward: 'nam dui proin leo',
@@ -200,69 +195,25 @@ describe('The Stampede API', function () {
           category: 'Resturant',
           stamps: 1,
         },
+        {
+          lp_id: 2,
+          stampsneeded: '1',
+          reward: 'nisi volutpat',
+          business_name: 'Quimba',
+          category: 'Groceries',
+          stamps: 4,
+        },  
       ];
       const result = await supertest(app)
         .get('/api/stamps/?customer_id=9')
         .expect(200);
       assert.deepEqual(user9Stamps, result.body);
     });
-  });
-  // it('should have a route that returns all users', async () => {
-  //   const result = await supertest(app).get('/api/users').expect(200);
-  //   const {users} = result.body;
-  //   assert.equal(21, users.length);
-  // });
-  // it('should have a route that returns a specific user', async () => {
-  //   const user1 = {
-  //     id: 1,
-  //     username: 'efurbank0',
-  //     first_name: 'Eustace',
-  //     surname: 'Furbank',
-  //     email: 'efurbank0@tamu.edu',
-  //     password: null,
-  //     profile_picture: null,
-  //   };
-  //   const result = await supertest(app)
-  //     .get('/api/user/?username=efurbank0')
-  //     .expect(200);
-  //   const user = result.body;
-  //   assert.deepEqual(user1, user);
-  // });
-  // it('should have a route that registers a business', async () => {
-  //   const result = await supertest(app)
-  //     .post('/api/register/business')
-  //     .send({
-  //       businessName: 'Realcube',
-  //       owner_id: 2,
-  //       category: 'Groceries',
-  //     })
-  //     .expect(201);
-  // });
-  // it('should have a route that returns the stamps for a specific user', async () => {
-  //   const user9Stamps = [
-  //     {
-  //       lp_id: 2,
-  //       stampsneeded: '1',
-  //       reward: 'nisi volutpat',
-  //       business_name: 'Quimba',
-  //       category: 'Groceries',
-  //       stamps: 4,
-  //     },
-  //     {
-  //       lp_id: 1,
-  //       stampsneeded: '4',
-  //       reward: 'nam dui proin leo',
-  //       business_name: 'Skyba',
-  //       category: 'Resturant',
-  //       stamps: 1,
-  //     },
-  //   ];
-  //   const result = await supertest(app)
-  //     .get('/api/stamps/?customer_id=9')
-  //     .expect(200);
-  //   assert.deepEqual(user9Stamps, result.body);
-  // });
+    // it(`should add a stamp to a user's loyalty programme card`, async () => {
 
+    //   //assert.equal(editedLP, result.body);
+    // });
+  });
   after(() => {
     db.$pool.end();
   });
