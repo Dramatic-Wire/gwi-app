@@ -20,12 +20,13 @@ export default function NewLP({ navigation }) {
 
   const missingInfo = stampCount > 0 && reward !== '' && validFor !== '';
 
-
+  
   const registerLP = () => {
     axios
-        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`, { businessID, stampCount, reward, validFor})
+        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  businessID, stampCount, reward, validFor)
         .then((result => {
           const results = result.data
+          // console.log(results);
           if (results.message == 'added') {
             setLoyaltyProgramme({ stampsRequired: stampCount, reward: reward, timeFrame: validFor, members:0 });
           }
