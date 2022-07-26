@@ -94,7 +94,7 @@ module.exports = function (app, db) {
     try {
       const {id} = req.query;
       const lpData = await db.one(
-        `select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`,
+        `select * from loyalty_programmes where business_id = $1`,
         [id],
       );
 
