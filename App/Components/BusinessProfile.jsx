@@ -3,16 +3,18 @@ import { useContext } from 'react';
 import BusinessContext from '../Contexts/BusinessContext';
 import styles from '../Styles/style';
 import QRCode from 'react-native-qrcode-svg';
+// import RemoveLP from "./DeleteLP";
 
 
 export default function BusinessProfile({ navigation }) {
     const { businessName, loyaltyProgramme, business_id } = useContext(BusinessContext);
     const { colors } = useTheme();
+    // const [preview, setPreview] = useState(false)
+    
 
-    const editLP = () => {
-        console.log('123');
+    const DeleteLP = () => {
         axios
-            .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/LP`, { stamps, reward, valid_for, business_id })
+            .post(`https://gwi22-dramaticwire.herokuapp.com/api/delete/LP`, { business_id })
             .then((result => {
                 const results = result.data
                 console.log(result.data.result);
@@ -41,9 +43,12 @@ export default function BusinessProfile({ navigation }) {
                     <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>
                     <Text>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>
                     <HStack space={3} justifyContent="center" >
-                        <Button >Edit</Button>
+                        <Button onPress={() => navigation.navigate('EditLP')}>Edit</Button>
                         <Button >Delete</Button>
+
                     </HStack>
+                    
+
                 </Box>}
 
             </VStack>

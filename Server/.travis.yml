@@ -9,10 +9,7 @@ node_js:
 
 before_script:
   - cd Server
-<<<<<<< HEAD:Server/.travis.yml
   - npm install mocha
-=======
->>>>>>> 43715529f9ebb646f5afbe3c7cb52de401c75811:.travis.yml
   - psql -c 'create database stampede_tests;' -U postgres
   - psql -U postgres -d stampede_tests -a -f ./sql/loyaltyApp.sql
 
