@@ -92,7 +92,7 @@ module.exports = function (app, db) {
             const { id } = req.query
             const lpData = await db.many(`select (stamps, reward, valid_for) from loyalty_programmes where business_id = $1`, [id])
 
-            res.json(lpData)
+            res.json(lpData) 
 
         } catch (err) {
             console.log(err);
