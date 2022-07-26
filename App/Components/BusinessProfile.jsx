@@ -7,7 +7,7 @@ import QRCode from 'react-native-qrcode-svg';
 
 
 export default function BusinessProfile({ navigation }) {
-    const { businessName, loyaltyProgramme } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, business_id } = useContext(BusinessContext);
     const { colors } = useTheme();
     // const [preview, setPreview] = useState(false)
     
@@ -37,7 +37,7 @@ export default function BusinessProfile({ navigation }) {
                     <QRCode
                         color={colors.primary['700']}
                         backgroundColor={colors.light['50']}
-                        value={businessName}
+                        value={business_id}
                     />
                     <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
                     <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>

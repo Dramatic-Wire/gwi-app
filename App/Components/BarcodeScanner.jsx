@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, Button, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import styles from '../Styles/style';
-import { Box } from 'native-base';  
+import { Box } from 'native-base';
+import axios from 'axios';
+import UserContext from '../Contexts/UserContext';
+import UserProfile from './UserProfile';
 
-export default function BarcodeScanner() {
+
+export default function BarcodeScanner({ navigation }) {
+  const { customer_id } = useContext(UserContext);
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState('Not yet scanned')
@@ -24,7 +30,23 @@ export default function BarcodeScanner() {
   // What happens when we scan the bar code
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    setText(data)
+    // setText(data)
+
+    axios
+      .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${data}`)
+      .then((result => {
+        console.log(result.data.id);
+        const LP_id = result.data.id
+        axios
+          .post(`https://gwi22-dramaticwire.herokuapp.com/api/add/stamp`, {UserId: customer_id, LPid: LP_id, timestamp:new Date(), redeemed: false})
+          .then((result => { 
+            console.log(result.data);
+            navigation.navigate('UserProfile')
+          }))
+
+
+      })).catch(error => console.log(error));
+
     console.log('Type: ' + type + '\nData: ' + data)
   };
 
@@ -46,19 +68,20 @@ export default function BarcodeScanner() {
   // Return the View
   return (
     <View>
-        <Box style={styles.barcodebox}>
+      <Box style={styles.barcodebox}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{ height: 400, width: 400 }} />
-          
-        </Box>
+
+      </Box>
       {/* <View style={styles.barcodebox}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{ height: 400, width: 400 }} />
       </View> */}
       <Box variant='section'>
-      <Text>{text}</Text>
+
+        {/* <Text>{text}</Text> */}
       </Box>
 
       {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
