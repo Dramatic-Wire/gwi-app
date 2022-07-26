@@ -98,8 +98,8 @@ module.exports = function (app, db) {
         [id],
       );
 
-      next();
       res.json(lpData);
+      next();
     } catch (err) {
       console.log(err);
     }
@@ -119,9 +119,9 @@ module.exports = function (app, db) {
         );
         res.json(businessData);
       }
+      next();
     } catch (err) {
       console.log(err);
-      next();
     }
   });
 
