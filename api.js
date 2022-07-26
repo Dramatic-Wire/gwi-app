@@ -105,6 +105,20 @@ module.exports = function (app, db) {
     }
   });
 
+  app.get('/api/LP/:LP_id/users', async (req, res) => {
+    const {LP_id} = req.params;
+    if (!LP_id) res.sendStatus(400);
+    try {
+      const users = await db.one('SELECT COUNT(distinct customer_id) FROM stamps where lp_id = $1 GROUP BY lp_id', [
+        LP_id,
+      ]);
+      res.json(users);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(400);
+    }
+  })
+
   app.get('/api/business', async function (req, res, next) {
     try {
       const {id} = req.query;
@@ -203,14 +217,9 @@ module.exports = function (app, db) {
         'insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)',
         [LPid, UserId, timestamp, redeemed],
       );
-
-      res.json({
-        message: 'stamp added',
-      });
+      res.sendStatus(201);
     } catch (error) {
-      res.json({
-        message: error,
-      });
+      res.send(error)
     }
   });
 
