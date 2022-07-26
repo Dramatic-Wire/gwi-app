@@ -37,7 +37,7 @@ export default function BarcodeScanner({ navigation }) {
       .then((result => {
         const LP_id = result.id
         axios
-          .post(`https://gwi22-dramaticwire.herokuapp.com/api/add/stamp`, {UserId:LP_id, LPid: customer_id, timestamp:new Date(), redeemed: false})
+          .post(`https://gwi22-dramaticwire.herokuapp.com/api/add/stamp`, {UserId: customer_id, LPid: LP_id, timestamp:new Date(), redeemed: false})
           .then((result => { 
             console.log(result.data);
             navigation.navigate('UserProfile')
