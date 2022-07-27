@@ -10,9 +10,12 @@ import axios from 'axios';
 
 export default function UserProfile({ navigation }) {
   const { colors } = useTheme()
-  let results
-  const { email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture, customer_id, setCustomer_Id } = useContext(UserContext);
-  // const { customerName, validFor, stampCount, stamped, reward } = useContext(UserContext);
+  const [results, setResults] = useState(false);
+  const [LP, setLP] = useState();
+  // let LP
+
+  const { email, password, first_name, setFirst_name, customer_id, setCustomer_Id } = useContext(UserContext);
+
   axios
     .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?email=${email}`, { email, password })
     .then((result => {
@@ -24,8 +27,13 @@ export default function UserProfile({ navigation }) {
   axios
     .get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${customer_id}`)
     .then((result => {
-      results = result.data
-      console.log(results);
+      console.log(result.data[0].lp_id);
+      if (result.data[0].lp_id) {
+       
+        setResults(true)
+        setLP(result.data)
+
+      }
     })).catch(error => console.log(error));
 
   return (
@@ -35,21 +43,16 @@ export default function UserProfile({ navigation }) {
           <Box variant='pageTitle'>
             <Heading style={styles.pageTitle}>Welcome {first_name}!</Heading>
           </Box>
-          {results == undefined && <Box variant='section'>
-            <Box variant='section'>
-              <Text variant='section'>You are currently not part of any loyalty programmes</Text>
-              <Button onPress={() => { navigation.navigate('BarcodeScanner')}}>Join a Loyalty Programme</Button>
-            </Box>
+          {results == false && <Box variant='section'>
+            <Text variant='section'>You are currently not part of any loyalty programmes</Text>
+            <Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button>
           </Box>}
+          {LP !== undefined && LP.map(element => { <CardIcon card={element} /> && console.log(element) })}
 
-          {results !== undefined && <Box variant='section'>
-            <CardIcon />
-          </Box>}
           {/* <LoyaltyCard/> */}
-
           {/* <CardIcon />
           <CardIcon />
-          <CardIcon />
+          <CardIcon card= />
           <CardIcon />
           <CardIcon /> */}
         </VStack>
