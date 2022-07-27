@@ -5,7 +5,6 @@ const assert = require('assert');
 const fs = require('fs');
 require('dotenv').config();
 
-const API = require('../api');
 const {default: axios} = require('axios');
 const app = express();
 
@@ -16,7 +15,9 @@ const DATABASE_URL = process.env.DATABASE_URL;
 const pgp = PgPromise({});
 const db = pgp(DATABASE_URL);
 
-API(app, db);
+const routes = require('../routes');
+
+routes(app, db);
 
 describe('The Stampede API', function () {
   before(async function () {
@@ -177,9 +178,7 @@ describe('The Stampede API', function () {
         .expect(200, 'deleted');
     });
     it('should return the number of users participating in the loyalty programme', async () => {
-      const result = await supertest(app)
-        .get('/api/LP/4/users')
-        .expect(200);
+      const result = await supertest(app).get('/api/LP/4/users').expect(200);
       assert.equal(4, result.body.count);
     });
   });
@@ -187,7 +186,7 @@ describe('The Stampede API', function () {
   describe('Adding stamps and getting user stamps', () => {
     it('return the stamps from all the loyalty programmes a user participates in', async () => {
       const user9Stamps = [
-      {
+        {
           lp_id: 1,
           stampsneeded: '4',
           reward: 'nam dui proin leo',
@@ -202,17 +201,49 @@ describe('The Stampede API', function () {
           business_name: 'Quimba',
           category: 'Groceries',
           stamps: 4,
-        },  
+        },
       ];
       const result = await supertest(app)
         .get('/api/stamps/?customer_id=9')
         .expect(200);
       assert.deepEqual(user9Stamps, result.body);
     });
-    // it(`should add a stamp to a user's loyalty programme card`, async () => {
-
-    //   //assert.equal(editedLP, result.body);
-    // });
+    it(`should add a stamp to a user's loyalty programme card`, async () => {
+      await supertest(app)
+        .post('/api/add/stamp')
+        .send({UserId: 9, LPid: 4})
+        .expect(201);
+      const user9Stamps = [
+        {
+          business_name: 'Pixope',
+          category: 'Beauty',
+          lp_id: 4,
+          reward: 'nulla neque libero',
+          stamps: 1,
+          stampsneeded: '14',
+        },
+        {
+          business_name: 'Skyba',
+          category: 'Resturant',
+          lp_id: 1,
+          reward: 'nam dui proin leo',
+          stamps: 1,
+          stampsneeded: '4',
+        },
+        {
+          business_name: 'Quimba',
+          category: 'Groceries',
+          lp_id: 2,
+          reward: 'nisi volutpat',
+          stamps: 4,
+          stampsneeded: '1',
+        },
+      ];
+      const result = await supertest(app)
+        .get('/api/stamps/?customer_id=9')
+        .expect(200);
+      assert.deepEqual(user9Stamps, result.body);
+    });
   });
   after(() => {
     db.$pool.end();
