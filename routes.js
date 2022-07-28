@@ -17,7 +17,7 @@ module.exports = function (app, db) {
   app.get('/api/business', users.getBusiness);
 
   //Customer Routes
-  app.get('/api/stamps', LP.getCustomerStamps);
+  app.get('/api/stamps', LP.updateStamps, LP.getCustomerStamps);
   app.post('/api/add/stamp', LP.addStamp);
 
   //Business Owner Routes
