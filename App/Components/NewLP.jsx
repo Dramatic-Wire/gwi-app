@@ -22,14 +22,14 @@ export default function NewLP({ navigation }) {
 
   
   const registerLP = () => {
-    axios
-        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  businessID, stampCount, reward, validFor)
+     axios
+        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {businessID, stampCount, reward, validFor})
         .then((result => {
           const results = result.data
           // console.log(results);
-          if (results.message == 'added') {
-            setLoyaltyProgramme({ stampsRequired: stampCount, reward: reward, timeFrame: validFor, members:0 });
-          }
+          // if (results.message == 'added') {
+          // }
+          setLoyaltyProgramme({ stampsRequired: stampCount, reward: reward, timeFrame: validFor, members:0 });
           navigation.navigate('BusinessProfile')
           console.log(results.message);
           

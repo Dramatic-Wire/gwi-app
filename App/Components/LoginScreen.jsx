@@ -20,14 +20,7 @@ export default function ({ navigation }) {
 
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        axios
-        .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?username=${username}`)
-        .then((result => {
-            console.log(username);
-            // boballen@gmail.com
-            // 123456
-            console.log(result.data[0].email);
-        }))
+  
         axios
             .post(`https://gwi22-dramaticwire.herokuapp.com/api/login`, { email, password })
             .then((result => {
@@ -61,10 +54,7 @@ export default function ({ navigation }) {
                     onChangeText={text => setEmail(text)}
                     style={styles.input}></Input>
                 <Text>Password</Text>
-                <Input w={{
-                    base: "85%",
-                    md: "25%"
-                }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
+                <Input type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
             </Box>
             <Button onPress={handleLogin}>Login</Button>
             <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
