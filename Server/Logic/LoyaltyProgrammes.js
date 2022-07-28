@@ -6,8 +6,9 @@ module.exports = function (db) {
     if (!customer_id) {
       res.sendStatus(400);
     }
-    const query =
-      'update stamps set expired = timestamp < CURRENT_TIMESTAMP - INTERVAL $1 from loyalty_programmes where stamps.LP_id = loyalty_programmes.id and valid_for = $1 and customer_id = $2';
+    const query = `update stamps set expired = timestamp < CURRENT_TIMESTAMP - INTERVAL $1 
+       from loyalty_programmes where stamps.LP_id = loyalty_programmes.id
+       and valid_for = $1 and customer_id = $2`;
 
     await db.none(query, ['1 month', customer_id]).catch((err) => {
       console.log(err);
@@ -34,7 +35,8 @@ module.exports = function (db) {
     try {
       const {business_id, stamps, reward, validFor} = req.body;
       await db.none(
-        `INSERT into loyalty_programmes (business_id, stamps, reward, valid_for) VALUES ($1, $2, $3, $4)`,
+        `INSERT into loyalty_programmes 
+        (business_id, stamps, reward, valid_for) VALUES ($1, $2, $3, $4)`,
         [business_id, stamps, reward, validFor],
       );
       res.sendStatus(201);
@@ -63,7 +65,8 @@ module.exports = function (db) {
     if (!LP_id) res.sendStatus(400);
     try {
       const users = await db.one(
-        'SELECT COUNT(distinct customer_id) FROM stamps where lp_id = $1 GROUP BY lp_id',
+        `SELECT COUNT(distinct customer_id) FROM stamps 
+         where lp_id = $1 GROUP BY lp_id`,
         [LP_id],
       );
       res.json(users);
@@ -79,7 +82,8 @@ module.exports = function (db) {
     if (!UserId || !LPid) res.send(400);
     try {
       await db.none(
-        'insert into stamps (customer_id, lp_id, timestamp, redeemed) values ($1, $2, $3, $4)',
+        `insert into stamps (customer_id, lp_id, timestamp, redeemed) 
+         values ($1, $2, $3, $4)`,
         [UserId, LPid, moment().toISOString(), false],
       );
       res.sendStatus(201);
@@ -94,7 +98,8 @@ module.exports = function (db) {
       const {stamps, reward, valid_for, business_id} = req.body;
 
       const updatedDetails = await db.one(
-        'update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 where business_id = $4 returning *',
+        `update loyalty_programmes set stamps = $1, reward = $2, valid_for = $3 
+         where business_id = $4 returning *`,
         [stamps, reward, valid_for, business_id],
       );
       res.status(200);
@@ -109,7 +114,7 @@ module.exports = function (db) {
   const deleteLoyaltyProgramme = async (req, res) => {
     try {
       const {businessID} = req.query;
-      db.none('delete from loyalty_programmes where business_id = $1', [
+      db.none(`delete from loyalty_programmes where business_id = $1`, [
         businessID,
       ]);
       res.status(200).send('deleted');
