@@ -11,26 +11,28 @@ export const UserProvider = ({ children }) => {
   const [first_name, setFirst_name] = useState();
   const [surname, setSurname] = useState();
   const [profile_picture, setProfile_picture] = useState();
-  const [customer_id, setCustomer_Id] = useState();
+  const [user_id, setCustomer_Id] = useState();
   const [LP, setLP] = useState();
 
+  useEffect(() => {
+
+    if (id == 0 || !id) {
+
+    } else {
+      await axios.get(`/user?user_id=${id}`).then(res => {
+        setFirst_name(res.data.first_name)
+      })
+    }
+
+  }, [id])
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      await axios.get(`/api/user?email=${email}`).then(res => {
-        setFirst_name(res.data.first_name)
-        setCustomer_Id(res.data.id)
+    if (id > 0) {
+      await axios.get(`/stamps?customer_id=${id}`).then(res => {
+        setLP(res.data)
       })
-      await axios.get(`/stamps?customer_id=${customer_id}`).then((res => {
-
-        // LP = res.data
-
-      })).catch(error => console.log(error))
     }
-    if (email > 0) {
-      getUserInfo()
-    }
-  }, [email])
+  }, [id])
 
   return (
     <UserContext.Provider

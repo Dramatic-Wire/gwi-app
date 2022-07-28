@@ -1,63 +1,54 @@
 import { View, KeyboardAvoidingView } from 'react-native';
 import { Button, Input, Text, Heading, Box, } from "native-base";
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { auth } from '../firebase'
-import axios from 'axios';
+import AxiosInstance from '../Hooks/AxiosInstance';
+
+
 import UserContext from "../Contexts/UserContext";
 
 
 export default function ({ navigation }) {
+    const axios = AxiosInstance();
+
     const [show, setShow] = useState(false);
 
     const { email, setEmail, password, setPassword, customer_id, setCustomer_Id, setFirst_name, LP, setLP } = useContext(UserContext);
 
-
-    const handleLogin = () => {
+    const handleLogin = async () => {
         // get token from current user
         // const token = await firebase.auth().currentUser.getIdToken();
 
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // useEffect(() => {
+        //     console.log(LP);
 
-        axios
-            .post(`https://gwi22-dramaticwire.herokuapp.com/api/login`, { email, password })
-            .then((result => {
-                const status = result.status
-                if (status == 200) {
+        // }, [LP])
+        await axios.post(`/login`, { email, password }).then(res => {
+            const status = res.status
+            if (status == 200) {
 
-                    auth
-                        .signInWithEmailAndPassword(email, password)
-                        .then(userCredentials => {
-                            const user = userCredentials.user;
+                auth
+                    .signInWithEmailAndPassword(email, password)
+                    .then(userCredentials => {
+                        const user = userCredentials.user;
 
-                            navigation.navigate('UserProfile')
+                        navigation.navigate('UserProfile')
 
-                        })
-                        .catch(error => alert(error.message))
-                }
+                    })
+                    .catch(error => alert(error.message))
+            }
+        });
+        await axios.get(`/user?email=${email}`).then(res => {
+            setUser_Id(res.data.id) 
+        });
+        await axios.get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${customer_id}`).then(res => {
+            setLP(res.data)
 
-            })).catch(error => console.log(error));
-        axios
-            .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?email=${email}`, { email, password })
-            .then((result => {
-
-                setFirst_name(result.data.first_name)
-                setCustomer_Id(result.data.id)
-
-                axios
-                    .get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${result.data.id}`)
-                    .then((result => {
-        
-                        setLP(result.data)
-                        if (result.data.length !== undefined) {
-                            //   setResults(true)
-                            //   setLP(result.data)
-        
-                        }
-                    })).catch(error => console.log(error));
-            })).catch(error => console.log(error));
+        });
     }
 
     return (
