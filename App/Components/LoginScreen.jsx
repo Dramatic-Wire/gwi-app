@@ -22,10 +22,7 @@ export default function ({ navigation }) {
 
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // useEffect(() => {
-        //     console.log(LP);
-
-        // }, [LP])
+        
         await axios.post(`/login`, { email, password }).then(res => {
             const status = res.status
             if (status == 200) {
@@ -41,13 +38,13 @@ export default function ({ navigation }) {
                     .catch(error => alert(error.message))
             }
         });
-        await axios.get(`/user?email=${email}`).then(res => {
-            setUser_Id(res.data.id) 
-        });
-        await axios.get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${customer_id}`).then(res => {
-            setLP(res.data)
+        // await axios.get(`/user?email=${email}`).then(res => {
+        //     setUser_Id(res.data.id) 
+        // });
+        // await axios.get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${customer_id}`).then(res => {
+        //     setLP(res.data)
 
-        });
+        // });
     }
 
     return (
@@ -70,7 +67,6 @@ export default function ({ navigation }) {
             </Box>
             <Button onPress={handleLogin}>Login</Button>
             <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
-
         </Box >
 
 

@@ -20,7 +20,7 @@ export default function UserProfile({ navigation }) {
             <Heading style={styles.pageTitle}>Welcome {first_name}!</Heading>
           </Box>
           <Box variant='section'>
-            {LP == undefined && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
+            {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
             <Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button>
           </Box>
           {Array.isArray(LP) && LP.map(element => { return <CardIcon key={element} card={element} /> })}

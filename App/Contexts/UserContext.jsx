@@ -15,29 +15,39 @@ export const UserProvider = ({ children }) => {
   const [LP, setLP] = useState();
 
   useEffect(() => {
-
-    if (id == 0 || !id) {
-
-    } else {
-      await axios.get(`/user?email=${email}`).then(res => {
-        setFirst_name(res.data.first_name)
-      })
+    const getUser = async () => {
+      if (userId == 0 || !userId) {
+        await axios.get(`/user?email=${email}`).then(res => {
+          setUserId(res.data.id)
+        })
+      } else {
+        await axios.get(`/user?email=${email}`).then(res => {
+          setFirst_name(res.data.first_name)
+        })
+      }
     }
-
-  }, [id])
+    if (userId > 0) {
+      getUser()
+    }
+  }, [userId])
 
   useEffect(() => {
-    if (id > 0) {
-      await axios.get(`/stamps?customer_id=${id}`).then(res => {
-        setLP(res.data)
-      })
+    const getUserStamps = async () => {
+      if (userId > 0) {
+        await axios.get(`/stamps?customer_id=${userId}`).then(res => {
+          setLP(res.data)
+        })
+      }
     }
-  }, [id])
+    if (userId > 0) {
+      getUserStamps()
+    }
+  }, [userId])
 
   return (
     <UserContext.Provider
       value={{
-        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture, customer_id, setCustomer_Id, LP, setLP
+        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP
       }}
     >
       {children}
