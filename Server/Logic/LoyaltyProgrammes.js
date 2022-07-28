@@ -103,30 +103,18 @@ module.exports = function (db) {
       const selectFromBusiness =
         'businesses.business_name, businesses.category from stamps';
       const joinLP =
-        'join loyalty_programmes on stamps.lp_id=loyalty_programmes.id';
+        'join loyalty_programmes on stamps.lp_id = loyalty_programmes.id';
       const joinBusiness =
         'join businesses on loyalty_programmes.business_id = businesses.id';
-      const where = 'where stamps.customer_id = $1';
+      const where = 'where stamps.customer_id = $1 and stamps.redeemed = $2';
+      const orderBy = 'order by timestamp desc';
 
       const result = await db.many(
-        `${selectFromStamps}, ${selectFromLP}, ${selectFromBusiness} ${joinLP} ${joinBusiness} ${where}`,
-        [customer_id],
+        `${selectFromStamps}, ${selectFromLP}, ${selectFromBusiness} ${joinLP} ${joinBusiness} ${where} ${orderBy}`,
+        [customer_id, 'false'],
       );
 
-      result.sort((a, b) => {
-        a = a.timestamp;
-        b = b.timestamp;
-        if (moment(a).isBefore(b)) {
-          return 1;
-        }
-        if (moment(a).isAfter(b)) {
-          return -1;
-        }
-        return 0;
-      });
-
-      const notRedeemed = result.filter((stamp) => stamp.redeemed == 'false');
-      const notExpired = notRedeemed.filter((stamp) => {
+      const notExpired = result.filter((stamp) => {
         const {timestamp, valid_for} = stamp;
         const now = moment();
         const expiration = moment(timestamp).add(
