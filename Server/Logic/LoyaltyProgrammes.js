@@ -1,7 +1,35 @@
 const moment = require('moment');
 
 module.exports = function (db) {
+  const updateStamps = async (req, res, next) => {
+    const {customer_id} = req.query;
+    if (!customer_id) {
+      res.sendStatus(400);
+    }
+    const query =
+      'update stamps set expired = timestamp < CURRENT_TIMESTAMP - INTERVAL $1 from loyalty_programmes where stamps.LP_id = loyalty_programmes.id and valid_for = $1 and customer_id = $2';
+
+    await db.none(query, ['1 month', customer_id]).catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+    await db.none(query, ['3 months', customer_id]).catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+    await db.none(query, ['6 months', customer_id]).catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+    await db.none(query, ['1 year', customer_id]).catch((err) => {
+      console.log(err);
+      res.send(err);
+    });
+    next();
+  };
+
   //app.post('/api/addLP')
+
   const addLoyaltyProgramme = async (req, res) => {
     try {
       const {business_id, stamps, reward, validFor} = req.body;
@@ -96,48 +124,19 @@ module.exports = function (db) {
     const {customer_id} = req.query;
     if (!customer_id) res.sendStatus(400);
     try {
-      const selectFromStamps =
-        'select stamps.timestamp, stamps.redeemed, stamps.lp_id';
-      const selectFromLP =
-        'loyalty_programmes.stamps as stampsNeeded, loyalty_programmes.reward, loyalty_programmes.valid_for';
-      const selectFromBusiness =
-        'businesses.business_name, businesses.category from stamps';
-      const joinLP =
-        'join loyalty_programmes on stamps.lp_id = loyalty_programmes.id';
-      const joinBusiness =
-        'join businesses on loyalty_programmes.business_id = businesses.id';
-      const where = 'where stamps.customer_id = $1 and stamps.redeemed = $2';
-      const orderBy = 'order by timestamp desc';
+      const query = `
+      SELECT lp_id, stampCount as stamps, reward, stamps as stampsNeeded, business_name, category FROM (
+      SELECT loyalty_programmes.id as lp_id, COUNT(*) as stampCount FROM stamps 
+      INNER JOIN loyalty_programmes ON stamps.lp_id=loyalty_programmes.id
+      WHERE stamps.customer_id = $1 AND stamps.redeemed = 'false' AND stamps.expired = 'false'
+      GROUP BY loyalty_programmes.id ) count
+      JOIN loyalty_programmes ON lp_id =loyalty_programmes.id
+      JOIN businesses ON loyalty_programmes.business_id = businesses.id
+      ORDER BY business_name`;
 
-      const result = await db.many(
-        `${selectFromStamps}, ${selectFromLP}, ${selectFromBusiness} ${joinLP} ${joinBusiness} ${where} ${orderBy}`,
-        [customer_id, 'false'],
-      );
+      const result = await db.many(query, [customer_id]);
 
-      const notExpired = result.filter((stamp) => {
-        const {timestamp, valid_for} = stamp;
-        const now = moment();
-        const expiration = moment(timestamp).add(
-          moment.duration(valid_for[0], valid_for.split(' ')[1]),
-        );
-        return moment(expiration).isSameOrAfter(now);
-      });
-
-      const userStamps = notExpired.reduce((lpList, stamp) => {
-        const {stampsneeded, business_name, category, reward, lp_id} = stamp;
-        const lpIndex = lpList.findIndex((lp) => lp.lp_id == lp_id);
-        if (lpIndex >= 0) {
-          lpList[lpIndex].stamps++;
-        } else {
-          lpList = [
-            ...lpList,
-            {lp_id, stampsneeded, reward, business_name, category, stamps: 1},
-          ];
-        }
-
-        return lpList;
-      }, []);
-      res.json(userStamps);
+      res.json(result);
     } catch (error) {
       console.log(error);
       res.send(error);
@@ -163,5 +162,6 @@ module.exports = function (db) {
     editLoyaltyProgramme,
     deleteLoyaltyProgramme,
     getCustomerStamps,
+    updateStamps,
   };
 };
