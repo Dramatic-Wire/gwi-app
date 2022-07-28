@@ -29,11 +29,8 @@ create table stamps(
 	customer_id int not null,
 	lp_id int not null ,
     timestamp timestamp not null,
-    redeemed text,
+    redeemed text default 'false',
+    expired text default 'false',
     foreign key (customer_id) references users(id) on delete cascade,
     foreign key (lp_id) references loyalty_programmes(id) on delete cascade
 );
-
-
-
-select stamps.*, loyalty_programmes.valid_for  from stamps join loyalty_programmes on stamps.lp_id = loyalty_programmes.id where timestamp < CURRENT_TIMESTAMP - INTERVAL '3 months' and loyalty_programmes.valid_for = '3 months'

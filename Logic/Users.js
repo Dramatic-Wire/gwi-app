@@ -1,18 +1,20 @@
-
 module.exports = function (db) {
   //app.get('/api/users')
   const getAllUsers = async (req, res) => {
     const users = await db.many(`select * from users`);
     res.json({users});
   };
-  //app.get('/api/user')
+  //app.get('/api/user')!!!!
   const getUser = async (req, res) => {
-    const {email} = req.query;
-    if (!email) res.sendStatus(400);
+    const {email, user_id} = req.query;
+    if (!email && !user_id) res.sendStatus(400);
     try {
-      const user = await db.one('select * from users where email = $1', [
-        email,
-      ]);
+      let user;
+      if (email) {
+        user = await db.one('select * from users where email = $1', [email]);
+      } else {
+        user = await db.one('select * from users where id = $1', [user_id]);
+      }
       res.json(user);
     } catch (err) {
       console.log(err);
@@ -65,5 +67,5 @@ module.exports = function (db) {
     getUser,
     registerBusiness,
     getBusiness,
-  }
+  };
 };
