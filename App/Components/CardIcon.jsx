@@ -17,17 +17,17 @@ export default function CardIcon({ card, color = 'emerald' }) {
     <Box bgColor={`${color}.300`} rounded='lg' p="3" shadow='5'>
       <HStack justifyContent="left" alignItems="start">
 
-        {/* <Box variant={stamped ? 'stamped' : 'unstamped'} bgColor={stamped ? `${color}.100` : 'muted.500'} p='2'>
-          {category == 'Coffee Shop' && <CoffeeShop fill={stamped ? colors[color]['400'] : colors['muted']['500']} stroke={stamped ? colors[color]['700'] : colors['muted']['700']} />}
-          {category == 'Beauty' && <Beauty fill={stamped ? colors[color]['400'] : colors['muted']['500']} stroke={stamped ? colors[color]['700'] : colors['muted']['700']} />}
-          {category == 'Resturant' && <Resturant fill={stamped ? colors[color]['400'] : colors['muted']['500']} stroke={stamped ? colors[color]['700'] : colors['muted']['700']} />}
-          {category == 'Groceries' && <Groceries fill={stamped ? colors[color]['400'] : colors['muted']['500']} stroke={stamped ? colors[color]['700'] : colors['muted']['700']} />}
-          {category == 'Clothing' && <Clothing fill={stamped ? colors[color]['400'] : colors['muted']['500']} stroke={stamped ? colors[color]['700'] : colors['muted']['700']} />}
-          {category == 'Health' && <Health fill={stamped ? colors[color]['400'] : colors['muted']['500']} stroke={stamped ? colors[color]['700'] : colors['muted']['700']} />}
-        </Box> */}
+        <Box variant={`stamped`} bgColor={`${color}.100`} p='2'>
+          {card.category == 'Coffee Shop' && <CoffeeShop fill={colors[color]['400'] }/>}
+          {card.category == 'Beauty' && <Beauty fill={colors[color]['400']}/>}
+          {card.category == 'Resturant' && <Resturant fill={colors[color]['400']} />}
+          {card.category == 'Groceries' && <Groceries fill={colors[color]['400']} />}
+          {card.category == 'Clothing' && <Clothing fill={colors[color]['400']} />}
+          {card.category == 'Health' && <Health fill={colors[color]['400']} />}
+        </Box>
         <Box width='75%' >
           <Heading size='md' textAlign={'left'}>{card.business_name}</Heading>
-          <Text fontSize='lg'>{`Collect ${card.stampsneeded - card.stamped} more stamps to get `}
+          <Text fontSize='lg'>{`Collect ${card.stampsneeded - card.stamps} more stamps to get `}
             <Text bold>
               {card.reward}
             </Text>

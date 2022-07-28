@@ -11,7 +11,7 @@ import UserContext from "../Contexts/UserContext";
 export default function ({ navigation }) {
     const [show, setShow] = useState(false);
 
-    const { email, setEmail, password, setPassword } = useContext(UserContext);
+    const { email, setEmail, password, setPassword, customer_id, setCustomer_Id, setFirst_name, LP, setLP } = useContext(UserContext);
 
 
     const handleLogin = () => {
@@ -20,7 +20,7 @@ export default function ({ navigation }) {
 
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  
+
         axios
             .post(`https://gwi22-dramaticwire.herokuapp.com/api/login`, { email, password })
             .then((result => {
@@ -38,6 +38,25 @@ export default function ({ navigation }) {
                         .catch(error => alert(error.message))
                 }
 
+            })).catch(error => console.log(error));
+        axios
+            .get(`https://gwi22-dramaticwire.herokuapp.com/api/user?email=${email}`, { email, password })
+            .then((result => {
+
+                setFirst_name(result.data.first_name)
+                setCustomer_Id(result.data.id)
+
+                axios
+                    .get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${result.data.id}`)
+                    .then((result => {
+        
+                        setLP(result.data)
+                        if (result.data.length !== undefined) {
+                            //   setResults(true)
+                            //   setLP(result.data)
+        
+                        }
+                    })).catch(error => console.log(error));
             })).catch(error => console.log(error));
     }
 
