@@ -1,17 +1,17 @@
 const supertest = require('supertest');
-const PgPromise = require('pg-promise');
+const PgPromise = require("pg-promise")
 const express = require('express');
 const assert = require('assert');
-const fs = require('fs');
-require('dotenv').config();
+
+require('dotenv').config()
 
 const {default: axios} = require('axios');
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
-const DATABASE_URL = process.env.DATABASE_URL;
+const DATABASE_URL = 'https://gwi22-dramaticwire.herokuapp.com';
 const pgp = PgPromise({});
 const db = pgp(DATABASE_URL);
 
@@ -19,87 +19,11 @@ const routes = require('../routes');
 
 routes(app, db);
 
-describe('The Stampede API', function () {
-  before(async function () {
-    this.timeout(5000);
-    await db.none(`TRUNCATE users RESTART IDENTITY CASCADE`);
-    const commandText = fs.readFileSync('./sql/test_data.sql', 'utf-8');
-    await db.none(commandText);
-  });
+describe('Loyalty App', function () {
 
-  describe('Registering a user', () => {
-    it('should respond with a 201 Created status if a user is successfully registered', async () => {
-      await supertest(app)
-        .post('/api/register/user')
-        .send({
-          username: 'sallysalamandar',
-          first_name: 'Sally',
-          surname: 'Salamandar',
-          email: 'salamandar@aol.com',
-          password: '1234',
-          profile_picture: '/',
-        })
-        .expect(201);
-      const result = await supertest(app).get('/api/users').expect(200);
-      const {users} = result.body;
-      assert.equal(21, users.length);
+    before(async function () {
+        this.timeout(5000);
     });
-    it('should not register a user if the username already exists', async () => {
-      await supertest(app)
-        .post('/api/register/user')
-        .send({
-          username: 'sallysalamandar',
-          first_name: 'Sal',
-          surname: 'Sala',
-          email: 'salamandar@gmail.com',
-          password: '1234',
-          profile_picture: '/',
-        })
-        .expect(400);
-      const result = await supertest(app).get('/api/users').expect(200);
-      const {users} = result.body;
-      assert.equal(21, users.length);
-    });
-    it('should not register a user if the email address already exists', async () => {
-      await supertest(app)
-        .post('/api/register/user')
-        .send({
-          username: 'sallysal',
-          first_name: 'Sally',
-          surname: 'Salamandar',
-          email: 'salamandar@aol.com',
-          password: '1234',
-          profile_picture: '/',
-        })
-        .expect(400);
-      const result = await supertest(app).get('/api/users').expect(200);
-      const {users} = result.body;
-      assert.equal(21, users.length);
-    });
-    it('should not register a user if required information is missing', async () => {
-      await supertest(app)
-        .post('/api/register/user')
-        .send({
-          first_name: 'Sally',
-          surname: 'Salamandar',
-          email: 'salamandar@aol.com',
-          password: '1234',
-          profile_picture: '/',
-        })
-        .expect(400);
-      const result = await supertest(app).get('/api/users').expect(200);
-      const {users} = result.body;
-      assert.equal(21, users.length);
-    });
-    it('the new user should now appear in the list of all users', async () => {
-      const result = await supertest(app).get('/api/users').expect(200);
-      const {users} = result.body;
-      assert.equal(
-        true,
-        users.some((user) => user.username == 'sallysalamandar'),
-      );
-    });
-  });
 
   describe('Registering a business and creating a loyalty programme', () => {
     it('should return the business id if a user successfully registers a business', async () => {
