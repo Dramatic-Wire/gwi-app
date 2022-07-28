@@ -25,9 +25,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-const API = require('./api');
+const routes = require('./routes');
 
-API(app, db);
+routes(app, db);
 
 //configure the port number using and environment number
 var portNumber = process.env.PORT || 4000;
