@@ -1,6 +1,5 @@
-import { View, KeyboardAvoidingView } from 'react-native';
-import { Button, Input, Text, Heading, Box, } from "native-base";
-import { useState, useContext, useEffect } from 'react';
+import { Button, Input, Text, Heading, Box } from "native-base";
+import { useState, useContext } from 'react';
 import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { auth } from '../firebase'

@@ -11,7 +11,7 @@ export const UserProvider = ({ children }) => {
   const [first_name, setFirst_name] = useState();
   const [surname, setSurname] = useState();
   const [profile_picture, setProfile_picture] = useState();
-  const [user_id, setCustomer_Id] = useState();
+  const [userId, setUserId] = useState();
   const [LP, setLP] = useState();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
     if (id == 0 || !id) {
 
     } else {
-      await axios.get(`/user?user_id=${id}`).then(res => {
+      await axios.get(`/user?email=${email}`).then(res => {
         setFirst_name(res.data.first_name)
       })
     }
