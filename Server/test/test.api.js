@@ -223,20 +223,20 @@ describe('The Stampede API', function () {
           stampsneeded: '14',
         },
         {
-          business_name: 'Skyba',
-          category: 'Resturant',
-          lp_id: 1,
-          reward: 'nam dui proin leo',
-          stamps: '1',
-          stampsneeded: '4',
-        },
-        {
           business_name: 'Quimba',
           category: 'Groceries',
           lp_id: 2,
           reward: 'nisi volutpat',
           stamps: '4',
           stampsneeded: '1',
+        },
+        {
+          business_name: 'Skyba',
+          category: 'Resturant',
+          lp_id: 1,
+          reward: 'nam dui proin leo',
+          stamps: '1',
+          stampsneeded: '4',
         },
       ];
       const result = await supertest(app)
