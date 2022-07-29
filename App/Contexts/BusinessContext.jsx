@@ -2,7 +2,7 @@ import { createContext, useState, useEffect  } from 'react';
 import AxiosInstance from '../Hooks/AxiosInstance';
 import UserContext from './UserContext';
 
-// const {customer_id} = useContext(UserContext)
+const {userId} = useContext(UserContext)
 const BusinessContext = createContext({});
 
 
@@ -17,7 +17,7 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getBusiness = async () => {
-      await axios.get(`/business/?id=${customer_id}`).then(res => {
+      await axios.get(`/business/?id=${userId}`).then(res => {
         console.log(res.data)
       })
     }

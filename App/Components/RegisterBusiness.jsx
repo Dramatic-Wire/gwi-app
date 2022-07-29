@@ -6,7 +6,7 @@ import UserContext from "../Contexts/UserContext";
 
 export default function RegisterBusiness({ navigation }) {
     const { businessName, setBusinessName, category, setCategory, logo, setLogo ,setBusinessID } = useContext(BusinessContext)
-    const {customer_id} = useContext(UserContext)
+    const {userId} = useContext(UserContext)
     const categortyList = ['Coffee Shop', 'Beauty', 'Restaurant', 'Groceries', 'Clothing', 'Health']
     const [error, setError] = useState(false);
     const [categoryError, setCategoryError] = useState(false);
@@ -20,7 +20,7 @@ export default function RegisterBusiness({ navigation }) {
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         if (!error && !categoryError) {
             axios
-                .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, customer_id, category, logo })
+                .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, userId, category, logo })
                 .then((result => {
                     const results = result.data
                     setBusinessID(results.id);
