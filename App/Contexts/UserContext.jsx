@@ -43,11 +43,7 @@ export const UserProvider = ({ children }) => {
     if (userId > 0) {
       getUserStamps()
     }
-<<<<<<< HEAD
-  }, [email, customer_id])
-=======
   }, [userId])
->>>>>>> 4b1159733a666701a593abce378c882a2000a697
 
   return (
     <UserContext.Provider
