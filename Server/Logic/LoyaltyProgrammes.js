@@ -151,9 +151,35 @@ module.exports = function (db) {
   //app.post('/api/LP/redeem/:customer_id/:LP_id');
   const redeemReward = async (req, res) => {
     const {customer_id, LP_id} = req.params;
-    if (!customer_id || LP_id) res.send(400);
+    if (!customer_id || !LP_id) {
+      res.sendStatus(400);
+    }
     try {
-      await db.none();
+      const {stamps_needed} = await db.one(
+        `select stamps as stamps_needed from loyalty_programmes where id = $1`,
+        [LP_id],
+      );
+      const {active_stamps} = await db.one(
+        `select COUNT(id) as active_stamps FROM stamps WHERE lp_id = $1 AND customer_id = $2 AND redeemed = 'false' AND expired = 'false'`,
+        [LP_id, customer_id],
+      );
+      if (active_stamps < stamps_needed) {
+        res.sendStatus(400);
+      } else {
+        try {
+          await db.any(
+            `UPDATE stamps
+            SET redeemed = 'true' WHERE id IN
+            (SELECT id FROM stamps
+              WHERE lp_id = $1 AND customer_id = $2 AND redeemed = 'false' AND expired = 'false'
+              ORDER BY timestamp ASC LIMIT $3)`,
+            [LP_id, customer_id, stamps_needed],
+          );
+          res.sendStatus(200);
+        } catch (err) {
+          res.send(err);
+        }
+      }
     } catch (err) {
       res.send(err);
     }
@@ -168,5 +194,6 @@ module.exports = function (db) {
     deleteLoyaltyProgramme,
     getCustomerStamps,
     updateStamps,
+    redeemReward,
   };
 };
