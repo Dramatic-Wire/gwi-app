@@ -99,6 +99,13 @@ describe('The Stampede API', function () {
         users.some((user) => user.username == 'sallysalamandar'),
       );
     });
+
+    it('login', async () => {
+      const result = await supertest(app)
+        .post('/api/login')
+        .send({email: 'salamandar@aol.com', password: '1234'});
+      console.log(result.body);
+    });
   });
 
   describe('Registering a business and creating a loyalty programme', () => {
