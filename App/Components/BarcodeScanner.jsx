@@ -6,10 +6,12 @@ import { Box } from 'native-base';
 import axios from 'axios';
 import UserContext from '../Contexts/UserContext';
 import UserProfile from './UserProfile';
+import AxiosInstance from '../Hooks/AxiosInstance';
 
 
 export default function BarcodeScanner({ navigation }) {
-  const { customer_id } = useContext(UserContext);
+  const axios = AxiosInstance();
+  const { userId, setUpdateStamps } = useContext(UserContext);
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -31,24 +33,13 @@ export default function BarcodeScanner({ navigation }) {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     // setText(data)
-
-    axios
-      .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${data}`)
-      .then((result => {
-        console.log(result.data.id);
-        const LP_id = result.data.id
         axios
-          .post(`https://gwi22-dramaticwire.herokuapp.com/api/add/stamp`, {UserId: customer_id, LPid: LP_id})
-          .then((result => { 
-            console.log(result.data);
+          .post(`/add/stamp`, {UserId: userId, LPid: data})
+          .then(result => { 
+            setUpdateStamps(true)
             navigation.navigate('UserProfile')
-          }))
-
-
-      })).catch(error => console.log(error));
-
-    console.log('Type: ' + type + '\nData: ' + data)
-  };
+          }).catch(error => console.log(error));
+      };
 
   // Check permissions and return the screens
   if (hasPermission === null) {

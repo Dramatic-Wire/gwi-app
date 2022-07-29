@@ -4,11 +4,15 @@ import UserContext from '../Contexts/UserContext';
 import { Button, Text, Heading, Box, VStack, useTheme, } from "native-base";
 import styles from '../Styles/style';
 import CardIcon from './CardIcon';
+import Loading from './Loading';
 
 export default function UserProfile({ navigation }) {
   const { colors } = useTheme()
 
   const { first_name, LP } = useContext(UserContext);
+
+  if (!first_name || !LP) return (<Loading></Loading>);
+  
 
   return (
     <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
@@ -21,7 +25,7 @@ export default function UserProfile({ navigation }) {
             {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
             <Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button>
           </Box>
-          {Array.isArray(LP) && LP.map(element => { return <CardIcon key={element} card={element} /> })}
+          {Array.isArray(LP) && LP.map((element, index) => { return <CardIcon key={index} card={element} /> })}
         </VStack>
       </ScrollView>
     </Box>
