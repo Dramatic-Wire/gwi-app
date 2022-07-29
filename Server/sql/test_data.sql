@@ -63,7 +63,7 @@ insert into stamps (customer_id, lp_id, timestamp, redeemed) values (4, 8, '2022
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (4, 1, '2022-05-04T07:42:02Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 8, '2021-08-13T07:50:25Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (9, 9, '2022-04-03T13:58:55Z', false);
-insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2022-03-20T13:57:01Z', true);
+insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2022-03-20T13:57:01Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (7, 6, '2021-09-26T10:28:58Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (7, 9, '2021-10-05T05:18:19Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (8, 10, '2022-01-14T23:03:38Z', false);
@@ -73,7 +73,7 @@ insert into stamps (customer_id, lp_id, timestamp, redeemed) values (6, 5, '2022
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (4, 7, '2022-04-28T22:55:36Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (10, 9, '2022-03-21T14:04:52Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (4, 10, '2021-10-01T16:18:22Z', false);
-insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2022-01-26T08:22:05Z', true);
+insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2022-01-26T08:22:05Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (1, 3, '2022-02-06T03:03:03Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 2, '2021-08-03T13:17:51Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (7, 10, '2022-04-08T03:15:38Z', true);
@@ -108,10 +108,10 @@ insert into stamps (customer_id, lp_id, timestamp, redeemed) values (1, 5, '2022
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (6, 6, '2021-11-01T14:38:01Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (1, 1, '2022-04-13T21:41:09Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (8, 1, '2022-03-12T03:08:06Z', true);
-insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2022-05-12T05:05:47Z', true);
+insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2022-05-12T05:05:47Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (6, 6, '2022-02-21T17:36:31Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 5, '2021-10-06T13:07:43Z', true);
-insert into stamps (customer_id, lp_id, timestamp, redeemed) values (7, 7, '2022-06-22T04:54:40Z', false);
+insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2022-06-22T04:54:40Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (2, 4, '2022-06-02T23:13:24Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (2, 4, '2021-08-19T15:34:40Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (7, 10, '2022-05-26T23:35:58Z', false);
@@ -134,7 +134,7 @@ insert into stamps (customer_id, lp_id, timestamp, redeemed) values (3, 7, '2022
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (6, 1, '2021-11-27T21:18:53Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (4, 5, '2021-12-31T06:12:08Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (6, 6, '2022-01-12T05:32:13Z', true);
-insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2021-09-28T04:11:32Z', true);
+insert into stamps (customer_id, lp_id, timestamp, redeemed) values (5, 1, '2021-09-28T04:11:32Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (3, 3, '2021-12-03T22:46:30Z', true);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (7, 2, '2021-08-19T00:22:53Z', false);
 insert into stamps (customer_id, lp_id, timestamp, redeemed) values (10, 2, '2022-06-11T01:32:44Z', true);

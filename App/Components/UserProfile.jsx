@@ -1,21 +1,14 @@
 import { ScrollView, } from 'react-native';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import UserContext from '../Contexts/UserContext';
-import { Button, Input, Text, IconButton, Heading, Box, Select, FlatList, HStack, VStack, useTheme, } from "native-base";
+import { Button, Text, Heading, Box, VStack, useTheme, } from "native-base";
 import styles from '../Styles/style';
-import LoyaltyCard from './LoyaltyCard';
 import CardIcon from './CardIcon';
-import axios from 'axios';
-
 
 export default function UserProfile({ navigation }) {
   const { colors } = useTheme()
-  const [results, setResults] = useState(false);
 
-
-  const { email, password, first_name, setFirst_name, customer_id, setCustomer_Id, LP} = useContext(UserContext);
-
-
+  const { first_name, LP } = useContext(UserContext);
 
   return (
     <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
@@ -28,18 +21,10 @@ export default function UserProfile({ navigation }) {
             <Button onPress={() => { navigation.navigate('RegisterBusiness')}} >Add a business</Button>
           </Box>
           <Box variant='section'>
-              {LP == undefined && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
-              <Button onPress={() => { navigation.navigate('BarcodeScanner')}}>Join a Loyalty Programme</Button>
+            {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
+            <Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button>
           </Box>
-          {Array.isArray(LP) && LP.map(element=>{ return <CardIcon key={element} card = {element}/> }) }
-       
-          {/* <LoyaltyCard/> */}
-
-          {/* <CardIcon />
-          <CardIcon />
-          <CardIcon card= />
-          <CardIcon />
-          <CardIcon /> */}
+          {Array.isArray(LP) && LP.map(element => { return <CardIcon key={element} card={element} /> })}
         </VStack>
       </ScrollView>
     </Box>

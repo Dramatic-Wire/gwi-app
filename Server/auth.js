@@ -27,7 +27,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 module.exports = function (db) {
- 
   //app.post('/api/register/user')
   const registerUser = async (req, res) => {
     const {username, first_name, surname, email, password, profile_picture} =
@@ -62,9 +61,7 @@ module.exports = function (db) {
         message = 'logged in';
       }
 
-      res.json({
-        result: message,
-      });
+      res.json({id: user.id});
     } catch (error) {
       res.json({
         message: error.message,
@@ -74,5 +71,5 @@ module.exports = function (db) {
   return {
     registerUser,
     userLogin,
-  }
+  };
 };
