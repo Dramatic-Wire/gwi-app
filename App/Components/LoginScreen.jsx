@@ -11,7 +11,7 @@ export default function ({ navigation }) {
 
     const [show, setShow] = useState(false);
 
-    const { email, setEmail, password, setPassword, userId } = useContext(UserContext);
+    const { email, setEmail, password, setPassword, userId, setUserId } = useContext(UserContext);
 
     const handleLogin = async () => {
         // get token from current user
@@ -21,19 +21,24 @@ export default function ({ navigation }) {
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         await axios.post(`/login`, { email, password }).then(res => {
-            const status = res.status
-            if (status == 200) {
 
-                auth
-                    .signInWithEmailAndPassword(email, password)
-                    .then(userCredentials => {
-                        const user = userCredentials.user;
+            const { id } = res.data;
+            setUserId(id);
+            navigation.navigate('UserProfile');
 
-                        navigation.navigate('UserProfile')
+            // const status = res.status
+            // if (status == 200) {
 
-                    })
-                    .catch(error => alert(error.message))
-            }
+            //     auth
+            //         .signInWithEmailAndPassword(email, password)
+            //         .then(userCredentials => {
+            //             console.log(userCredentials)
+            //             const user = userCredentials.user;
+            //             navigation.navigate('UserProfile')
+
+            //         })
+            //         .catch(error => alert(error.message))
+            // }
         });
     }
 
