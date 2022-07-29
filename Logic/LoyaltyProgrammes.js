@@ -79,7 +79,7 @@ module.exports = function (db) {
   //app.post('/api/add/stamp')
   const addStamp = async (req, res) => {
     const {UserId, LPid} = req.body;
-    if (!UserId || !LPid) res.send(400);
+    if (!UserId || !LPid) res.sendStatus(400);
     try {
       await db.none(
         `insert into stamps (customer_id, lp_id, timestamp, redeemed) 
@@ -139,9 +139,10 @@ module.exports = function (db) {
       JOIN businesses ON loyalty_programmes.business_id = businesses.id
       ORDER BY business_name`;
 
-      const result = await db.many(query, [customer_id]);
-
-      res.json(result);
+      await db
+        .many(query, [customer_id])
+        .then((result) => res.json(result))
+        .catch((err) => res.send(err));
     } catch (error) {
       console.log(error);
       res.send(error);
