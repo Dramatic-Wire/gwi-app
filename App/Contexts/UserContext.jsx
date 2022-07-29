@@ -16,18 +16,21 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const getUser = async () => {
-      if (userId == 0 || !userId) {
-        await axios.get(`/user?email=${email}`).then(res => {
-          setUserId(res.data.id)
-          setFirst_name(res.data.first_name)
+        await axios.get(`/user?user_id=${userId}`).then(res => {
+          console.log(res.data)
+          const { first_name, profile_picture, surname, username } = res.data
+          setUsername(username);
+         setFirst_name(first_name);
+         setSurname(surname);
+         setProfile_picture(profile_picture);
         })
-      } else {
-        await axios.get(`/user?email=${email}`).then(res => {
-          setFirst_name(res.data.first_name)
-        })
-      }
     }
-    if (email) {
+    if (userId == 0 || !userId) {
+      setUsername();
+      setFirst_name();
+      setSurname();
+      setProfile_picture();
+    } else {
       getUser()
     }
   }, [userId])
@@ -36,6 +39,7 @@ export const UserProvider = ({ children }) => {
     const getUserStamps = async () => {
       if (userId > 0) {
         await axios.get(`/stamps?customer_id=${userId}`).then(res => {
+          console.log(res.data)
           setLP(res.data)
         })
       }
