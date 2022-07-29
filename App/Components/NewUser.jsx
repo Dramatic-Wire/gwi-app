@@ -11,7 +11,7 @@ export default function NewUser({ navigation }) {
  const { password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture } = useContext(UserContext);
 
     const [show, setShow] = useState(false);
-    const [email, setEmail] = useState(false);
+    const [email, setEmail] = useState('');
 
 
     const registerUser = () => {
