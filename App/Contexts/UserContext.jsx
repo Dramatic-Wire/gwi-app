@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
       if (userId == 0 || !userId) {
         await axios.get(`/user?email=${email}`).then(res => {
           setUserId(res.data.id)
+          setFirst_name(res.data.first_name)
         })
       } else {
         await axios.get(`/user?email=${email}`).then(res => {
@@ -26,7 +27,7 @@ export const UserProvider = ({ children }) => {
         })
       }
     }
-    if (userId > 0) {
+    if (email) {
       getUser()
     }
   }, [userId])
@@ -47,7 +48,8 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP
+        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, 
+        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP
       }}
     >
       {children}

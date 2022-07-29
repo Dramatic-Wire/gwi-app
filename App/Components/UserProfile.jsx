@@ -1,11 +1,9 @@
 import { ScrollView, } from 'react-native';
 import { useContext } from 'react';
 import UserContext from '../Contexts/UserContext';
-import { Button, Text, Heading, Box } from "native-base";
+import { Button, Text, Heading, Box, VStack, useTheme, } from "native-base";
 import styles from '../Styles/style';
 import CardIcon from './CardIcon';
-
-
 
 export default function UserProfile({ navigation }) {
   const { colors } = useTheme()

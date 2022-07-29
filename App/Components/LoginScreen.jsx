@@ -4,17 +4,14 @@ import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { auth } from '../firebase'
 import AxiosInstance from '../Hooks/AxiosInstance';
-
-
 import UserContext from "../Contexts/UserContext";
-
 
 export default function ({ navigation }) {
     const axios = AxiosInstance();
 
     const [show, setShow] = useState(false);
 
-    const { email, setEmail, password, setPassword, customer_id, setCustomer_Id, setFirst_name, LP, setLP } = useContext(UserContext);
+    const { email, setEmail, password, setPassword, userId } = useContext(UserContext);
 
     const handleLogin = async () => {
         // get token from current user
@@ -22,7 +19,7 @@ export default function ({ navigation }) {
 
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
+
         await axios.post(`/login`, { email, password }).then(res => {
             const status = res.status
             if (status == 200) {
@@ -38,13 +35,6 @@ export default function ({ navigation }) {
                     .catch(error => alert(error.message))
             }
         });
-        // await axios.get(`/user?email=${email}`).then(res => {
-        //     setUser_Id(res.data.id) 
-        // });
-        // await axios.get(`https://gwi22-dramaticwire.herokuapp.com/api/stamps?customer_id=${customer_id}`).then(res => {
-        //     setLP(res.data)
-
-        // });
     }
 
     return (
