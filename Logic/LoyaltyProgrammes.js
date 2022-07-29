@@ -79,7 +79,7 @@ module.exports = function (db) {
   //app.post('/api/add/stamp')
   const addStamp = async (req, res) => {
     const {UserId, LPid} = req.body;
-    if (!UserId || !LPid) res.send(400);
+    if (!UserId || !LPid) res.sendStatus(400);
     try {
       await db.none(
         `insert into stamps (customer_id, lp_id, timestamp, redeemed) 
