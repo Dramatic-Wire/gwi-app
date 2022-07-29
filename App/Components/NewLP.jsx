@@ -5,7 +5,6 @@ import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 
-
 export default function NewLP({ navigation }) {
   const { setLoyaltyProgramme, businessID  } = useContext(BusinessContext)
   const [stampCount, setStampCount] = useState(0);

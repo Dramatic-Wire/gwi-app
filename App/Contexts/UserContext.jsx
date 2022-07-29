@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
     if (email > 0) {
       getUserInfo()
     }
-  }, [email])
+  }, [email, customer_id])
 
   return (
     <UserContext.Provider
