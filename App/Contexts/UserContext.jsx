@@ -13,17 +13,18 @@ export const UserProvider = ({ children }) => {
   const [profile_picture, setProfile_picture] = useState();
   const [userId, setUserId] = useState();
   const [LP, setLP] = useState();
+  const [updateStamps, setUpdateStamps] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
-        await axios.get(`/user?user_id=${userId}`).then(res => {
-          console.log(res.data)
-          const { first_name, profile_picture, surname, username } = res.data
-          setUsername(username);
-         setFirst_name(first_name);
-         setSurname(surname);
-         setProfile_picture(profile_picture);
-        })
+      await axios.get(`/user?user_id=${userId}`).then(res => {
+        console.log(res.data)
+        const { first_name, profile_picture, surname, username } = res.data
+        setUsername(username);
+        setFirst_name(first_name);
+        setSurname(surname);
+        setProfile_picture(profile_picture);
+      })
     }
     if (userId == 0 || !userId) {
       setUsername();
@@ -31,7 +32,8 @@ export const UserProvider = ({ children }) => {
       setSurname();
       setProfile_picture();
     } else {
-      getUser()
+      getUser();
+      setUpdateStamps(true)
     }
   }, [userId])
 
@@ -47,13 +49,19 @@ export const UserProvider = ({ children }) => {
     if (userId > 0) {
       getUserStamps()
     }
-  }, [userId])
+
+    if (updateStamps) {
+      getUserStamps()
+      setUpdateStamps(false)
+    }
+
+  }, [updateStamps])
 
   return (
     <UserContext.Provider
       value={{
-        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, 
-        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP
+        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name,
+        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP, setUpdateStamps
       }}
     >
       {children}
