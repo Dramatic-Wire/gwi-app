@@ -11,31 +11,45 @@ export const UserProvider = ({ children }) => {
   const [first_name, setFirst_name] = useState();
   const [surname, setSurname] = useState();
   const [profile_picture, setProfile_picture] = useState();
-  const [customer_id, setCustomer_Id] = useState();
+  const [userId, setUserId] = useState();
   const [LP, setLP] = useState();
 
+  useEffect(() => {
+    const getUser = async () => {
+      if (userId == 0 || !userId) {
+        await axios.get(`/user?email=${email}`).then(res => {
+          setUserId(res.data.id)
+          setFirst_name(res.data.first_name)
+        })
+      } else {
+        await axios.get(`/user?email=${email}`).then(res => {
+          setFirst_name(res.data.first_name)
+        })
+      }
+    }
+    if (email) {
+      getUser()
+    }
+  }, [userId])
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      await axios.get(`/api/user?email=${email}`).then(res => {
-        setFirst_name(res.data.first_name)
-        setCustomer_Id(res.data.id)
-      })
-      await axios.get(`/stamps?customer_id=${customer_id}`).then((res => {
-
-        // LP = res.data
-
-      })).catch(error => console.log(error))
+    const getUserStamps = async () => {
+      if (userId > 0) {
+        await axios.get(`/stamps?customer_id=${userId}`).then(res => {
+          setLP(res.data)
+        })
+      }
     }
-    if (email > 0) {
-      getUserInfo()
+    if (userId > 0) {
+      getUserStamps()
     }
-  }, [email])
+  }, [userId])
 
   return (
     <UserContext.Provider
       value={{
-        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture, customer_id, setCustomer_Id, LP, setLP
+        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name, 
+        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP
       }}
     >
       {children}

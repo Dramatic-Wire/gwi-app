@@ -1,5 +1,5 @@
 import { useTheme, Box, Text, Heading, HStack } from 'native-base';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Beauty from "./Icons/Beauty";
 import Resturant from "./Icons/Restaurant";
 import Health from "./Icons/Health";
@@ -12,7 +12,7 @@ import UserContext from '../Contexts/UserContext';
 export default function CardIcon({ card, color = 'emerald' }) {
   // stampCount = 10, reward = '20% off', name = "Fiona's Fashions", stamped = 2, color = 'emerald', category = 'Clothing'
   const { colors } = useTheme();
- 
+  
   return (
     <Box bgColor={`${color}.300`} rounded='lg' p="3" shadow='5'>
       <HStack justifyContent="left" alignItems="start">
