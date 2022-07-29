@@ -1,10 +1,11 @@
-import { useTheme, Box, Text, Heading, HStack } from 'native-base';
+import { useTheme, Box, Text, Heading, HStack, Badge } from 'native-base';
 import { useState, useContext, useEffect } from 'react';
 import Beauty from "./Icons/Beauty";
 import Resturant from "./Icons/Restaurant";
 import Health from "./Icons/Health";
 import Clothing from "./Icons/Clothing";
 import Groceries from "./Icons/Groceries";
+import CoffeeShop from "./Icons/CoffeeShop"
 import axios from 'axios';
 import UserContext from '../Contexts/UserContext';
 
@@ -14,16 +15,23 @@ export default function CardIcon({ card, color = 'emerald' }) {
   const { colors } = useTheme();
   
   return (
+    <Box>
+      <Badge // bg="red.400"
+      colorScheme="danger" rounded="full" mb={-4} mr={-4} zIndex={1} variant="solid" alignSelf="flex-start" _text={{
+        fontSize: 12
+        }}>
+        !
+        </Badge>
     <Box bgColor={`${color}.300`} rounded='lg' p="3" shadow='5'>
       <HStack justifyContent="left" alignItems="start">
 
         <Box variant={`stamped`} bgColor={`${color}.100`} p='2'>
-          {card.category == 'Coffee Shop' && <CoffeeShop fill={colors[color]['400'] }/>}
-          {card.category == 'Beauty' && <Beauty fill={colors[color]['400']}/>}
-          {card.category == 'Resturant' && <Resturant fill={colors[color]['400']} />}
-          {card.category == 'Groceries' && <Groceries fill={colors[color]['400']} />}
-          {card.category == 'Clothing' && <Clothing fill={colors[color]['400']} />}
-          {card.category == 'Health' && <Health fill={colors[color]['400']} />}
+          {card.category == 'Coffee Shop' && <CoffeeShop fill={colors[color]['400'] } stroke={colors[color]['700']}/>}
+          {card.category == 'Beauty' && <Beauty fill={colors[color]['400']} stroke={colors[color]['700']}/>}
+          {card.category == 'Resturant' && <Resturant fill={colors[color]['400']} stroke={colors[color]['700']}/>}
+          {card.category == 'Groceries' && <Groceries fill={colors[color]['400']} stroke={colors[color]['700']}/>}
+          {card.category == 'Clothing' && <Clothing fill={colors[color]['400']} stroke={colors[color]['700']}/>}
+          {card.category == 'Health' && <Health fill={colors[color]['400']} stroke={colors[color]['700']}/>}
         </Box>
         <Box width='75%' >
           <Heading size='md' textAlign={'left'}>{card.business_name}</Heading>
@@ -34,6 +42,7 @@ export default function CardIcon({ card, color = 'emerald' }) {
           </Text>
         </Box>
       </HStack>
-    </Box>
+      </Box>
+      </Box>
   );
 }

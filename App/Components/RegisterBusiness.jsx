@@ -10,7 +10,7 @@ export default function RegisterBusiness({ navigation }) {
     const categortyList = ['Coffee Shop', 'Beauty', 'Restaurant', 'Groceries', 'Clothing', 'Health']
     const [error, setError] = useState(false);
     const [categoryError, setCategoryError] = useState(false);
-    // const owner_id = 4 
+    const owner_id = userId
     const url = `https://gwi22-dramaticwire.herokuapp.com`
     const registerBusiness = () => {
         // get token from current user
@@ -19,10 +19,12 @@ export default function RegisterBusiness({ navigation }) {
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         if (!error && !categoryError) {
+            // console.log('ownerid: ' + owner_id);
             axios
-                .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, userId, category, logo })
+                .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, logo })
                 .then((result => {
                     const results = result.data
+                    console.log(results);
                     setBusinessID(results.id);
                     navigation.navigate('BusinessProfile')
 
