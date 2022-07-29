@@ -4,7 +4,7 @@ module.exports = function (db) {
     const users = await db.many(`select * from users`);
     res.json({users});
   };
-  //app.get('/api/user')!!!!
+  //app.get('/api/user')
   const getUser = async (req, res) => {
     const {email, user_id} = req.query;
     if (!email && !user_id) res.sendStatus(400);
