@@ -38,7 +38,6 @@ export default function ({ navigation }) {
     }
 
     return (
-
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Box variant='pageTitle' style={{ marginBottom: 3 }}>
                 <Heading>Welcome to the{"\n"} Loyalty App!</Heading>
@@ -58,8 +57,5 @@ export default function ({ navigation }) {
             <Button onPress={handleLogin}>Login</Button>
             <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
         </Box >
-
-
-
     );
 }
