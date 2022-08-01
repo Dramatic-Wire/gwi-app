@@ -32,6 +32,7 @@ module.exports = function (db) {
   //app.post('/api/addLP')
 
   const addLoyaltyProgramme = async (req, res) => {
+    // businessID, stampCount, reward, validFor
     try {
       const {business_id, stamps, reward, validFor} = req.body;
       await db.none(
