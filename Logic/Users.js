@@ -42,7 +42,7 @@ module.exports = function (db) {
 
   //app.get('/api/business')
   const getBusiness = async (req, res) => {
-
+    
     try {
       const {id} = req.query;
       const checkForOwnerId = await db.oneOrNone(
