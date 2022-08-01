@@ -22,10 +22,10 @@ module.exports = function (db) {
     }
   };
   //app.post('/api/register/business')
-  const registerBusiness = async (req, res) => {
+  const registerBusiness = async (req, res, next) => {
     const {businessName, owner_id, category, logo} = req.body;
     if (!businessName || !owner_id || !category) {
-       res.sendStatus(400);
+      res.sendStatus(400);
     }
     await db
       .one(
@@ -34,7 +34,6 @@ module.exports = function (db) {
       )
       .then((result) => {
         res.status(201).json(result);
-        // next(); 
       })
       .catch((err) => {
         res.status(400).send(err.message);
@@ -43,20 +42,14 @@ module.exports = function (db) {
 
   //app.get('/api/business')
   const getBusiness = async (req, res) => {
+    const {id} = req.params;
+    if (!id) res.sendStatus(400);
     try {
-      const {id} = req.query;
-      const checkForOwnerId = await db.oneOrNone(
-        `select * from businesses where owner_id = $1`,
+      const businessData = await db.one(
+        `select business_name, owner_id, category, logo from businesses where owner_id = $1`,
         [id],
       );
-      if (checkForOwnerId.length > 0) {
-        const businessData = await db.many(
-          `select (business_name, owner_id, category, logo) from businesses where owner_id = $1`,
-          [id],
-        );
-        res.json(businessData);
-      }
-      next();
+      res.json(businessData);
     } catch (err) {
       console.log(err);
     }
