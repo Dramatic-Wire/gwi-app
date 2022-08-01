@@ -1,5 +1,4 @@
-import { useTheme, Box, Text, Heading, HStack, Badge } from 'native-base';
-import { useState, useContext, useEffect } from 'react';
+import { useTheme, Box, Text, Heading, VStack, Badge } from 'native-base';
 import Beauty from "./Icons/Beauty";
 import Resturant from "./Icons/Restaurant";
 import Health from "./Icons/Health";
@@ -10,39 +9,38 @@ import axios from 'axios';
 import UserContext from '../Contexts/UserContext';
 
 
-export default function CardIcon({ card, color = 'emerald' }) {
+export default function CardIcon({ card, color = 'violet' }) {
   // stampCount = 10, reward = '20% off', name = "Fiona's Fashions", stamped = 2, color = 'emerald', category = 'Clothing'
   const { colors } = useTheme();
-  
-  return (
-    <Box>
-      <Badge // bg="red.400"
-      colorScheme="danger" rounded="full" mb={-4} mr={-4} zIndex={1} variant="solid" alignSelf="flex-start" _text={{
-        fontSize: 12
-        }}>
-        !
-        </Badge>
-    <Box bgColor={`${color}.300`} rounded='lg' p="3" shadow='5'>
-      <HStack justifyContent="left" alignItems="start">
+  const { stampsneeded, stamps, business_name } = card
 
-        <Box variant={`stamped`} bgColor={`${color}.100`} p='2'>
-          {card.category == 'Coffee Shop' && <CoffeeShop fill={colors[color]['400'] } stroke={colors[color]['700']}/>}
+  return ( 
+      <VStack margin={3} alignItems="center" justifyContent="flex-end">
+    {stamps >= stampsneeded && <Badge // bg="red.400"
+        bgColor={'secondary.400'} rounded="full" mb={-3} mr={-4} zIndex={1} variant="solid" alignSelf="flex-end" _text={{
+      color: 'black',
+      fontSize: 12
+      }}>
+      Reward!
+      </Badge>}
+    {stampsneeded - stamps == 1 && <Badge // bg="red.400"
+        bgColor={'tertiary.300'} rounded="full" mb={-3} mr={-4} zIndex={1} variant="solid" alignSelf="flex-end" _text={{
+      color: 'black',
+      fontSize: 12
+      }}>
+      1 to go!
+      </Badge>}
+        <VStack>
+        <Box rounded='lg' bgColor={`${color}.200`} p={4} width={90} height={100}>
+          {card.category == 'Coffee Shop' && <CoffeeShop fill={colors[color]['400'] } stroke={colors[color]['700']}  />}
           {card.category == 'Beauty' && <Beauty fill={colors[color]['400']} stroke={colors[color]['700']}/>}
           {card.category == 'Resturant' && <Resturant fill={colors[color]['400']} stroke={colors[color]['700']}/>}
           {card.category == 'Groceries' && <Groceries fill={colors[color]['400']} stroke={colors[color]['700']}/>}
           {card.category == 'Clothing' && <Clothing fill={colors[color]['400']} stroke={colors[color]['700']}/>}
           {card.category == 'Health' && <Health fill={colors[color]['400']} stroke={colors[color]['700']}/>}
         </Box>
-        <Box width='75%' >
-          <Heading size='md' textAlign={'left'}>{card.business_name}</Heading>
-          <Text fontSize='lg'>{`Collect ${card.stampsneeded - card.stamps} more stamps to get `}
-            <Text bold>
-              {card.reward}
-            </Text>
-          </Text>
-        </Box>
-      </HStack>
-      </Box>
-      </Box>
+        </VStack>   
+          <Heading size='sm' margin={2} color={'white'}>{business_name}</Heading>
+      </VStack>
   );
 }
