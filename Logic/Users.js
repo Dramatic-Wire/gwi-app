@@ -22,10 +22,10 @@ module.exports = function (db) {
     }
   };
   //app.post('/api/register/business')
-  const registerBusiness = async (req, res) => {
+  const registerBusiness = async (req, res, next) => {
     const {businessName, owner_id, category, logo} = req.body;
     if (!businessName || !owner_id || !category) {
-       res.sendStatus(400);
+      res.sendStatus(400);
     }
     await db
       .one(
@@ -41,7 +41,7 @@ module.exports = function (db) {
   };
 
   //app.get('/api/business')
-  const getBusiness = async (req, res) => {
+  const getBusiness = async (req, res, next) => {
     try {
       const {id} = req.query;
       const checkForOwnerId = await db.oneOrNone(
