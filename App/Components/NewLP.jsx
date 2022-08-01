@@ -34,7 +34,7 @@ export default function NewLP({ navigation }) {
           console.log(results.message);
           
         })).catch(error => console.log(error));
-}
+  }
 
   return (
     <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>

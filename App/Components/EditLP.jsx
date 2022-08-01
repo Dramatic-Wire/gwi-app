@@ -29,7 +29,7 @@ export default function EditLP({ navigation }) {
             .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${businessID}`)
             .then((result => {
               const results = result.data
-              setLoyaltyProgramme({ stampsRequired: stampCount, reward: reward, timeFrame: validFor, members:0 });
+              // setLoyaltyProgramme({ stampsRequired: stampCount, reward: reward, timeFrame: validFor, members:0 });
               navigation.navigate('BusinessProfile')
 
             }))
