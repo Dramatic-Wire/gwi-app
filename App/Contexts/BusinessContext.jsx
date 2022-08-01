@@ -17,7 +17,7 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getBusiness = async () => {
-      await axios.get(`/business?id=${userId}`).then(res => {
+      await axios.get(`/business/${userId}`).then(res => {
         console.log(res.data)
       })
     }

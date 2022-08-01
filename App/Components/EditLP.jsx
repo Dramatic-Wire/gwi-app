@@ -8,28 +8,31 @@ import axios from 'axios';
 
 export default function EditLP({ navigation }) {
   const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
-  const [stampCount, setStampCount] = useState(0);
-  const [validFor, setValidFor] = useState('');
+  const [stamps, setStamps] = useState(0);
+  const [valid_for, setValid_for] = useState('');
   const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
+  const business_id = businessID
+
 
   const handleTimeFrameSelection = (timeFrame) => {
-    setValidFor(timeFrame);
+    setValid_for(timeFrame);
   }
 
-  const missingInfo = stampCount > 0 && reward !== '' && validFor !== '';
+  const missingInfo = stamps > 0 && reward !== '' && valid_for !== '';
+  // stamps, reward, valid_for, business_id
 
 
   const editLP = () => {
     axios
-        .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/LP`, { stampCount, reward, validFor, businessID})
+        .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/LP`, { stamps, reward, valid_for, business_id})
         .then(
           axios
             .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${businessID}`)
             .then((result => {
               const results = result.data
-              // setLoyaltyProgramme({ stampsRequired: stampCount, reward: reward, timeFrame: validFor, members:0 });
+              setLoyaltyProgramme({ stampsRequired: stamps, reward: reward, timeFrame: valid_for, members:0 });
               navigation.navigate('BusinessProfile')
 
             }))
@@ -47,9 +50,9 @@ export default function EditLP({ navigation }) {
       <Box variant='section'>
         <Text variant='section' >Number of stamps on each card</Text>
         <Box style={{flexDirection:'row' , justifyContent:'center', alignItems:'center'}} >
-          <IconButton icon={<Icon name='minus-circle' size={20} color='black'/> } onPress={() => {if(stampCount > 0) setStampCount(stampCount - 1)}}  disabled={stampCount == 0 ? true : false} />
-          <Text style={{ margin: 5, fontSize: 20 }}>{stampCount}</Text>
-          <IconButton icon={<Icon name='plus-circle' size={20} color='black'/> } onPress={() => {setStampCount(stampCount + 1)}}/>
+          <IconButton icon={<Icon name='minus-circle' size={20} color='black'/> } onPress={() => {if(stamps > 0) setStamps(stamps - 1)}}  disabled={stamps == 0 ? true : false} />
+          <Text style={{ margin: 5, fontSize: 20 }}>{stamps}</Text>
+          <IconButton icon={<Icon name='plus-circle' size={20} color='black'/> } onPress={() => {setStamps(stamps + 1)}}/>
         </Box>
       </Box>
 
@@ -61,7 +64,7 @@ export default function EditLP({ navigation }) {
       <Box variant='section' >
         <Text variant='section'>Valid for</Text>
         <HStack space={2} flexWrap='wrap'>
-          {timeframeOptions.map((time, index) => <Button size={'sm'}  key={time} value={index} onPress={() => handleTimeFrameSelection(time)} variant={validFor == time ? 'chipSelected' : 'chip'} >{time}</Button>)}
+          {timeframeOptions.map((time, index) => <Button size={'sm'}  key={time} value={index} onPress={() => handleTimeFrameSelection(time)} variant={valid_for == time ? 'chipSelected' : 'chip'} >{time}</Button>)}
         </HStack>
      
       </Box>
@@ -69,7 +72,7 @@ export default function EditLP({ navigation }) {
       <Button isDisabled={!missingInfo}  onPress={() => setPreview(true)}>Preview</Button>
       <Button isDisabled={!missingInfo} onPress={editLP}>Save</Button>
       </HStack>
-      {preview == true && <LoyaltyCard stampCount={stampCount} validFor={validFor} reward={reward} onClose={setPreview} open={preview} />}
+      {preview == true && <LoyaltyCard stamps={stamps} valid_for={valid_for} reward={reward} onClose={setPreview} open={preview} />}
         </VStack>
       </Box>
       </Box>
