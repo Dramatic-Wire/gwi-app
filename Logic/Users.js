@@ -41,21 +41,15 @@ module.exports = function (db) {
   };
 
   //app.get('/api/business')
-  const getBusiness = async (req, res, next) => {
+  const getBusiness = async (req, res) => {
+    const {id} = req.params;
+    if (!id) res.sendStatus(400);
     try {
-      const {id} = req.query;
-      const checkForOwnerId = await db.oneOrNone(
-        `select * from businesses where owner_id = $1`,
+      const businessData = await db.one(
+        `select business_name, owner_id, category, logo from businesses where owner_id = $1`,
         [id],
       );
-      if (checkForOwnerId.length > 0) {
-        const businessData = await db.many(
-          `select (business_name, owner_id, category, logo) from businesses where owner_id = $1`,
-          [id],
-        );
-        res.json(businessData);
-      }
-      next();
+      res.json(businessData);
     } catch (err) {
       console.log(err);
     }
