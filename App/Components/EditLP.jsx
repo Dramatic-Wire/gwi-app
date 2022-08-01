@@ -24,15 +24,17 @@ export default function EditLP({ navigation }) {
   const editLP = () => {
     axios
         .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/LP`, { stampCount, reward, validFor, businessID})
-        .then((result => {
-          const results = result.data
-          if (results.message == 'updated') {
-            setLoyaltyProgramme({ stampsRequired: stampCount, reward: reward, timeFrame: validFor, members:0 });
-          }
-          navigation.navigate('BusinessProfile')
-          console.log(results.message);
-          
-        })).catch(error => console.log(error));
+        .then(
+          axios
+            .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${businessID}`)
+            .then((result => {
+              const results = result.data
+              setLoyaltyProgramme({ stampsRequired: stampCount, reward: reward, timeFrame: validFor, members:0 });
+              navigation.navigate('BusinessProfile')
+
+            }))
+        )
+        .catch(error => console.log(error));
 }
 
   return (
@@ -65,7 +67,7 @@ export default function EditLP({ navigation }) {
       </Box>
       <HStack space={3}  justifyContent="center" >
       <Button isDisabled={!missingInfo}  onPress={() => setPreview(true)}>Preview</Button>
-      <Button isDisabled={!missingInfo} onPress={() => {editLP; navigation.navigate('BusinessProfile')}}>Save</Button>
+      <Button isDisabled={!missingInfo} onPress={editLP}>Save</Button>
       </HStack>
       {preview == true && <LoyaltyCard stampCount={stampCount} validFor={validFor} reward={reward} onClose={setPreview} open={preview} />}
         </VStack>
