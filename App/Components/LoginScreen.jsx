@@ -24,8 +24,9 @@ export default function ({ navigation }) {
 
             const { id } = res.data;
             setUserId(id);
+            setEmail('')
+            setPassword('')
             navigation.navigate('UserProfile');
-
             // const status = res.status
             // if (status == 200) {
 
@@ -52,12 +53,9 @@ export default function ({ navigation }) {
                 <Text>Email</Text>
                 <Input placeholder='Email' value={email}
                     onChangeText={text => setEmail(text)}
-                    style={styles.input}></Input>
+                    style={styles.input} />
                 <Text>Password</Text>
-                <Input w={{
-                    base: "85%",
-                    md: "25%"
-                }} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" onChangeText={text => setPassword(text)} />
+                <Input type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" value={password} onChangeText={text => setPassword(text)} style={styles.input}/>
             </Box>
             <Button onPress={handleLogin}>Login</Button>
             <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>

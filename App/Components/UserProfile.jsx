@@ -6,13 +6,21 @@ import styles from '../Styles/style';
 import CardIcon from './CardIcon';
 import Loading from './Loading';
 
+
 export default function UserProfile({ navigation }) {
   const { colors } = useTheme()
 
-  const { first_name, LP } = useContext(UserContext);
+  const { first_name, LP, setUserId, setUsername, setSurname, setFirst_name, setProfile_picture } = useContext(UserContext);
 
   if (!first_name || !LP) return (<Loading></Loading>);
-  
+  const handleLogout = () => {
+    setUserId();
+    setUsername();
+    setFirst_name();
+    setSurname();
+    setProfile_picture();
+    navigation.navigate('LoginScreen')
+  }
 
   return (
     <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
@@ -21,13 +29,13 @@ export default function UserProfile({ navigation }) {
           <Box variant='pageTitle'>
             <Heading style={styles.pageTitle}>Welcome {first_name}!</Heading>
           </Box>
-          <Box variant='section'>
-            {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
-            <Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button>
-          </Box>
+          {!Array.isArray(LP) && <Box variant='section'>
+            <Text variant='section'>You are currently not part of any loyalty programmes</Text>
+          </Box>}
           {Array.isArray(LP) && LP.map((element, index) => { return <CardIcon key={index} card={element} /> })}
         </VStack>
       </ScrollView>
+      <Box><Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button><Button onPress={handleLogout}>Logout</Button></Box>
     </Box>
   )
 }
