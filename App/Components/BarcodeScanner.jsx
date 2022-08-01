@@ -58,24 +58,16 @@ export default function BarcodeScanner({ navigation }) {
 
   // Return the View
   return (
-    <View>
-      <Box style={styles.barcodebox}>
+    <Box safeArea bg='primary.800' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+      <Box style={styles.barcodebox} w='90%' height='90%'>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 400, width: 400 }} />
+          style={{ height: '100%', width: '100%' }} />
 
-      </Box>
-      {/* <View style={styles.barcodebox}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 400, width: 400 }} />
-      </View> */}
-      <Box variant='section'>
-
-        {/* <Text>{text}</Text> */}
+    
       </Box>
 
       {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
-    </View>
+    </Box>
   );
 }

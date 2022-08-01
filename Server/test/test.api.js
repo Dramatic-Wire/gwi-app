@@ -104,11 +104,6 @@ describe('The Stampede API', function () {
       const result = await supertest(app)
         .post('/api/login')
         .send({email: 'salamandar@aol.com', password: '1234'});
-      console.log(result.body);
-
-      console.log(
-        await supertest(app).get('/api/stamps/?customer_id=21').expect(200),
-      );
     });
   });
 
