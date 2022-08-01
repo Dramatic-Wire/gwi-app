@@ -29,17 +29,19 @@ export default function UserProfile({ navigation }) {
           <Box variant='pageTitle'>
             <Heading style={styles.pageTitle}>Welcome {first_name}!</Heading>
           </Box>
-          <Box>
-            <Button onPress={() => { navigation.navigate('RegisterBusiness')}} >Add a business</Button>
-          </Box>
-          <Box variant='section'>
-            {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
-            <Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button>
-          </Box>
+        
+        
+        <Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button>
+          {!Array.isArray(LP) && <Box variant='section'>
+            <Text variant='section'>You are currently not part of any loyalty programmes</Text>
+          </Box>}
           {Array.isArray(LP) && LP.map((element, index) => { return <CardIcon key={index} card={element} /> })}
         </VStack>
       </ScrollView>
-      <Box><Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button><Button onPress={handleLogout}>Logout</Button></Box>
+      <Box>
+        <Button onPress={() => { navigation.navigate('RegisterBusiness')}} >Add a business</Button>
+        <Button onPress={handleLogout}>Logout</Button>
+      </Box>
     </Box>
   )
 }
