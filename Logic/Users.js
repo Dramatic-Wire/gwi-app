@@ -25,7 +25,7 @@ module.exports = function (db) {
   const registerBusiness = async (req, res) => {
     const {businessName, owner_id, category, logo} = req.body;
     if (!businessName || !owner_id || !category) {
-       res.sendStatus(400);
+      res.sendStatus(400);
     }
     await db
       .one(
@@ -34,7 +34,6 @@ module.exports = function (db) {
       )
       .then((result) => {
         res.status(201).json(result);
-        next(); 
       })
       .catch((err) => {
         res.status(400).send(err.message);
