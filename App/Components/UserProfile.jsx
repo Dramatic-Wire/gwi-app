@@ -27,7 +27,6 @@ export default function UserProfile({ navigation }) {
     navigation.navigate('LoginScreen')
   }
   const toggleProfiles = () => {
-    //setBusinessID(businessID);
     toggleSwitch
     navigation.navigate('BusinessProfile')
   }
@@ -38,11 +37,13 @@ export default function UserProfile({ navigation }) {
         <VStack space={3} safeArea='8' justifyContent='center'>
           <Box variant='pageTitle'>
             <Heading style={styles.pageTitle}>Welcome {first_name}!</Heading>
+            {businessID > 0  &&
             <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
               thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleProfiles }
               value={isEnabled} />
+            }
           </Box>
           {/* <Box>
             <Button onPress={() => { navigation.navigate('RegisterBusiness')}} >Add a business</Button>
