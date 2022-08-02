@@ -1,6 +1,7 @@
 import { Button, Text, Heading, Box, HStack, VStack, useTheme } from "native-base";
 import { useContext } from 'react';
 import BusinessContext from '../Contexts/BusinessContext';
+import UserContext from "../Contexts/UserContext";
 import styles from '../Styles/style';
 import QRCode from 'react-native-qrcode-svg';
 import axios from "axios";
@@ -11,6 +12,8 @@ export default function BusinessProfile({ navigation }) {
     const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme } = useContext(BusinessContext);
     const { colors } = useTheme();
     // const [preview, setPreview] = useState(false)
+    const {userId} = useContext(UserContext)
+    const ownerID = userId
     
 
     const DeleteLP = () => {
@@ -21,6 +24,17 @@ export default function BusinessProfile({ navigation }) {
                 setLoyaltyProgramme({ stampsRequired: null, reward: null, timeFrame: null, members:null });
                 console.log('deleted');
                 // navigation.navigate('NewLP')
+
+            })).catch(error => console.log(error));
+    }
+
+    const DeleteBusiness = () => {
+        axios
+            .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/business?ownerID=${ownerID}`)
+            .then((result => {
+                const results = result.data
+                console.log('deleted business');
+                navigation.navigate('UserProfile')
 
             })).catch(error => console.log(error));
     }
@@ -55,7 +69,7 @@ export default function BusinessProfile({ navigation }) {
                 </Box>}
                 <HStack space={3} justifyContent="center" >
                         <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
-                        <Button>Delete Business</Button>
+                        <Button onPress={DeleteBusiness}>Delete Business</Button>
                 </HStack>
 
             </VStack>

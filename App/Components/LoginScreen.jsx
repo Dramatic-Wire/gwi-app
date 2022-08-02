@@ -49,7 +49,7 @@ export default function ({ navigation }) {
         lg: "auto"
             }} width='80%' behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <Box variant='pageTitle' style={{ marginBottom: 3 }}>
-                <Heading>Welcome to the{"\n"} Loyalty App!</Heading>
+                <Heading>Welcome to{"\n"} Stampede!</Heading>
                 </Box>
             <Spacer/>
             <Box variant='section'>
