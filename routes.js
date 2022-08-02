@@ -27,6 +27,8 @@ module.exports = function (app, db) {
   app.get('/api/LP', LP.getLoyaltyProgramme);
   app.get('/api/LP/:LP_id/users', LP.getLoyaltyProgrammeUsers);
   app.post('/api/LP/redeem/:customer_id/:LP_id', LP.redeemReward);
+  app.delete('/api/delete/business', users.deleteBusiness);
+  app.post('/api/edit/business', users.editBusiness)
 
   //Developer Routes
   app.get('/api/users', users.getAllUsers);
