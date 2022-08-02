@@ -130,7 +130,7 @@ module.exports = function (db) {
     if (!customer_id) res.sendStatus(400);
     try {
       const query = `
-      SELECT lp_id, stampCount as stamps, reward, stamps as stampsNeeded, business_name, category FROM (
+      SELECT lp_id, stampCount as stamps, reward, stamps as stampsNeeded, business_name, valid_for, category FROM (
       SELECT loyalty_programmes.id as lp_id, COUNT(*) as stampCount FROM stamps 
       INNER JOIN loyalty_programmes ON stamps.lp_id=loyalty_programmes.id
       WHERE stamps.customer_id = $1 AND stamps.redeemed = 'false' AND stamps.expired = 'false'
