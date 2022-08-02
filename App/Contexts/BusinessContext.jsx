@@ -12,38 +12,18 @@ export const BusinessProvider = ({ children }) => {
   const [businessName, setBusinessName] = useState();
   const [category, setCategory] = useState()
   const [logo, setLogo] = useState('');
-  const [loyaltyProgramme, setLoyaltyProgramme] = useState();
+  const [loyaltyProgramme, setLoyaltyProgramme] = useState({});
   
 
   useEffect(() => {
     const getBusiness = async () => {
       await axios.get(`/business/${userId}`).then(res => {
-        
-        setBusinessID(res.data.id)
-        setBusinessName(res.data.business_name)
-        setCategory(res.data.category)
-        setLogo(res.data.logo)
-      })
-    }
-    if (userId > 0) {
-      getBusiness()
-    } 
-  },[userId])
-
-  useEffect(() => {
-    const getLP = async () => {
-      await axios.get(`/LP?id=${businessID}`).then(res => {
-        console.log('------')
         console.log(res.data)
-        console.log('------')
-        //setLoyaltyProgramme({ stampsRequired: 1, reward: 1, timeFrame: 1, members:1 });
-        console.log(loyaltyProgramme)
       })
     }
     if (businessID > 0) {
-      getLP()
+      getBusiness()
     } 
-    
   },[businessID])
 
 

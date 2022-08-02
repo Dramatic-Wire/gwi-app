@@ -51,14 +51,14 @@ export default function EditLP({ navigation }) {
         <Text variant='section' >Number of stamps on each card</Text>
         <Box style={{flexDirection:'row' , justifyContent:'center', alignItems:'center'}} >
           <IconButton icon={<Icon name='minus-circle' size={20} color='black'/> } onPress={() => {if(stamps > 0) setStamps(stamps - 1)}}  disabled={stamps == 0 ? true : false} />
-          <Text style={{ margin: 5, fontSize: 20 }}>{stamps}</Text>
+          <Text style={{ margin: 5, fontSize: 20 }} >{stamps}</Text>
           <IconButton icon={<Icon name='plus-circle' size={20} color='black'/> } onPress={() => {setStamps(stamps + 1)}}/>
         </Box>
       </Box>
 
       <Box variant='section'>
         <Text variant='section'>Customer reward</Text>
-      <Input placeholder='A free item or discount' onChangeText={text => setReward(text)} />
+      <Input placeholder='A free item or discount' onChangeText={text => setReward(text)}  />
       </Box>
 
       <Box variant='section' >
