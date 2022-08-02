@@ -27,7 +27,7 @@ export default function UserProfile({ navigation }) {
     navigation.navigate('LoginScreen')
   }
   const toggleProfiles = () => {
-    setBusinessID(businessID);
+    //setBusinessID(businessID);
     toggleSwitch
     navigation.navigate('BusinessProfile')
   }
