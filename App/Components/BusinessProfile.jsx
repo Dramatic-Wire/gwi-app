@@ -10,31 +10,31 @@ import { ScrollView, Switch } from 'react-native';
 // import RemoveLP from "./DeleteLP";
 
 export default function BusinessProfile({ navigation }) {
-    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, stamps, validFor, reward, LP_ID } = useContext(BusinessContext);
     const { colors } = useTheme();
     const [isEnabled, setIsEnabled] = useState(true);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     // const [preview, setPreview] = useState(false)
-    const {userId} = useContext(UserContext)
+    const { userId } = useContext(UserContext)
     const ownerID = userId
-    
+
+    const toggleProfiles = () => {
+        toggleSwitch
+        navigation.navigate('UserProfile')
+    }
 
     const DeleteLP = () => {
         axios
             .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/LP?businessID=${businessID}`)
             .then((result => {
                 const results = result.data
-                setLoyaltyProgramme({ stampsRequired: null, reward: null, timeFrame: null, members: null });
+                // setLoyaltyProgramme({ stampsRequired: null, reward: null, timeFrame: null, members: null });
                 console.log('deleted');
                 // navigation.navigate('NewLP')
 
             })).catch(error => console.log(error));
     }
-    const toggleProfiles = () => {
-        toggleSwitch
-        navigation.navigate('UserProfile')
-      }
 
     const DeleteBusiness = () => {
         axios
@@ -59,19 +59,19 @@ export default function BusinessProfile({ navigation }) {
                         onValueChange={toggleProfiles}
                         value={isEnabled} />
                 </Box>
-                {!loyaltyProgramme.stampsRequired && <Box variant='section'>
+                {!stamps && <Box variant='section'>
                     <Text variant='section'>You currently have no loyalty programme for your business</Text>
                     <Button onPress={() => { navigation.navigate('NewLP') }}>Add Loyalty Programme</Button>
                 </Box>}
-                {loyaltyProgramme.stampsRequired && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
+                {stamps && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
                     <QRCode
                         color={colors.primary['700']}
                         backgroundColor={colors.light['50']}
-                        value={loyaltyProgramme.id}
+                        value={LP_ID}
                     />
                     <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
-                    <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>
-                    <Text>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>
+                    <Text>{`${'loyaltyProgramme.members'} active members on programme`}</Text>
+                    <Text>{`${stamps} stamps for ${reward}`}</Text>
                     <HStack space={3} justifyContent="center" >
                         <Button onPress={() => navigation.navigate('EditLP')}>Edit</Button>
                         <Button onPress={DeleteLP}>Delete</Button>
@@ -81,8 +81,8 @@ export default function BusinessProfile({ navigation }) {
 
                 </Box>}
                 <HStack space={3} justifyContent="center" >
-                        <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
-                        <Button onPress={DeleteBusiness}>Delete Business</Button>
+                    <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
+                    <Button onPress={DeleteBusiness}>Delete Business</Button>
                 </HStack>
 
             </VStack>
