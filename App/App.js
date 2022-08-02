@@ -9,6 +9,9 @@ import UserProfile from './Components/UserProfile';
 import LoginScreen from './Components/LoginScreen';
 import BarcodeScanner from './Components/BarcodeScanner';
 import EditLP from './Components/EditLP';
+import Success from './Components/Success';
+import Error from './Components/Error';
+import EditBusiness from './Components/EditBusiness';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserProvider } from './Contexts/UserContext';
@@ -32,6 +35,9 @@ export default function App() {
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="BarcodeScanner" component={BarcodeScanner} />
         <Stack.Screen name="EditLP" component={EditLP} />
+        <Stack.Screen name="Success" component={Success} />
+        <Stack.Screen name="Error" component={Error} />
+        <Stack.Screen name="EditBusiness" component={EditBusiness} />
 
       </Stack.Navigator>
     </NavigationContainer>

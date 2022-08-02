@@ -8,17 +8,19 @@ import axios from "axios";
 
 
 export default function BusinessProfile({ navigation }) {
-    const { businessName, loyaltyProgramme, businessID } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme } = useContext(BusinessContext);
     const { colors } = useTheme();
     // const [preview, setPreview] = useState(false)
     
 
     const DeleteLP = () => {
         axios
-            .post(`https://gwi22-dramaticwire.herokuapp.com/api/delete/LP`, { businessID })
+            .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/LP?businessID=${businessID}`)
             .then((result => {
                 const results = result.data
-                console.log(result.data.result);
+                setLoyaltyProgramme({ stampsRequired: null, reward: null, timeFrame: null, members:null });
+                console.log('deleted');
+                // navigation.navigate('NewLP')
 
             })).catch(error => console.log(error));
     }
@@ -51,6 +53,10 @@ export default function BusinessProfile({ navigation }) {
                     
 
                 </Box>}
+                <HStack space={3} justifyContent="center" >
+                        <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
+                        <Button>Delete Business</Button>
+                </HStack>
 
             </VStack>
         </Box>
