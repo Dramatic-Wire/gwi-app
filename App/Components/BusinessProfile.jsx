@@ -7,7 +7,6 @@ import QRCode from 'react-native-qrcode-svg';
 import axios from "axios";
 // import RemoveLP from "./DeleteLP";
 
-
 export default function BusinessProfile({ navigation }) {
     const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme } = useContext(BusinessContext);
     const { colors } = useTheme();
