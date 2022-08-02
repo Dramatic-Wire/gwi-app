@@ -22,6 +22,7 @@ export const BusinessProvider = ({ children }) => {
       })
     }
     if (businessID > 0) {
+      console.log('test')
       getBusiness()
     } 
   },[businessID])
