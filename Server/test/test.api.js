@@ -206,6 +206,7 @@ describe('The Stampede API', function () {
           reward: 'nisi volutpat',
           stamps: '4',
           stampsneeded: '1',
+          valid_for: '1 year',
         },
         {
           business_name: 'Skyba',
@@ -214,6 +215,7 @@ describe('The Stampede API', function () {
           reward: 'nam dui proin leo',
           stamps: '1',
           stampsneeded: '4',
+          valid_for: '1 year',
         },
       ];
       const result = await supertest(app)
@@ -234,6 +236,7 @@ describe('The Stampede API', function () {
           reward: 'nulla neque libero',
           stamps: '1',
           stampsneeded: '14',
+          valid_for: '3 months',
         },
         {
           business_name: 'Quimba',
@@ -242,6 +245,7 @@ describe('The Stampede API', function () {
           reward: 'nisi volutpat',
           stamps: '4',
           stampsneeded: '1',
+          valid_for: '1 year',
         },
         {
           business_name: 'Skyba',
@@ -250,6 +254,7 @@ describe('The Stampede API', function () {
           reward: 'nam dui proin leo',
           stamps: '1',
           stampsneeded: '4',
+          valid_for: '1 year',
         },
       ];
       const result = await supertest(app)
@@ -257,40 +262,40 @@ describe('The Stampede API', function () {
         .expect(200);
       assert.deepEqual(user9Stamps, result.body);
     });
+    it(`should mark a stamp as redeemed if a user has used it to get a reward`, async () => {
+      await supertest(app).post('/api/LP/redeem/5/1').expect(200);
+      const result = await supertest(app)
+        .get('/api/stamps/?customer_id=5')
+        .expect(200);
+      user5Stamps = [
+        {
+          lp_id: 2,
+          stamps: '1',
+          reward: 'nisi volutpat',
+          stampsneeded: '1',
+          business_name: 'Quimba',
+          category: 'Groceries',
+        },
+        {
+          lp_id: 1,
+          stamps: '1',
+          reward: 'nam dui proin leo',
+          stampsneeded: '4',
+          business_name: 'Skyba',
+          category: 'Resturant',
+        },
+        {
+          lp_id: 3,
+          stamps: '2',
+          reward: 'blandit nam nulla',
+          stampsneeded: '7',
+          business_name: 'Youopia',
+          category: 'Groceries',
+        },
+      ];
+      assert.deepEqual(user5Stamps, result.body);
+    });
   });
-  // it(`should mark a stamp as redeemed if a user has used it to get a reward`, async () => {
-  //   await supertest(app).post('/api/LP/redeem/5/1').expect(200);
-  //   const result = await supertest(app)
-  //     .get('/api/stamps/?customer_id=5')
-  //     .expect(200);
-  //   user5Stamps = [
-  //     {
-  //       lp_id: 2,
-  //       stamps: '1',
-  //       reward: 'nisi volutpat',
-  //       stampsneeded: '1',
-  //       business_name: 'Quimba',
-  //       category: 'Groceries',
-  //     },
-  //     {
-  //       lp_id: 1,
-  //       stamps: '1',
-  //       reward: 'nam dui proin leo',
-  //       stampsneeded: '4',
-  //       business_name: 'Skyba',
-  //       category: 'Resturant',
-  //     },
-  //     {
-  //       lp_id: 3,
-  //       stamps: '2',
-  //       reward: 'blandit nam nulla',
-  //       stampsneeded: '7',
-  //       business_name: 'Youopia',
-  //       category: 'Groceries',
-  //     },
-  //   ];
-  //   assert.deepEqual(user5Stamps, result.body);
-  // });
 
   ///should redeem oldest stamps first
   after(() => {

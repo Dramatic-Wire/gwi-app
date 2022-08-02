@@ -46,9 +46,6 @@ export const UserProvider = ({ children }) => {
         })
       }
     }
-    if (userId > 0) {
-      getUserStamps()
-    }
 
     if (updateStamps) {
       getUserStamps()

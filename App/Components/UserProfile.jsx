@@ -6,13 +6,16 @@ import styles from '../Styles/style';
 import CardIcon from './CardIcon';
 import Loading from './Loading';
 import StampIcon from './Icons/StampIcon';
+import LoyaltyCard from './LoyaltyCard';
+import RewardCode from './RewardCode';
 import BusinessContext from '../Contexts/BusinessContext';
 
-
-export default function UserProfile({ navigation }) {
-  const { colors } = useTheme()
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  
+  export default function UserProfile({ navigation }) {
+    const { colors } = useTheme()
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const [focusLP, setFocusLP] = useState();
 
   const { businessName, loyaltyProgramme, businessID, setBusinessID } = useContext(BusinessContext);
   const { first_name, LP, userId, setUserId, setUsername, setSurname, setFirst_name, setProfile_picture } = useContext(UserContext);
@@ -48,14 +51,16 @@ export default function UserProfile({ navigation }) {
           {/* <Box>
             <Button onPress={() => { navigation.navigate('RegisterBusiness')}} >Add a business</Button>
           </Box> */}
-          {!Array.isArray(LP) && <Box variant='section'>
-            <Text variant='section'>You are currently not part of any loyalty programmes</Text>
+          <Box>
+            {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
             {/* <Button onPress={() => { navigation.navigate('BarcodeScanner') }}>Join a Loyalty Programme</Button> */}
-          </Box>}
-          <HStack maxW={'100%'} flexWrap='wrap'>
-            {Array.isArray(LP) && LP.map((element, index) => { return <CardIcon key={index} card={element} /> })}
+          </Box>
+          <HStack maxW={'100%'} flexWrap='wrap' alignItems={'flex-end'}>
+            {Array.isArray(LP) && LP.map((element, index) => { return <Pressable key={index} onPress={() => { setFocusLP({...element})}}><CardIcon  card={element} /></Pressable>})}
           </HStack>
         </VStack>
+         {focusLP && focusLP.stampsneeded > focusLP.stamps && <LoyaltyCard stampCount={parseInt(focusLP.stampsneeded)} stamped={parseInt(focusLP.stamps)} name={focusLP.business_name} validFor={'validFor'} reward={focusLP.reward} LPCategory={focusLP.category} onClose={() => {setFocusLP()}} open={focusLP != undefined} />}
+         {focusLP && focusLP.stampsneeded <= focusLP.stamps && <RewardCode  onClose={() => {setFocusLP()}} LP={focusLP} customer_id={userId} open={focusLP != undefined} />}
       </ScrollView>
 
       {/* <Button onPress={handleLogout}>Logout</Button> */}
