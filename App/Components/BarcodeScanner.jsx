@@ -33,13 +33,18 @@ export default function BarcodeScanner({ navigation }) {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     // setText(data)
-        axios
-          .post(`/add/stamp`, {UserId: userId, LPid: data})
-          .then(result => { 
-            setUpdateStamps(true)
-            navigation.navigate('UserProfile')
-          }).catch(error => console.log(error));
-      };
+    axios
+      .post(`/add/stamp`, { UserId: userId, LPid: data })
+      .then(result => {
+        if (result.status == 201) {
+          setUpdateStamps(true)
+          navigation.navigate('Success')
+        }
+        else {
+          navigation.navigate('Error')
+        }
+      }).catch(error => console.log(error));
+  };
 
   // Check permissions and return the screens
   if (hasPermission === null) {
@@ -64,7 +69,7 @@ export default function BarcodeScanner({ navigation }) {
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{ height: '100%', width: '100%' }} />
 
-    
+
       </Box>
 
       {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}

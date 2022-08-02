@@ -46,7 +46,7 @@ module.exports = function (db) {
     if (!id) res.sendStatus(400);
     try {
       const businessData = await db.one(
-        `select business_name, owner_id, category, logo from businesses where owner_id = $1`,
+        `select id, business_name, category, logo from businesses where owner_id = $1`,
         [id],
       );
       res.json(businessData);
