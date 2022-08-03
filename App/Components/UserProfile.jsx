@@ -63,7 +63,7 @@ import BusinessContext from '../Contexts/BusinessContext';
          {focusLP && focusLP.stampsneeded <= focusLP.stamps && <RewardCode  onClose={() => {setFocusLP()}} LP={focusLP} customer_id={userId} open={focusLP != undefined} />}
       </ScrollView>
 
-      {/* <Button onPress={handleLogout}>Logout</Button> */}
+      <Button onPress={handleLogout}>Logout</Button>
       <Box width='100%'>
 
         <Box bgColor={'primary.700'} width='100%' alignItems={'center'} padding={5} marginBottom={-50} paddingBottom={60} borderColor='primary.200' borderTopWidth={4}>

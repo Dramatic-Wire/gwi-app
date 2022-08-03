@@ -7,10 +7,10 @@ import axios from 'axios';
 
 
 export default function EditLP({ navigation }) {
-  const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
-  const [stamps, setStamps] = useState(0);
+  const { setLoyaltyProgramme, businessID, stamps, reward, setStamps, setReward } = useContext(BusinessContext)
+  // const [stamps, setStamps] = useState(0);
   const [valid_for, setValid_for] = useState('');
-  const [reward, setReward] = useState('');
+  // const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
