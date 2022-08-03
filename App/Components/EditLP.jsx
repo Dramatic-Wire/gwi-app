@@ -48,7 +48,7 @@ export default function EditLP({ navigation }) {
       <Heading size='md'>Edit your loyalty programme</Heading>
       </Box>
       <Box variant='section'>
-        <Text variant='section' >Number of stamps on each card</Text>
+        <Text variant='section'>Number of stamps on each card</Text>
         <Box style={{flexDirection:'row' , justifyContent:'center', alignItems:'center'}} >
           <IconButton icon={<Icon name='minus-circle' size={20} color='black'/> } onPress={() => {if(stamps > 0) setStamps(stamps - 1)}}  disabled={stamps == 0 ? true : false} />
           <Text style={{ margin: 5, fontSize: 20 }} >{stamps}</Text>

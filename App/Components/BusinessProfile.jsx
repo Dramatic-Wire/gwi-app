@@ -6,11 +6,12 @@ import styles from '../Styles/style';
 import QRCode from 'react-native-qrcode-svg';
 import axios from "axios";
 import { ScrollView, Switch } from 'react-native';
+import Loading from "./Loading";
 
 // import RemoveLP from "./DeleteLP";
 
 export default function BusinessProfile({ navigation }) {
-    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, stamps, validFor, reward, LP_ID } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, reward } = useContext(BusinessContext);
     const { colors } = useTheme();
     const [isEnabled, setIsEnabled] = useState(true);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -48,6 +49,10 @@ export default function BusinessProfile({ navigation }) {
     }
 
 
+    if (!loyaltyProgramme) return (
+        <Loading></Loading>
+    );
+
     return (
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
             <VStack space={3} safeArea='8' >
@@ -59,26 +64,25 @@ export default function BusinessProfile({ navigation }) {
                         onValueChange={toggleProfiles}
                         value={isEnabled} />
                 </Box>
-                {!stamps && <Box variant='section'>
+               
+                {loyaltyProgramme == 'none' && <Box variant='section'>
                     <Text variant='section'>You currently have no loyalty programme for your business</Text>
                     <Button onPress={() => { navigation.navigate('NewLP') }}>Add Loyalty Programme</Button>
                 </Box>}
-                {stamps && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
+
+                {loyaltyProgramme !== 'none' && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
                     <QRCode
                         color={colors.primary['700']}
                         backgroundColor={colors.light['50']}
-                        value={LP_ID}
+                        value={loyaltyProgramme.lp_id}
                     />
                     <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
                     <Text>{`${'loyaltyProgramme.members'} active members on programme`}</Text>
-                    <Text>{`${stamps} stamps for ${reward}`}</Text>
+                    <Text>{`${loyaltyProgramme.stamps} stamps for ${loyaltyProgramme.reward}`}</Text>
                     <HStack space={3} justifyContent="center" >
                         <Button onPress={() => navigation.navigate('EditLP')}>Edit</Button>
                         <Button onPress={DeleteLP}>Delete</Button>
-
                     </HStack>
-
-
                 </Box>}
                 <HStack space={3} justifyContent="center" >
                     <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
