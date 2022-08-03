@@ -204,7 +204,7 @@ describe('The Stampede API', function () {
           category: 'Groceries',
           lp_id: '2',
           reward: 'nisi volutpat',
-          stamps: '4',
+          stamps: '3',
           stampsneeded: '1',
           valid_for: '1 year',
         },
@@ -241,16 +241,16 @@ describe('The Stampede API', function () {
         {
           business_name: 'Quimba',
           category: 'Groceries',
-          lp_id: 2,
+          lp_id: '2',
           reward: 'nisi volutpat',
-          stamps: '4',
+          stamps: '3',
           stampsneeded: '1',
           valid_for: '1 year',
         },
         {
           business_name: 'Skyba',
           category: 'Resturant',
-          lp_id: 1,
+          lp_id: '1',
           reward: 'nam dui proin leo',
           stamps: '1',
           stampsneeded: '4',
@@ -275,6 +275,7 @@ describe('The Stampede API', function () {
           stampsneeded: '1',
           business_name: 'Quimba',
           category: 'Groceries',
+          valid_for: '1 year',
         },
         {
           lp_id: 1,
@@ -283,14 +284,7 @@ describe('The Stampede API', function () {
           stampsneeded: '4',
           business_name: 'Skyba',
           category: 'Resturant',
-        },
-        {
-          lp_id: 3,
-          stamps: '2',
-          reward: 'blandit nam nulla',
-          stampsneeded: '7',
-          business_name: 'Youopia',
-          category: 'Groceries',
+          valid_for: '1 year',
         },
       ];
       assert.deepEqual(user5Stamps, result.body);
