@@ -59,11 +59,11 @@ export default function BusinessProfile({ navigation }) {
                         onValueChange={toggleProfiles}
                         value={isEnabled} />
                 </Box>
-                {!loyaltyProgramme.stampsRequired && <Box variant='section'>
+                {!loyaltyProgramme && <Box variant='section'>
                     <Text variant='section'>You currently have no loyalty programme for your business</Text>
                     <Button onPress={() => { navigation.navigate('NewLP') }}>Add Loyalty Programme</Button>
                 </Box>}
-                {loyaltyProgramme.stampsRequired && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
+                {loyaltyProgramme?.stampsRequired && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
                     <QRCode
                         color={colors.primary['700']}
                         backgroundColor={colors.light['50']}

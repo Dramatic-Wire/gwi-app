@@ -36,7 +36,7 @@ export const BusinessProvider = ({ children }) => {
         console.log('------')
         console.log(res.data)
         console.log('------')
-        //setLoyaltyProgramme({ stampsRequired: 1, reward: 1, timeFrame: 1, members:1 });
+        //setLoyaltyProgramme(res.data);
         console.log(loyaltyProgramme)
       })
     }
