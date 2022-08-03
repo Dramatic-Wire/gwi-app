@@ -15,7 +15,7 @@ export const BusinessProvider = ({ children }) => {
   const [stamps, setStamps] = useState(0);
   const [validFor, setValidFor] = useState('');
   const [reward, setReward] = useState('');
-  const [LP_ID, setLP_ID] = useState();
+  const [LP_ID, setLP_ID] = useState(0);
   const [loyaltyProgramme, setLoyaltyProgramme] = useState();
 
 
@@ -37,11 +37,10 @@ export const BusinessProvider = ({ children }) => {
   useEffect(() => {
     const getLP = async () => {
       await axios.get(`/LP?id=${businessID}`).then(res => {
+        setLP_ID(res.data.id)
         setStamps(res.data.stamps)
         setValidFor(res.data.valid_for)
         setReward(res.data.reward)
-        setLP_ID(res.data.id)
-        console.log(LP_ID);
 
       })
     }

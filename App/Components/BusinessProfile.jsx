@@ -67,7 +67,7 @@ export default function BusinessProfile({ navigation }) {
                     <QRCode
                         color={colors.primary['700']}
                         backgroundColor={colors.light['50']}
-                        value={LP_ID}
+                        value={'LP_ID'}
                     />
                     <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
                     <Text>{`${'loyaltyProgramme.members'} active members on programme`}</Text>
