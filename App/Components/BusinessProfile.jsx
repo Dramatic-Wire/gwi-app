@@ -53,6 +53,8 @@ export default function BusinessProfile({ navigation }) {
         <Loading></Loading>
     );
 
+    console.log(loyaltyProgramme)
+
     return (
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
             <VStack space={3} safeArea='8' >

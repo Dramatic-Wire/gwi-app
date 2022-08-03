@@ -56,7 +56,7 @@ module.exports = function (db) {
       );
       res.json(lpData);
     } catch (err) {
-      res.json('none');
+      res.send('none');
     }
   };
 
