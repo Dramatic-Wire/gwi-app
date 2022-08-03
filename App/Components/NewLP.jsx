@@ -6,8 +6,10 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 
 export default function NewLP({ navigation }) {
-  const { setLoyaltyProgramme, businessID, stamps, setStamps, validFor, setValidFor, reward, setReward  } = useContext(BusinessContext)
-  
+  const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
+  const [stamps, setStamps] = useState(0);
+  const [validFor, setValidFor] = useState('');
+  const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
@@ -24,14 +26,9 @@ export default function NewLP({ navigation }) {
   const registerLP = () => {
      axios
         .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
-        .then((result => {
-          const results = result.data
-          console.log(results);
-          // if (results.message == 'added') {
-          // }
-          // setLoyaltyProgramme({ stampsRequired: stamps, reward: reward, timeFrame: validFor, members:0 });
+        .then((res => {
+          setLoyaltyProgramme(res.data)
           navigation.navigate('BusinessProfile')
-          console.log(results.message);
           
         })).catch(error => console.log(error));
   }
@@ -68,7 +65,7 @@ export default function NewLP({ navigation }) {
       <Button isDisabled={!missingInfo}  onPress={() => setPreview(true)}>Preview</Button>
       <Button isDisabled={!missingInfo} onPress={registerLP}>Save</Button>
       </HStack>
-      {preview == true && <LoyaltyCard stamps={stamps} validFor={validFor} reward={reward} onClose={setPreview} open={preview} />}
+      {preview == true && <LoyaltyCard stampCount={stamps} validFor={validFor} reward={reward} onClose={setPreview} open={preview} />}
         </VStack>
       </Box>
       </Box>

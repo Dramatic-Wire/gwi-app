@@ -33,7 +33,7 @@ export const BusinessProvider = ({ children }) => {
   useEffect(() => {
     const getLP = async () => {
       await axios.get(`/LP?id=${businessID}`).then(res => {
-        setLoyaltyProgramme({...res.data})
+        setLoyaltyProgramme(res.data)
       })
     }
     if (businessID > 0) {

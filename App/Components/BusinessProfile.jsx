@@ -41,8 +41,7 @@ export default function BusinessProfile({ navigation }) {
         axios
             .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/business?ownerID=${ownerID}`)
             .then((result => {
-                const results = result.data
-                console.log('deleted business');
+                setLoyaltyProgramme('none')
                 navigation.navigate('UserProfile')
 
             })).catch(error => console.log(error));
