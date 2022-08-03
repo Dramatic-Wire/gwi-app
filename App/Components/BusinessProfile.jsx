@@ -77,7 +77,7 @@ export default function BusinessProfile({ navigation }) {
                         value={loyaltyProgramme.lp_id}
                     />
                     <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
-                    <Text>{`${'loyaltyProgramme.members'} active members on programme`}</Text>
+                    <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>
                     <Text>{`${loyaltyProgramme.stamps} stamps for ${loyaltyProgramme.reward}`}</Text>
                     <HStack space={3} justifyContent="center" >
                         <Button onPress={() => navigation.navigate('EditLP')}>Edit</Button>

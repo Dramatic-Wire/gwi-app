@@ -4,10 +4,14 @@ import BusinessContext from "../Contexts/BusinessContext";
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
+import UserContext from "../Contexts/UserContext";
 
 export default function NewLP({ navigation }) {
-  const { setLoyaltyProgramme, businessID, stamps, setStamps, validFor, setValidFor, reward, setReward  } = useContext(BusinessContext)
-  
+  const { setLoyaltyProgramme, businessID  } = useContext(BusinessContext)
+  // const { stamps, setStamps, validFor, setValidFor, reward, setReward  } = useContext(UserContext)
+  const [stamps, setStamps] = useState(0);
+  const [validFor, setValidFor] = useState('');
+  const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID

@@ -1,16 +1,18 @@
 import { Button, Input, Text, IconButton, Heading, Box, HStack, VStack} from "native-base";
 import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
+import UserContext from "../Contexts/UserContext";
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 
 
 export default function EditLP({ navigation }) {
-  const { setLoyaltyProgramme, businessID, stamps, reward, setStamps, setReward } = useContext(BusinessContext)
-  // const [stamps, setStamps] = useState(0);
+  const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
+  // const { stamps, reward, setStamps, setReward } = useContext(UserContext)
+  const [stamps, setStamps] = useState(0);
   const [valid_for, setValid_for] = useState('');
-  // const [reward, setReward] = useState('');
+  const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
@@ -51,7 +53,7 @@ export default function EditLP({ navigation }) {
         <Text variant='section'>Number of stamps on each card</Text>
         <Box style={{flexDirection:'row' , justifyContent:'center', alignItems:'center'}} >
           <IconButton icon={<Icon name='minus-circle' size={20} color='black'/> } onPress={() => {if(stamps > 0) setStamps(stamps - 1)}}  disabled={stamps == 0 ? true : false} />
-          <Text style={{ margin: 5, fontSize: 20 }} >{stamps}</Text>
+          <Text style={{ margin: 5, fontSize: 20 }}>{stamps}</Text>
           <IconButton icon={<Icon name='plus-circle' size={20} color='black'/> } onPress={() => {setStamps(stamps + 1)}}/>
         </Box>
       </Box>
