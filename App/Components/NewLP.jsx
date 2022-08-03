@@ -6,10 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 
 export default function NewLP({ navigation }) {
-  const { setLoyaltyProgramme, businessID  } = useContext(BusinessContext)
-  const [stamps, setStamps] = useState(0);
-  const [validFor, setValidFor] = useState('');
-  const [reward, setReward] = useState('');
+  const { setLoyaltyProgramme, businessID, stamps, setStamps, validFor, setValidFor, reward, setReward  } = useContext(BusinessContext)
+  
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
@@ -31,7 +29,7 @@ export default function NewLP({ navigation }) {
           console.log(results);
           // if (results.message == 'added') {
           // }
-          setLoyaltyProgramme({ stampsRequired: stamps, reward: reward, timeFrame: validFor, members:0 });
+          // setLoyaltyProgramme({ stampsRequired: stamps, reward: reward, timeFrame: validFor, members:0 });
           navigation.navigate('BusinessProfile')
           console.log(results.message);
           
