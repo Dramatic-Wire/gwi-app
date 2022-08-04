@@ -1,4 +1,4 @@
-import { Button, Input, Text,  Heading, Box, } from "native-base";
+import { Button, Input, Text,  Heading, Box, Flex, KeyboardAvoidingView } from "native-base";
 import { useState, useContext } from 'react';
 import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -36,9 +36,13 @@ export default function NewUser({ navigation }) {
             .catch(error => alert(error.message))
     }
     return (
-        <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
-            <Box variant='pageTitle'>
-                <Heading>Create an account</Heading>
+        <Flex safeArea bg='primary.700' height={'100%'} alignItems='center' paddingTop='10'>
+        <KeyboardAvoidingView h={{
+            base: "400px",
+            lg: "auto"
+        }} width='80%' behavior={Platform.OS === "ios" ? "padding" : "height"}>
+            <Box style={{marginBottom: '2%'}} variant='pageTitle'>
+                <Heading >Create an account</Heading>
             </Box>
 
             <Box variant='section'>
@@ -61,7 +65,8 @@ export default function NewUser({ navigation }) {
                 <Text>Profile Picture</Text>
                 <Input placeholder='Profile Picture' value={profile_picture} onChangeText={value => setProfile_picture(value)}></Input>
             </Box>
-            <Button onPress={handleSignUp}>Sign Up</Button>
-        </Box>
+            <Button style={{marginTop: '2%'}} onPress={handleSignUp}>Sign Up</Button>
+            </KeyboardAvoidingView>
+        </Flex>
      );
 }
