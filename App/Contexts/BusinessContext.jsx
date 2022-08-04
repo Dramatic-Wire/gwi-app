@@ -12,10 +12,6 @@ export const BusinessProvider = ({ children }) => {
   const [businessName, setBusinessName] = useState();
   const [category, setCategory] = useState()
   const [logo, setLogo] = useState('');
-  const [stamps, setStamps] = useState(0);
-  const [validFor, setValidFor] = useState('');
-  const [reward, setReward] = useState('');
-  const [LP_ID, setLP_ID] = useState(0);
   const [loyaltyProgramme, setLoyaltyProgramme] = useState();
 
 
@@ -37,11 +33,7 @@ export const BusinessProvider = ({ children }) => {
   useEffect(() => {
     const getLP = async () => {
       await axios.get(`/LP?id=${businessID}`).then(res => {
-        setLP_ID(res.data.id)
-        setStamps(res.data.stamps)
-        setValidFor(res.data.valid_for)
-        setReward(res.data.reward)
-
+        setLoyaltyProgramme(res.data)
       })
     }
     if (businessID > 0) {
@@ -55,7 +47,7 @@ export const BusinessProvider = ({ children }) => {
     <BusinessContext.Provider
       value={{
         businessName, loyaltyProgramme, setBusinessName, setLoyaltyProgramme, businessID, setBusinessID, category, setCategory, logo,
-        setLogo, stamps, setStamps, validFor, setValidFor, reward, setReward, LP_ID, setLP_ID
+        setLogo
       }}
     >
       {children}

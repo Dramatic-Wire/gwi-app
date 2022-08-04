@@ -1,7 +1,7 @@
 import { ScrollView, Switch } from 'react-native';
 import { useContext, useState } from 'react';
 import UserContext from '../Contexts/UserContext';
-import { Button, Text, Heading, Box, VStack, useTheme, HStack, Pressable, Actionsheet, useDisclose } from "native-base";
+import { Button, Text, Heading, Box, VStack, useTheme, HStack, Pressable, Actionsheet, useDisclose, IconButton } from "native-base";
 import styles from '../Styles/style';
 import CardIcon from './CardIcon';
 import Loading from './Loading';
@@ -9,6 +9,8 @@ import StampIcon from './Icons/StampIcon';
 import LoyaltyCard from './LoyaltyCard';
 import RewardCode from './RewardCode';
 import BusinessContext from '../Contexts/BusinessContext';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import Header from './Header';
 
 export default function UserProfile({ navigation }) {
   const { colors } = useTheme()
@@ -32,23 +34,22 @@ export default function UserProfile({ navigation }) {
     toggleSwitch
     navigation.navigate('BusinessProfile')
   }
-  
+
   const {
     isOpen,
     onOpen,
     onClose
   } = useDisclose();
-  
+
   if (!first_name || !LP) return (<Loading></Loading>);
 
   return (
+    <>
+      <Header></Header>
     <Box safeArea bg='primary.800' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
-      <Button onPress={onOpen}>Actionsheet</Button>
-
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content onClose={onClose}>
-          <Button onPress={handleLogout}>Logout</Button>
-          <Button onPress={() => { navigation.navigate('RegisterBusiness')}} >Add a business</Button>
+          <Button onPress={() => { navigation.navigate('RegisterBusiness') }} >Add a business</Button>
 
           {businessID > 0 &&
             <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -61,12 +62,6 @@ export default function UserProfile({ navigation }) {
       </Actionsheet>
       <ScrollView width="100%" h="80" horizontal={false} alwaysBounceHorizontal={false}>
         <VStack space={3} safeArea='8' justifyContent='center'>
-          <Box variant='pageTitle'>
-            <Heading style={styles.pageTitle}>Welcome {first_name}!</Heading>
-
-          </Box>
-          {/* <Box>
-          </Box> */}
           <Box>
             {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
             {/* */}
@@ -81,14 +76,17 @@ export default function UserProfile({ navigation }) {
 
       <Box width='100%'>
 
-        <Box bgColor={'primary.700'} width='100%' alignItems={'center'} padding={5} marginBottom={-50} paddingBottom={60} borderColor='primary.200' borderTopWidth={4}>
+        <HStack bgColor={'primary.700'} width='100%' alignItems={'center'} padding={5} marginBottom={-50} paddingBottom={60} borderColor='primary.200' borderTopWidth={4} justifyContent={'space-between'}>
+          
           <Pressable justifySelf='flex-start' rounded={'full'} bgColor='primary.800' p={4} onPress={() => { navigation.navigate('BarcodeScanner') }} width='90' height='90' marginTop={-45} borderColor='primary.200' borderWidth={4}>
             <StampIcon justifySelf='center' />
           </Pressable>
-        </Box>
+          <Button onPress={handleLogout}>Logout</Button>
+
+        </HStack>
       </Box>
 
     </Box>
-
+</>
   )
 }
