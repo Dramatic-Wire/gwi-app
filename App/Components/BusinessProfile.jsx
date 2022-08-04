@@ -52,7 +52,7 @@ export default function BusinessProfile({ navigation }) {
         <Loading></Loading>
     );
     
-    
+    // if(!members)return(members = 0)
 
     console.log(loyaltyProgramme)
     console.log(members);
