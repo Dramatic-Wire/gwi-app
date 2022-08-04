@@ -45,21 +45,12 @@ export default function UserProfile({ navigation }) {
 
   return (
     <>
-      <Header></Header>
-    <Box safeArea bg='primary.800' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
-      <Actionsheet isOpen={isOpen} onClose={onClose}>
-        <Actionsheet.Content onClose={onClose}>
-          <Button onPress={() => { navigation.navigate('RegisterBusiness') }} >Add a business</Button>
-
-          {businessID > 0 &&
-            <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
-              thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleProfiles}
-              value={isEnabled} />
-          }
-        </Actionsheet.Content>
-      </Actionsheet>
+      <Header navigation={navigation}></Header>
+    <Box safeArea bg='primary.900' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+          <Pressable justifySelf='flex-start' rounded={'full'} bgColor='primary.800' p={4} onPress={() => { navigation.navigate('BarcodeScanner') }} width='90' height='90' marginTop={-45} borderColor='primary.200' borderWidth={4}>
+            <StampIcon justifySelf='center' />
+          </Pressable>
+    
       <ScrollView width="100%" h="80" horizontal={false} alwaysBounceHorizontal={false}>
         <VStack space={3} safeArea='8' justifyContent='center'>
           <Box>
@@ -73,18 +64,6 @@ export default function UserProfile({ navigation }) {
         {focusLP && focusLP.stampsneeded > focusLP.stamps && <LoyaltyCard stampCount={parseInt(focusLP.stampsneeded)} stamped={parseInt(focusLP.stamps)} name={focusLP.business_name} validFor={'validFor'} reward={focusLP.reward} LPCategory={focusLP.category} onClose={() => { setFocusLP() }} open={focusLP != undefined} />}
         {focusLP && focusLP.stampsneeded <= focusLP.stamps && <RewardCode onClose={() => { setFocusLP() }} LP={focusLP} customer_id={userId} open={focusLP != undefined} />}
       </ScrollView>
-
-      <Box width='100%'>
-
-        <HStack bgColor={'primary.700'} width='100%' alignItems={'center'} padding={5} marginBottom={-50} paddingBottom={60} borderColor='primary.200' borderTopWidth={4} justifyContent={'space-between'}>
-          
-          <Pressable justifySelf='flex-start' rounded={'full'} bgColor='primary.800' p={4} onPress={() => { navigation.navigate('BarcodeScanner') }} width='90' height='90' marginTop={-45} borderColor='primary.200' borderWidth={4}>
-            <StampIcon justifySelf='center' />
-          </Pressable>
-          <Button onPress={handleLogout}>Logout</Button>
-
-        </HStack>
-      </Box>
 
     </Box>
 </>
