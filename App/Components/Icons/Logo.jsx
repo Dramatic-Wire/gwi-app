@@ -1,7 +1,6 @@
-import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 
-function SvgComponent(props) {
+function Logo(props) {
   return (
     <Svg
       viewBox="0 0 249 51"
