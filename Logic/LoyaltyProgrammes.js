@@ -32,12 +32,11 @@ module.exports = function (db) {
   //app.post('/api/addLP')
 
   const addLoyaltyProgramme = async (req, res) => {
-    // businessID, stampCount, reward, validFor
     try {
       const {business_id, stamps, reward, validFor} = req.body;
       await db.none(
         `INSERT into loyalty_programmes 
-        (business_id, stamps, reward, valid_for) VALUES ($1, $2, $3, $4)`,
+        (business_id, stamps, reward, valid_for) VALUES ($1, $2, $3, $4) RETURNING *`,
         [business_id, stamps, reward, validFor],
       );
       res.sendStatus(201);
@@ -56,7 +55,7 @@ module.exports = function (db) {
       );
       res.json(lpData);
     } catch (err) {
-      res.json('none');
+      res.send('none');
     }
   };
 
