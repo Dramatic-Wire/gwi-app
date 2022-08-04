@@ -11,11 +11,10 @@ import Loading from "./Loading";
 // import RemoveLP from "./DeleteLP";
 
 export default function BusinessProfile({ navigation }) {
-    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, reward } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers  } = useContext(BusinessContext);
     const { colors } = useTheme();
     const [isEnabled, setIsEnabled] = useState(true);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
     // const [preview, setPreview] = useState(false)
     const { userId } = useContext(UserContext)
     const ownerID = userId
@@ -41,17 +40,22 @@ export default function BusinessProfile({ navigation }) {
         axios
             .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/business?ownerID=${ownerID}`)
             .then((result => {
-                const results = result.data
-                console.log('deleted business');
+                setLoyaltyProgramme('none')
                 navigation.navigate('UserProfile')
 
             })).catch(error => console.log(error));
     }
 
 
+
     if (!loyaltyProgramme) return (
         <Loading></Loading>
     );
+    
+    
+
+    console.log(loyaltyProgramme)
+    console.log(members);
 
     return (
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
@@ -77,7 +81,7 @@ export default function BusinessProfile({ navigation }) {
                         value={loyaltyProgramme.lp_id}
                     />
                     <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
-                    <Text>{`${loyaltyProgramme.members} active members on programme`}</Text>
+                    <Text>{`${members} active members on programme`}</Text>
                     <Text>{`${loyaltyProgramme.stamps} stamps for ${loyaltyProgramme.reward}`}</Text>
                     <HStack space={3} justifyContent="center" >
                         <Button onPress={() => navigation.navigate('EditLP')}>Edit</Button>
