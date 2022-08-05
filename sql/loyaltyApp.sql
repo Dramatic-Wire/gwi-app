@@ -14,7 +14,7 @@ create table businesses(
     category text not null,
     logo text,
     unique (business_name, owner_id),
-    foreign key (owner_id) references users(id)
+    foreign key (owner_id) references users(id) on delete cascade
 ); 
 create table loyalty_programmes(
 	id serial not null primary key,
@@ -22,7 +22,7 @@ create table loyalty_programmes(
 	stamps text not null,
     reward text not null,
     valid_for text not null,
-    foreign key (business_id) references businesses(id)
+    foreign key (business_id) references businesses(id) on delete cascade
 );
 create table stamps(
 	id serial not null primary key,
