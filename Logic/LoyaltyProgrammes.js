@@ -35,7 +35,7 @@ module.exports = function (db) {
     const {business_id, stamps, reward, validFor} = req.body;
 
     await db
-      .none(
+      .one(
         `INSERT into loyalty_programmes 
         (business_id, stamps, reward, valid_for) VALUES ($1, $2, $3, $4) RETURNING *`,
         [business_id, stamps, reward, validFor],
