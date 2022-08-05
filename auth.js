@@ -56,8 +56,12 @@ module.exports = function (db) {
         .catch((err) => res.send(err));
       await bcrypt
         .compare(password, user.password)
-        .then((decrypt) => {
-          res.json({id: user.id});
+        .then((result) => {
+          if (result) {
+            res.json({id: user.id});
+          } else {
+            res.status(401).send('invalid password');
+          }
         })
         .catch((err) => res.send(err));
     } catch (error) {
