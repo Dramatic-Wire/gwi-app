@@ -29,7 +29,7 @@ export default function ({ navigation }) {
         await axios.post(`/login`, { email, password }).then(res => {
 
             const { id } = res.data;
-            console.log(res.data)
+            console.log(res)
             setUserId(id);
             navigation.navigate('UserProfile');
             // const status = res.status
