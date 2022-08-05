@@ -29,6 +29,7 @@ export default function NewLP({ navigation }) {
         .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
         .then((res => {
           setLoyaltyProgramme(res.data)
+          console.log(res.data)
           navigation.navigate('BusinessProfile')
           
         })).catch(error => console.log(error));
