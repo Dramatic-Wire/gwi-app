@@ -33,12 +33,13 @@ module.exports = function (db) {
       req.body;
     bcrypt.hash(password, saltRounds).then(async function (hash) {
       await db
-        .none(
-          'insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6)',
+        .one(
+          'insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6) returning id',
           [username, first_name, surname, email, hash, profile_picture],
         )
-        .then(() => {
-          res.sendStatus(201);
+        .then((result) => {
+          res.status(201);
+          res.json(result);
         })
         .catch((err) => {
           res.status(400).send(err.message);
