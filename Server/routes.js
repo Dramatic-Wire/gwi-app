@@ -15,6 +15,9 @@ module.exports = function (app, db) {
   app.get('/api/user', users.getUser);
   app.post('/api/register/business', users.registerBusiness);
   app.get('/api/business/:id', users.getBusiness);
+  app.delete('/api/deleteLoyaltyCard', users.deleteLoyaltyCard);
+  app.delete('/api/deleteAccount', users.deleteAccount);
+
 
   //Customer Routes
   app.get('/api/stamps', LP.updateStamps, LP.getCustomerStamps);

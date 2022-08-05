@@ -1,3 +1,4 @@
+
 import {KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native'
 import {
   Button,
@@ -49,6 +50,7 @@ export default function ({navigation}) {
             })
           .catch(err => { console.log(err); setErrors({...errors, failed: 'registration'})})
     }
+
 
   const validate = () => {
     const err = {};
@@ -205,5 +207,3 @@ export default function ({navigation}) {
         </KeyboardAvoidingView>
   );
 }
-
-

@@ -45,6 +45,7 @@ export default function Header({ navigation }) {
         <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content onClose={onClose}>
           <Button onPress={() => { navigation.navigate('RegisterBusiness') }} >Add a business</Button>
+          <Button onPress={() => { navigation.navigate('LoginScreen') }} >Delete account</Button>
 
           {businessID > 0 &&
             <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
