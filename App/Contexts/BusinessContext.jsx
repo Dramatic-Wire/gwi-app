@@ -28,6 +28,8 @@ export const BusinessProvider = ({ children }) => {
     }
     if (userId > 0) {
       getBusiness()
+    } else {
+      setBusinessID()
     }
   }, [userId])
 
@@ -40,6 +42,11 @@ export const BusinessProvider = ({ children }) => {
     }
     if (businessID > 0) {
       getLP()
+    } else {
+      setBusinessName()
+      setCategory()
+      setLogo()
+      setLP_id()
     }
   }, [businessID])
 
@@ -56,6 +63,9 @@ export const BusinessProvider = ({ children }) => {
     if (LP_id > 0) {
       // console.log('id')
       getMembers()
+    } else {
+      setMembers()
+      setLoyaltyProgramme()
     }
     
   }, [LP_id])

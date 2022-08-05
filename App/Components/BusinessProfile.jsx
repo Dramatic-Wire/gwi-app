@@ -11,7 +11,7 @@ import Loading from "./Loading";
 // import RemoveLP from "./DeleteLP";
 
 export default function BusinessProfile({ navigation }) {
-    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID } = useContext(BusinessContext);
     const { colors } = useTheme();
     const [isEnabled, setIsEnabled] = useState(true);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -34,7 +34,7 @@ export default function BusinessProfile({ navigation }) {
             .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/LP?businessID=${businessID}`)
             .then((result => {
                 const results = result.data
-                // setLoyaltyProgramme('none');
+                setLP_id();
                 console.log('deleted');
                 // navigation.navigate('NewLP')
 
@@ -45,7 +45,7 @@ export default function BusinessProfile({ navigation }) {
         axios
             .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/business?ownerID=${ownerID}`)
             .then((result => {
-                setLoyaltyProgramme('none')
+                setBusinessID();
                 navigation.navigate('UserProfile')
                 console.log('business deleted');
 
