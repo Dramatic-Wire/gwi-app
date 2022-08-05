@@ -45,27 +45,27 @@ export default function ({ navigation }) {
 
     return (
         <Flex safeArea bg='primary.700' height={'100%'} alignItems='center' paddingTop='10'>
-            <KeyboardAvoidingView h={{
-        base: "400px",
-        lg: "auto"
-            }} width='80%' behavior={Platform.OS === "ios" ? "padding" : "height"}>
-            <Box variant='pageTitle' style={{ marginBottom: 3 }}>
-                <Heading>Welcome to{"\n"} Stampede!</Heading>
+            {/* <KeyboardAvoidingView h={{
+                base: "400px",
+                lg: "auto"
+            }} width='80%' behavior={Platform.OS === "ios" ? "padding" : "height"}> */}
+                <Box variant='pageTitle' style={{ marginBottom: 3 }}>
+                    <Heading>Welcome to{"\n"} Stampede!</Heading>
                 </Box>
-            <Spacer/>
-            <Box variant='section'>
-                <Text>Email</Text>
-                <Input placeholder='Email' value={email}
-                    onChangeText={text => setEmail(text)}
-                    style={styles.input} />
-                <Text>Password</Text>
-                <Input type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" value={password} onChangeText={text => setPassword(text)} style={styles.input}/>
-            </Box>
-                    <Spacer/>
-            <Button onPress={handleLogin}>Login</Button>
-                    <Spacer/>
-            <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
-            </KeyboardAvoidingView>
-            </Flex >
-            );
+                <Spacer />
+                <Box variant='section'>
+                    <Text>Email</Text>
+                    <Input placeholder='Email' value={email}
+                        onChangeText={text => setEmail(text)}
+                        style={styles.input} />
+                    <Text>Password</Text>
+                    <Input type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" value={password} onChangeText={text => setPassword(text)} style={styles.input} />
+                </Box>
+                <Spacer />
+                <Button onPress={handleLogin}>Login</Button>
+                <Spacer />
+                <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
+            {/* </KeyboardAvoidingView> */}
+        </Flex >
+    );
 }
