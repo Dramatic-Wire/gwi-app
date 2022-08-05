@@ -20,12 +20,11 @@ export const BusinessProvider = ({ children }) => {
   useEffect(() => {
     const getBusiness = async () => {
       await axios.get(`/business/${userId}`).then(res => {
-
         setBusinessID(res.data.id)
         setBusinessName(res.data.business_name)
         setCategory(res.data.category)
         setLogo(res.data.logo)
-      })
+      }).catch(setBusinessID())
     }
     if (userId > 0) {
       getBusiness()

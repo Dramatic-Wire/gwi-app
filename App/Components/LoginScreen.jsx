@@ -27,9 +27,7 @@ export default function ({ navigation }) {
         const { email, password } = formData
 
         await axios.post(`/login`, { email, password }).then(res => {
-
             const { id } = res.data;
-            console.log(res)
             setUserId(id);
             navigation.navigate('UserProfile');
             // const status = res.status
@@ -45,7 +43,7 @@ export default function ({ navigation }) {
             //         })
             //         .catch(error => alert(error.message))
             // }
-        }).catch(err => console.log(err));
+        }).catch(err => { console.log(err); setErrors({...errors, failed: 'login'})})
     }
 
     const validate = () => {
@@ -79,6 +77,8 @@ export default function ({ navigation }) {
             <Box height={50} width='100%' mb='5'>
      <Logo fill={colors['primary'][500]}/>
         </Box>
+                  {'failed' in errors && <Heading size={'md'} color='danger.600'>Login failed. Please try again.</Heading>}
+
                 <VStack variant='section' space={10} py={5}>
 
                     <FormControl isRequired isInvalid={'email' in errors}>
