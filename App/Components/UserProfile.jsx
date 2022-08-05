@@ -48,26 +48,26 @@ export default function UserProfile({ navigation }) {
   return (
     <>
       <VStack space={4} alignItems='center' bg='primary.900' height={'100%'}>
-      <Header navigation={navigation}></Header>
-          <Pressable justifySelf='flex-start'  rounded={'sm'} bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='92.5%' >
+        <Header navigation={navigation}></Header>
+        <Pressable justifySelf='flex-start' rounded={'sm'} bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='92.5%' >
           <Boot height={150} width={150} alignSelf='center' />
-          <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text>  
-          </Pressable>
-    
+          <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text>
+        </Pressable>
+
         <VStack space={3} safeArea='8' width='92.5%' rounded={'sm'} bg='primary.200' justifyContent='center'>
-      <ScrollView width="100%" alignItems='center' horizontal={false} alwaysBounceHorizontal={false}>
-          <Box>
-            {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
-            {/* */}
-          </Box>
-          <HStack maxW={'100%'} flexWrap='wrap' alignItems={'flex-end'}>
-            {Array.isArray(LP) && LP.map((element, index) => { return <Pressable key={index} onPress={() => { setFocusLP({ ...element }) }}><CardIcon card={element} /></Pressable> })}
-          </HStack>
-      </ScrollView>
+          <ScrollView width="100%" alignItems='center' horizontal={false} alwaysBounceHorizontal={false}>
+            <Box>
+              {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
+              {/* */}
+            </Box>
+            <HStack maxW={'100%'} flexWrap='wrap' alignItems={'flex-end'}>
+              {Array.isArray(LP) && LP.map((element, index) => { return <Pressable key={index} onPress={() => { setFocusLP({ ...element }) }}><CardIcon card={element} /></Pressable> })}
+            </HStack>
+          </ScrollView>
         </VStack>
         {focusLP && focusLP.stampsneeded > focusLP.stamps && <LoyaltyCard stampCount={parseInt(focusLP.stampsneeded)} stamped={parseInt(focusLP.stamps)} name={focusLP.business_name} validFor={'validFor'} reward={focusLP.reward} LPCategory={focusLP.category} onClose={() => { setFocusLP() }} open={focusLP != undefined} />}
         {focusLP && focusLP.stampsneeded <= focusLP.stamps && <RewardCode onClose={() => { setFocusLP() }} LP={focusLP} customer_id={userId} open={focusLP != undefined} />}
 
-    </VStack>
-</>)
+      </VStack>
+    </>)
 }
