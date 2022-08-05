@@ -4,6 +4,7 @@ import BusinessContext from "../Contexts/BusinessContext";
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
+import UserContext from "../Contexts/UserContext";
 
 export default function NewLP({ navigation }) {
   const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)

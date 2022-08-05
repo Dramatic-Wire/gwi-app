@@ -21,6 +21,21 @@ module.exports = function (db) {
       res.sendStatus(401);
     }
   };
+  //app.delete('/api/delete/user)
+  // const deleteUser = async (req, res) => {
+  //   try {
+  //     const {user_id} = req.query
+  //     db.none(`delete from businesses where owner_id = $1`, [
+  //       user_id,
+  //     ]);
+  //     res.status(200).send('deleted');
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(400).send(err.message);
+  //   }
+    
+  // };
+
   //app.post('/api/register/business')
   const registerBusiness = async (req, res) => {
     const { businessName, owner_id, category, logo } = req.body;
@@ -122,6 +137,7 @@ module.exports = function (db) {
   return {
     getAllUsers,
     getUser,
+    deleteUser,
     registerBusiness,
     getBusiness,
     deleteBusiness,
