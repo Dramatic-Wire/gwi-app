@@ -53,7 +53,10 @@ module.exports = function (db) {
     try {
       const user = await db
         .one('select * from users where email = $1', [email])
-        .catch((err) => res.send('user not found'));
+        .catch((err) => {
+          res.status(401);
+          res.send('user not found');
+        });
       await bcrypt
         .compare(password, user.password)
         .then((result) => {
