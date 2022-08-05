@@ -59,15 +59,16 @@ module.exports = function (db) {
   const getBusiness = async (req, res) => {
     const {id} = req.params;
     if (!id) res.sendStatus(400);
-    try {
-      const businessData = await db.one(
+
+    await db
+      .one(
         `select id, business_name, category, logo from businesses where owner_id = $1`,
         [id],
-      );
-      res.json(businessData);
-    } catch (err) {
-      console.log(err);
-    }
+      )
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => res.send(err));
   };
 
   //app.delete('/api/delete/business')
