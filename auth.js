@@ -52,8 +52,8 @@ module.exports = function (db) {
     if (!email || !password) res.sendStatus(400);
     try {
       const user = await db
-        .oneOrNone('select * from users where email = $1', [email])
-        .catch((err) => res.send(err));
+        .one('select * from users where email = $1', [email])
+        .catch((err) => res.send('user not found'));
       await bcrypt
         .compare(password, user.password)
         .then((result) => {
