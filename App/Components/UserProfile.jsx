@@ -17,11 +17,10 @@ export default function UserProfile({ navigation }) {
   const { colors } = useTheme()
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [focusLP, setFocusLP] = useState();
   const [isVisible, setIsVisible] = useState(false);
 
   const { businessName, loyaltyProgramme, businessID, setBusinessID } = useContext(BusinessContext);
-  const { first_name, LP, userId, setUserId, setUsername, setSurname, setFirst_name, setProfile_picture } = useContext(UserContext);
+  const { first_name, LP, userId, setUserId, setUsername, setSurname, setFirst_name, setProfile_picture, focusLP, setFocusLP } = useContext(UserContext);
 
   const handleLogout = () => {
     setBusinessID()

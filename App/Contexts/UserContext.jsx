@@ -14,6 +14,7 @@ export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState();
   const [LP, setLP] = useState();
   const [updateStamps, setUpdateStamps] = useState(false);
+  const [focusLP, setFocusLP] = useState();
 
   useEffect(() => {
     const getUser = async () => {
@@ -58,7 +59,8 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name,
-        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP, setUpdateStamps
+        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP, setUpdateStamps,
+        focusLP, setFocusLP
       }}
     >
       {children}

@@ -1,20 +1,22 @@
 import { Button, Input, Text, IconButton, Heading, Box, HStack, VStack} from "native-base";
 import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
+import UserContext from "../Contexts/UserContext";
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 
 
 export default function EditLP({ navigation }) {
-  const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
+  const { setLoyaltyProgramme, businessID, loyaltyProgramme } = useContext(BusinessContext)
+  // const { stamps, reward, setStamps, setReward } = useContext(UserContext)
   const [stamps, setStamps] = useState(0);
   const [valid_for, setValid_for] = useState('');
   const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
-
+ 
 
   const handleTimeFrameSelection = (timeFrame) => {
     setValid_for(timeFrame);
@@ -38,7 +40,7 @@ export default function EditLP({ navigation }) {
             }))
         )
         .catch(error => console.log(error));
-}
+  }
 
   return (
     <Box safeArea bg='primary.700' style={{ flex:1 ,alignItems: 'center', justifyContent: 'center', }}>
@@ -58,7 +60,7 @@ export default function EditLP({ navigation }) {
 
       <Box variant='section'>
         <Text variant='section'>Customer reward</Text>
-      <Input placeholder='A free item or discount' onChangeText={text => setReward(text)} />
+      <Input placeholder='A free item or discount' onChangeText={text => setReward(text)}  />
       </Box>
 
       <Box variant='section' >

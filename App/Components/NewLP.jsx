@@ -4,6 +4,7 @@ import BusinessContext from "../Contexts/BusinessContext";
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
+import UserContext from "../Contexts/UserContext";
 
 export default function NewLP({ navigation }) {
   const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
@@ -27,6 +28,10 @@ export default function NewLP({ navigation }) {
      axios
         .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
         .then((res => {
+          console.log('---------');
+          console.log(res.data);
+          console.log('---------');
+
           setLoyaltyProgramme(res.data)
           navigation.navigate('BusinessProfile')
           

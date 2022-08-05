@@ -8,13 +8,14 @@ import AxiosInstance from '../Hooks/AxiosInstance';
 export default function LoyaltyCard({ stampCount, validFor, reward, name = 'Suzie Salamandar', onClose, open, stamped = 2, color = 'emerald', LPCategory }) {
   const axios = AxiosInstance();
   
-  const { userId, LP } = useContext(UserContext);
+  const { userId, focusLP, setFocusLP } = useContext(UserContext);
   const [openAlert, setOpenAlert] = useState(false);
   const closeAlert = () => setOpenAlert(false);
   const cancelRef = useRef(null);
 
   const deleteCard = async () => {
-    await axios.post(`/deleteLoyaltyCard?id=${userId}&lp_id=${LP.id}`).then(res => {
+    console.log(focusLP)
+    await axios.delete(`/deleteLoyaltyCard?id=${userId}&lp_id=${focusLP.lp_id}`).then(res => {
     }).catch(error => console.log(error));
   }
   return (
