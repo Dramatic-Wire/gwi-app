@@ -14,7 +14,7 @@ export const BusinessProvider = ({ children }) => {
   const [logo, setLogo] = useState('');
   const [loyaltyProgramme, setLoyaltyProgramme] = useState();
   const [LP_id , setLP_id] = useState()
-  const [members, setMembers] = useState(0)
+  const [members, setMembers] = useState()
 
 
   useEffect(() => {
@@ -46,20 +46,16 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getMembers = async () => {
-      console.log('__________');
-      console.log(LP_id);
-      console.log('__________');
-
       await axios.get(`/LP/${LP_id}/users`).then(res => {
-        setMembers(res.data)
-        console.log('__________');
-        console.log(res.data);
-        console.log('__________');
+        setMembers(res.data.count)
+        // console.log(res.data);
+        // console.log(res.data.count);
+      
       })
       .catch(error => console.log(error))
     }
     if (LP_id > 0) {
-      console.log('id')
+      // console.log('id')
       getMembers()
     }
     
@@ -70,7 +66,7 @@ export const BusinessProvider = ({ children }) => {
     <BusinessContext.Provider
       value={{ 
         businessName, loyaltyProgramme, setBusinessName, setLoyaltyProgramme, businessID, setBusinessID, category, setCategory, logo,
-        setLogo, LP_id, setLP_id
+        setLogo, LP_id, setLP_id, members, setMembers
       }}
     >
       {children}
