@@ -1,67 +1,209 @@
-import { Button, Input, Text,  Heading, Box, } from "native-base";
-import { useState, useContext } from 'react';
+import {KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native'
+import {
+  Button,
+  Input,
+  Text,
+  Heading,
+  Box,
+  Flex,
+  Spacer,
+  useTheme,
+  VStack,
+  FormControl,
+} from 'native-base';
+import {useState, useContext} from 'react';
 import styles from '../Styles/style';
-import Icon from 'react-native-vector-icons/FontAwesome'
-import { auth } from '../firebase'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {auth} from '../firebase';
 import axios from 'axios';
-import UserContext from "../Contexts/UserContext";
+import UserContext from '../Contexts/UserContext';
+import Logo from './Icons/Logo';
 
+export default function ({navigation}) {
+  const {colors} = useTheme();
+  const [formData, setData] = useState({});
+  const [errors, setErrors] = useState({});
 
-export default function NewUser({ navigation }) {
- const { password, setPassword, username, setUsername, first_name, setFirst_name, surname, setSurname, profile_picture, setProfile_picture } = useContext(UserContext);
+  const [show, setShow] = useState(false);
 
-    const [show, setShow] = useState(false);
-    const [email, setEmail] = useState('');
+  const {setUserId} = useContext(UserContext);
 
-
-    const registerUser = () => {
+  const registerUser = () => {
+      const { username, name, surname, email, password } = formData
         axios
-            .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/user`, { username, first_name, surname, email, password, profile_picture })
-            .then((result => {
-                const results = result.data
-                console.log(result.data.result);
-
+            .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/user`, { username, first_name:name, surname, email, password })
+          .then((result => {
+              setUserId(result.data.id)
             })).catch(error => console.log(error));
     }
-    const handleSignUp = () => {
+  const handleSignUp = () => {
+      console.log('test')
         auth
-            .createUserWithEmailAndPassword(email, password)
+            .createUserWithEmailAndPassword(formData.email, formData.password)
             .then(userCredentials => {
                 const user = userCredentials.user;
                 console.log('Registered with:', user.email);
                 registerUser()
-                navigation.navigate('LoginScreen')
+                navigation.navigate('UserProfile')
 
             })
-            .catch(error => alert(error.message))
+          .catch(err => { console.log(err); setErrors({...errors, failed: 'registration'})})
     }
-    return (
-        <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
-            <Box variant='pageTitle'>
-                <Heading>Create an account</Heading>
-            </Box>
 
-            <Box variant='section'>
-                <Text>Name</Text>
-                <Input placeholder='Name' value={first_name}
-                    onChangeText={text => setFirst_name(text)}></Input>
-                <Text>Surname</Text>
-                <Input placeholder='Surname' value={surname}
-                    onChangeText={text => setSurname(text)}></Input>
-                <Text>Username</Text>
-                <Input placeholder='Username' value={username}
-                    onChangeText={text => setUsername(text)}></Input>
-                <Text>Email</Text>
-                <Input placeholder='Email' value={email}
-                    onChangeText={text => setEmail(text)}
-                    style={styles.input}></Input>
-                <Text>Password</Text>
-                    <Input value={password} onChangeText={value => setPassword(value)} type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"}  size={20} mr="2" color="grey" onPress={() => setShow(!show)} />} placeholder="Password" />
-                
-                <Text>Profile Picture</Text>
-                <Input placeholder='Profile Picture' value={profile_picture} onChangeText={value => setProfile_picture(value)}></Input>
-            </Box>
-            <Button onPress={handleSignUp}>Sign Up</Button>
-        </Box>
-     );
+  const validate = () => {
+    const err = {};
+    const fields = ['name', 'surname', 'username', 'email', 'password'];
+    let valid = true
+    
+    fields.forEach((field) => {
+      if (!formData[field]) {
+        err[field] = 'This field is required.'
+        valid = false
+      }
+    })
+
+    setErrors({ ...err })
+    return valid
+  };
+
+  const onSubmit = () => {
+    if (validate()) {
+      handleSignUp();
+    }
+  };
+
+  return (
+       <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <VStack
+      safeArea
+      bg='secondary.500'
+      height='100%'
+      px={3}
+      py={10}
+      space={6}
+      justifyContent='start'
+    >
+      <Box height={50} width='100%' mb='5'>
+        <Logo fill={colors['primary'][500]} />
+          </Box>
+          {'failed' in errors && <Heading size={'md'} color='danger.600'>Registration failed. Please try again.</Heading>}
+          <VStack variant='section' space={3} py={5}>
+        <FormControl isRequired isInvalid={'name' in errors}>
+          <FormControl.Label
+            _text={{
+              bold: true,
+              fontSize: 'lg',
+            }}
+          >
+            Name
+          </FormControl.Label>
+          <Input
+            placeholder='Sally'
+            onChangeText={(value) => setData({...formData, name: value})}
+          />
+          {'name' in errors && (
+            <FormControl.ErrorMessage>{errors.name}</FormControl.ErrorMessage>
+          )}
+              </FormControl>              
+        <FormControl isRequired isInvalid={'surname' in errors}>
+          <FormControl.Label
+            _text={{
+              bold: true,
+              fontSize: 'lg',
+            }}
+          >
+            Surname
+          </FormControl.Label>
+          <Input
+            placeholder='Salamandar'
+            onChangeText={(value) => setData({...formData, surname: value})}
+          />
+          {'surname' in errors && (
+            <FormControl.ErrorMessage>{errors.surname}</FormControl.ErrorMessage>
+          )}
+              </FormControl>
+              
+        <FormControl isRequired isInvalid={'username' in errors}>
+          <FormControl.Label
+            _text={{
+              bold: true,
+              fontSize: 'lg',
+            }}
+          >
+            Username
+          </FormControl.Label>
+          <Input
+            placeholder='sallythesalamandar'
+            onChangeText={(value) => setData({...formData, username: value})}
+          />
+          {'username' in errors && (
+            <FormControl.ErrorMessage>{errors.username}</FormControl.ErrorMessage>
+          )}
+              </FormControl>
+              
+        <FormControl isRequired isInvalid={'email' in errors}>
+          <FormControl.Label
+            _text={{
+              bold: true,
+              fontSize: 'lg',
+            }}
+          >
+            Email
+          </FormControl.Label>
+          <Input
+            placeholder='stamp@stampede.com'
+            onChangeText={(value) => setData({...formData, email: value})}
+          />
+          {'email' in errors && (
+            <FormControl.ErrorMessage>{errors.email}</FormControl.ErrorMessage>
+          )}
+        </FormControl>
+
+        <FormControl isRequired isInvalid={'password' in errors}>
+          <FormControl.Label
+            _text={{
+              bold: true,
+              fontSize: 'lg',
+            }}
+          >
+            Password
+          </FormControl.Label>
+          <Input
+            type={show ? 'text' : 'password'}
+            InputRightElement={
+              <Icon
+                name={show ? 'eye' : 'eye-slash'}
+                size={17}
+                mr='2'
+                color='grey'
+                onPress={() => setShow(!show)}
+              />
+            }
+            onChangeText={(value) =>
+              setData({
+                ...formData,
+                password: value,
+              })
+            }
+          />
+          {'password' in errors && (
+            <FormControl.ErrorMessage>
+              {errors.password}
+            </FormControl.ErrorMessage>
+          )}
+        </FormControl>
+      </VStack>
+      <Button onPress={onSubmit}
+      >
+        Sign up
+      </Button>
+          </VStack>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+  );
 }
+
+

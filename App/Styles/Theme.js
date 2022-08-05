@@ -9,16 +9,16 @@ const colors = {
 const Theme = extendTheme({
   colors: {
     primary: {
-      50: '#dbfcff',
-      100: '#b4eef9',
-      200: '#8ae2f0',
-      300: '#5fd5ea',
-      400: '#36c9e3',
-      500: '#1cb0c9',
-      600: '#0b899d',
-      700: '#006271',
-      800: '#003c46',
-      900: '#00161a',
+      50: '#dff6ff',
+      100: '#b3e0ff',
+      200: '#84cbfc',
+      300: '#56b6fb',
+      400: '#32a1fa',
+      500: '#2388e1',
+      600: '#186aaf',
+      700: '#0c4b7e',
+      800: '#002d4d',
+      900: '#00101e',
     },
     secondary: {
       50: '#fef9de',
@@ -44,23 +44,17 @@ const Theme = extendTheme({
       800: '#173421',
       900: '#001306',
     },
-    light: {
-      50: '#fbf4e9',
-      100: '#f1ddc2',
-      200: '#e9c799',
-      300: '#e2b06e',
-      400: '#db9945',
-      500: '#c2812e',
-      600: '#976324',
-      700: '#6b471a',
-      800: '#402b10',
-      900: '#160e04',
-    },
   },
   components: {
     Button: {
       defaultProps: {
-        variant: 'subtle',
+        rounded: 'lg',
+        mx: 2,
+        _text: {
+          fontSize: 'lg',
+          letterSpacing: 1.5,
+          fontWeight: 'bold',
+        },
         size: 'lg',
       },
       variants: {
@@ -70,22 +64,34 @@ const Theme = extendTheme({
           borderWidth: '2',
           size: 'sm',
           mt: '1',
-          mb:'1'
+          mb: '1',
         },
         chipSelected: {
           rounded: 'full',
           borderColor: 'primary.500',
           backgroundColor: 'primary.500',
           borderWidth: '2',
-          size: 'sm'
-        }
-      }
+          size: 'sm',
+        },
+      },
     },
     Input: {
       defaultProps: {
         variant: 'underlined',
-        size: 'lg'
-      }
+        size: 'lg',
+      },
+    },
+    VStack: {
+      variants: {
+        section: {
+          rounded: 'lg',
+          bg: `light.50`,
+          px: '5',
+          py: '2.5',
+          borderColor: 'light.100',
+          borderWidth: '2',
+        },
+      },
     },
     Box: {
       variants: {
@@ -110,7 +116,7 @@ const Theme = extendTheme({
           shadow: 7,
           alignItems: 'center',
           justifyContent: 'center',
-          rounded:'lg',
+          rounded: 'lg',
         },
         unstamped: {
           width: 60,
@@ -118,8 +124,8 @@ const Theme = extendTheme({
           margin: 2,
           alignItems: 'center',
           justifyContent: 'center',
-          rounded:'lg'
-        }
+          rounded: 'lg',
+        },
       },
     },
     Text: {
@@ -128,13 +134,17 @@ const Theme = extendTheme({
           fontSize: 'lg',
           pb: '2',
         },
+        field: {
+          fontSize: 'md',
+          fontWeight: 'semibold',
+        },
       },
     },
     Heading: {
       defaultProps: {
-        textAlign:'center'
-      }
-    }
+        textAlign: 'center',
+      },
+    },
   },
 });
 
