@@ -17,6 +17,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserProvider } from './Contexts/UserContext';
 import { BusinessProvider } from './Contexts/BusinessContext';
+import RewardScanner from './Components/RewardScanner';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ export default function App() {
               <Stack.Screen name="Success" component={Success} />
               <Stack.Screen name="Error" component={Error} />
               <Stack.Screen name="EditBusiness" component={EditBusiness} />
+              <Stack.Screen name="RewardScanner" component={RewardScanner} />
 
             </Stack.Navigator>
           </NavigationContainer>

@@ -4,13 +4,15 @@ import BusinessContext from '../Contexts/BusinessContext';
 import UserContext from "../Contexts/UserContext";
 import styles from '../Styles/style';
 import QRCode from 'react-native-qrcode-svg';
-import axios from "axios";
+// import axios from "axios";
 import { ScrollView, Switch } from 'react-native';
 import Loading from "./Loading";
+import AxiosInstance from '../Hooks/AxiosInstance';
 
 // import RemoveLP from "./DeleteLP";
 
 export default function BusinessProfile({ navigation }) {
+    const axios = AxiosInstance();
     const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID } = useContext(BusinessContext);
     const { colors } = useTheme();
     const [isEnabled, setIsEnabled] = useState(true);
@@ -31,7 +33,8 @@ export default function BusinessProfile({ navigation }) {
 
     const DeleteLP = () => {
         axios
-            .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/LP?businessID=${businessID}`)
+            // .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/LP?businessID=${businessID}`)
+            .delete(`/delete/LP?businessID=${businessID}`)
             .then((result => {
                 const results = result.data
                 setLP_id();
@@ -43,7 +46,8 @@ export default function BusinessProfile({ navigation }) {
 
     const DeleteBusiness = () => {
         axios
-            .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/business?ownerID=${ownerID}`)
+            // .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/business?ownerID=${ownerID}`)
+            .delete(`/delete/business?ownerID=${ownerID}`)
             .then((result => {
                 setBusinessID();
                 navigation.navigate('UserProfile')
@@ -57,7 +61,7 @@ export default function BusinessProfile({ navigation }) {
         <Loading></Loading>
     );
 
-    // console.log(loyaltyProgramme)
+    console.log(loyaltyProgramme.id)
     // console.log(members);
 
     return (
@@ -81,7 +85,7 @@ export default function BusinessProfile({ navigation }) {
                     <QRCode
                         color={colors.primary['700']}
                         backgroundColor={colors.light['50']}
-                        value={loyaltyProgramme.lp_id}
+                        value={JSON.stringify(loyaltyProgramme.id)}
                     />
                     <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
                     {members == undefined && <Text>{`${0} active members on programme`}</Text>}
@@ -145,6 +149,10 @@ export default function BusinessProfile({ navigation }) {
                 </HStack>
 
             </VStack>
+            
+            <Button colorScheme="success" onPress={() => navigation.navigate('RewardScanner')}>Redeem Reward</Button>
+            
+ 
         </Box>
     );
 }

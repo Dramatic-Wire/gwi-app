@@ -3,10 +3,12 @@ import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import axios from 'axios';
+// import axios from 'axios';
 import UserContext from "../Contexts/UserContext";
+import AxiosInstance from "../Hooks/AxiosInstance";
 
 export default function NewLP({ navigation }) {
+  const axios = AxiosInstance();
   const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
   const [stamps, setStamps] = useState(0);
   const [validFor, setValidFor] = useState('');
@@ -26,7 +28,8 @@ export default function NewLP({ navigation }) {
   
   const registerLP = () => {
      axios
-        .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
+        // .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
+        .post(`/addLP`,  {business_id, stamps, reward, validFor})
         .then((res => {
           setLoyaltyProgramme(res.data)
           console.log(res.data)

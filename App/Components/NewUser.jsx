@@ -16,11 +16,14 @@ import {useState, useContext} from 'react';
 import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {auth} from '../firebase';
-import axios from 'axios';
+// import axios from 'axios';
 import UserContext from '../Contexts/UserContext';
 import Logo from './Icons/Logo';
+// import { AxiosInstance } from 'axios';
+import AxiosInstance from '../Hooks/AxiosInstance';
 
 export default function ({navigation}) {
+  const axios = AxiosInstance();
   const {colors} = useTheme();
   const [formData, setData] = useState({});
   const [errors, setErrors] = useState({});
@@ -32,8 +35,9 @@ export default function ({navigation}) {
   const registerUser = () => {
       const { username, name, surname, email, password } = formData
         axios
-            .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/user`, { username, first_name:name, surname, email, password })
-          .then((result => {
+            // .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/user`, { username, first_name:name, surname, email, password })
+            .post(`/register/user`, { username, first_name:name, surname, email, password })
+            .then((result => {
               setUserId(result.data.id)
             })).catch(error => console.log(error));
     }

@@ -4,10 +4,12 @@ import BusinessContext from "../Contexts/BusinessContext";
 import UserContext from "../Contexts/UserContext";
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import axios from 'axios';
+// import axios from 'axios';
+import AxiosInstance from "../Hooks/AxiosInstance";
 
 
 export default function EditLP({ navigation }) {
+  const axios = AxiosInstance();
   const { setLoyaltyProgramme, businessID, loyaltyProgramme } = useContext(BusinessContext)
   // const { stamps, reward, setStamps, setReward } = useContext(UserContext)
   const [stamps, setStamps] = useState(0);
@@ -28,10 +30,12 @@ export default function EditLP({ navigation }) {
 
   const editLP = () => {
     axios
-        .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/LP`, { stamps, reward, valid_for, business_id})
+        // .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/LP`, { stamps, reward, valid_for, business_id})
+        .post(`/edit/LP`, { stamps, reward, valid_for, business_id})
         .then(
           axios
-            .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${businessID}`)
+            // .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${businessID}`)
+            .get(`/LP?id=${businessID}`)
             .then((result => {
               const results = result.data
               setLoyaltyProgramme({ stampsRequired: stamps, reward: reward, timeFrame: valid_for, members:0 });

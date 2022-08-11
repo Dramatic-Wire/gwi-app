@@ -1,17 +1,19 @@
 import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack } from "native-base";
 import { useState, useContext } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import BusinessContext from "../Contexts/BusinessContext";
 import UserContext from "../Contexts/UserContext";
+import AxiosInstance from "../Hooks/AxiosInstance";
 
 export default function RegisterBusiness({ navigation }) {
+    const axios = AxiosInstance();
     const { businessName, setBusinessName, category, setCategory, logo, setLogo ,setBusinessID } = useContext(BusinessContext)
     const {userId} = useContext(UserContext)
     const categortyList = ['Coffee Shop', 'Beauty', 'Restaurant', 'Groceries', 'Clothing', 'Health']
     const [error, setError] = useState(false);
     const [categoryError, setCategoryError] = useState(false);
     const owner_id = userId
-    const url = `https://gwi22-dramaticwire.herokuapp.com`
+    // const url = `https://gwi22-dramaticwire.herokuapp.com`
     const registerBusiness = () => {
         // get token from current user
         // const token = await firebase.auth().currentUser.getIdToken();
@@ -21,7 +23,8 @@ export default function RegisterBusiness({ navigation }) {
         if (!error && !categoryError) {
             // console.log('ownerid: ' + owner_id);
             axios
-                .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, logo })
+                // .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, logo })
+                .post(`/register/business`, { businessName, owner_id, category, logo })
                 .then((result => {
                     const results = result.data
                     console.log(results);

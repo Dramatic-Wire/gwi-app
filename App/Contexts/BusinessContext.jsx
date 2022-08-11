@@ -15,6 +15,7 @@ export const BusinessProvider = ({ children }) => {
   const [loyaltyProgramme, setLoyaltyProgramme] = useState();
   const [LP_id , setLP_id] = useState()
   const [members, setMembers] = useState()
+  // const [reward, setReward] = useState()
 
 
   useEffect(() => {
@@ -69,6 +70,25 @@ export const BusinessProvider = ({ children }) => {
     }
     
   }, [LP_id])
+
+  // useEffect(() => {
+  //   const getReward= async () => {
+  //     await axios.post(`/LP/redeem/${userId}/${LP_id}`).then(res => {
+  //       setReward(res.data)
+  //       console.log('_______________');
+  //       console.log(res.data);
+  //       console.log('_______________');
+  //       // console.log(res.data.count);
+      
+  //     })
+  //     .catch(error => console.log(error))
+  //   }
+  //   if (LP_id > 0) {
+  //     // console.log('id')
+  //     getReward()
+  //   } 
+    
+  // }, [LP_id])
  
 
   return (
