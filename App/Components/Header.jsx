@@ -26,6 +26,7 @@ export default function Header({ navigation }) {
   }
   const toggleProfiles = () => {
     toggleSwitch
+    onClose
     navigation.navigate('BusinessProfile')
   }
 

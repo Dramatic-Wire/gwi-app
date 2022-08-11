@@ -48,25 +48,27 @@ module.exports = function (db) {
   };
   //app.post('/api/login')
   const userLogin = async (req, res) => {
+    const {email, password} = req.body;
+    if (!email || !password) res.sendStatus(400);
     try {
-      let message;
-      const {email, password} = req.body;
-      const user = await db.oneOrNone('select * from users where email = $1', [
-        email,
-      ]);
-      const decrypt = await bcrypt.compare(password, user.password);
-
-      if (!decrypt) {
-        message = 'Wrong password';
-      } else {
-        message = 'logged in';
-      }
-
-      res.json({id: user.id});
+      const user = await db
+        .one('select * from users where email = $1', [email])
+        .catch((err) => {
+          res.status(401);
+          res.send('user not found');
+        });
+      await bcrypt
+        .compare(password, user.password)
+        .then((result) => {
+          if (result) {
+            res.json({id: user.id});
+          } else {
+            res.status(401).send('invalid password');
+          }
+        })
+        .catch((err) => res.send(err));
     } catch (error) {
-      res.json({
-        message: error.message,
-      });
+      res.send(error);
     }
   };
   return {

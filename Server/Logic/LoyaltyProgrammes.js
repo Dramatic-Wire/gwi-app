@@ -32,17 +32,19 @@ module.exports = function (db) {
   //app.post('/api/addLP')
 
   const addLoyaltyProgramme = async (req, res) => {
-    try {
-      const {business_id, stamps, reward, validFor} = req.body;
-      await db.none(
+    const {business_id, stamps, reward, validFor} = req.body;
+
+    await db
+      .one(
         `INSERT into loyalty_programmes 
         (business_id, stamps, reward, valid_for) VALUES ($1, $2, $3, $4) RETURNING *`,
         [business_id, stamps, reward, validFor],
-      );
-      res.sendStatus(201);
-    } catch (err) {
-      res.status(400).send(err.message);
-    }
+      )
+      .then((result) => {
+        res.status(201);
+        res.json(result);
+      })
+      .catch((err) => res.send(err));
   };
 
   //app.get('/api/LP')
