@@ -20,7 +20,6 @@ export default function ({ navigation }) {
 
     const handleLogin = async () => {
         // get token from current user
-        // const token = await firebase.auth().currentUser.getIdToken();
 
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -30,19 +29,23 @@ export default function ({ navigation }) {
         await axios.post(`/login`, { email, password }).then(res => {
             const { id } = res.data;
             setUserId(id);
+            formData.email = ''
+            formData.password = ''
             navigation.navigate('UserProfile');
             // const status = res.status
             // if (status == 200) {
 
-            //     auth
-            //         .signInWithEmailAndPassword(email, password)
-            //         .then(userCredentials => {
-            //             console.log(userCredentials)
-            //             const user = userCredentials.user;
-            //             setUserId(id);
-            //             navigation.navigate('UserProfile');
+            auth
+                .signInWithEmailAndPassword(email, password)
+                .then(async userCredentials => {
+                    // const token = getIdToken(userCredentials)
+                    const user = userCredentials.user
+                    // console.log(user)
+                    setUserId(id);
+                    console.log(await user.getIdToken()) 
+                    navigation.navigate('UserProfile');
 
-            //         })
+                })
             //         .catch(error => alert(error.message))
             // }
         }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
@@ -86,9 +89,9 @@ export default function ({ navigation }) {
                 <FormControl isRequired isInvalid={'email' in errors}>
                     <FormControl.Label _text={{
                         bold: true,
-                        fontSize: 'lg'
+                        fontSize: 'lg',
                     }}>Email</FormControl.Label>
-                    <Input placeholder="stamp@stampede.com" onChangeText={value => setData({
+                    <Input placeholder="stamp@stampede.com" value={formData.email} onChangeText={value => setData({
                         ...formData,
                         email: value
                     })} />
@@ -102,7 +105,7 @@ export default function ({ navigation }) {
                         bold: true,
                         fontSize: 'lg'
                     }}>Password</FormControl.Label>
-                    <Input type={show ? "text" : "password"} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} onChangeText={value => setData({
+                    <Input type={show ? "text" : "password"} value={formData.password} InputRightElement={<Icon name={show ? "eye" : "eye-slash"} size={17} mr="2" color="grey" onPress={() => setShow(!show)} />} onChangeText={value => setData({
                         ...formData,
                         password: value
                     })} />

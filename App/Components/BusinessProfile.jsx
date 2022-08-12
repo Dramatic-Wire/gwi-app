@@ -148,6 +148,10 @@ export default function BusinessProfile({ navigation }) {
                 </HStack>
 
             </VStack>
+            
+            <Button colorScheme="success" onPress={() => navigation.navigate('RewardScanner')}>Redeem Reward</Button>
+            
+ 
         </Box>
     );
 }

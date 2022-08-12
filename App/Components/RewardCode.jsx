@@ -18,7 +18,7 @@ export default function RewardCode({ LP, customer_id, onClose, open, color = 'em
             size={200}
             color={colors.primary['700']}
             backgroundColor={colors.light['50']}
-            value={JSON.stringify({ customer_id: customer_id, lp_id: LP.id })}
+            value={JSON.stringify({ customer_id: customer_id, lp_id: LP.lp_id })}
           />
         </Box>
         <Heading size='sm'>The business will scan this code when you redeem your reward</Heading>

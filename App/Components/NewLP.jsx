@@ -3,18 +3,19 @@ import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
 import LoyaltyCard from './LoyaltyCard';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import AxiosInstance from "../Hooks/AxiosInstance";
+// import axios from 'axios';
 import UserContext from "../Contexts/UserContext";
+import AxiosInstance from "../Hooks/AxiosInstance";
 
 export default function NewLP({ navigation }) {
-  const { setLoyaltyProgramme, businessID, setLP_id } = useContext(BusinessContext)
+  const axios = AxiosInstance();
+  const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
   const [stamps, setStamps] = useState(0);
   const [validFor, setValidFor] = useState('');
   const [reward, setReward] = useState('');
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
-  const axios = AxiosInstance()
 
   const handleTimeFrameSelection = (timeFrame) => {
     setValidFor(timeFrame);
@@ -22,12 +23,18 @@ export default function NewLP({ navigation }) {
 
   const missingInfo = stamps > 0 && reward !== '' && validFor !== '';
 
-  const registerLP = async () => {
-    await axios.post(`/addLP`, { business_id, stamps, reward, validFor }).then((res => {
-      setLP_id(res.data.id)
-      setLoyaltyProgramme(res.data)
-      navigation.navigate('BusinessProfile')
-    })).catch(error => console.log(error));
+
+  
+  const registerLP = () => {
+     axios
+        // .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
+        .post(`/addLP`,  {business_id, stamps, reward, validFor})
+        .then((res => {
+          setLoyaltyProgramme(res.data)
+          console.log(res.data)
+          navigation.navigate('BusinessProfile')
+          
+        })).catch(error => console.log(error));
   }
 
   return (

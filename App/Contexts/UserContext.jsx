@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const getUser = async () => {
       await axios.get(`/user?user_id=${userId}`).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         const { first_name, profile_picture, surname, username } = res.data
         setUsername(username);
         setFirst_name(first_name);
@@ -42,7 +42,6 @@ export const UserProvider = ({ children }) => {
     const getUserStamps = async () => {
       if (userId > 0) {
         await axios.get(`/stamps?customer_id=${userId}`).then(res => {
-          console.log(res.data)
           setLP(res.data)
         })
       }
