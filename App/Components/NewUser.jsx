@@ -101,7 +101,8 @@ export default function ({navigation}) {
       <Box height={50} width='100%' mb='5'>
         <Logo fill={colors['primary'][500]} />
           </Box>
-          {'failed' in errors && <Heading size={'md'} color='danger.600'>Registration failed. Please try again.</Heading>}
+          {/* {'failed' in errors && <Heading size={'md'} color='danger.600'>Registration failed. Please try again.</Heading>} */}
+          {'failed' in errors && alert('Registration failed. Please try again.')}
           <VStack variant='section' space={3} py={5}>
         <FormControl isRequired isInvalid={'name' in errors}>
           <FormControl.Label
