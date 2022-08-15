@@ -20,17 +20,9 @@ export default function EditBusiness({ navigation }) {
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         if (!error && !categoryError) {
-<<<<<<< HEAD
-            axios
-                .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/business`, { businessName, category, logo, owner_id})
-                .then((result => {
-                    const results = result.data
-                    navigation.navigate('BusinessProfile')
-=======
             // console.log('ownerid: ' + owner_id);
             await axios.post(`/edit/business`, { businessName, category, logo, owner_id }).then((res => {
                 navigation.navigate('BusinessProfile')
->>>>>>> 0e858ee1af0848f8a3f2fabe80d91afb42094594
 
             })).catch(error => console.log(error));
         }

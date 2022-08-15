@@ -33,6 +33,7 @@ export default function ({ navigation }) {
                 auth
                     .signInWithEmailAndPassword(email, password)
                     .then(async userCredentials => {
+                        console.log(user)
                         const user = userCredentials.user
                         const token = await user.getIdToken()
         
@@ -71,15 +72,10 @@ export default function ({ navigation }) {
     };
 
     const onSubmit = () => {
-<<<<<<< HEAD
-      if( validate()) {handleLogin()};
-  };
-=======
         console.log(formData)
         if (validate()) { handleLogin() };
         console.log(errors)
     };
->>>>>>> 0e858ee1af0848f8a3f2fabe80d91afb42094594
 
     return (
         <VStack safeArea bg='secondary.500' height='100%' px={3} py={10} space={6} justifyContent='start'>
