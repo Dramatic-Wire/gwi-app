@@ -64,8 +64,9 @@ export const BusinessProvider = ({ children }) => {
       // console.log('id')
       getMembers()
     } else {
+      console.log('lp useEffect')
       setMembers()
-      setLoyaltyProgramme()
+      setLoyaltyProgramme('none')
     }
     
   }, [LP_id])

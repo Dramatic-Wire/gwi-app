@@ -7,7 +7,7 @@ import axios from 'axios';
 import UserContext from "../Contexts/UserContext";
 
 export default function NewLP({ navigation }) {
-  const { setLoyaltyProgramme, businessID } = useContext(BusinessContext)
+  const { setLoyaltyProgramme, businessID, setLP_id } = useContext(BusinessContext)
   const [stamps, setStamps] = useState(0);
   const [validFor, setValidFor] = useState('');
   const [reward, setReward] = useState('');
@@ -27,9 +27,9 @@ export default function NewLP({ navigation }) {
   const registerLP = () => {
      axios
         .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
-        .then((res => {
+       .then((res => {
+         setLP_id(res.data.id);
           setLoyaltyProgramme(res.data)
-          console.log(res.data)
           navigation.navigate('BusinessProfile')
           
         })).catch(error => console.log(error));

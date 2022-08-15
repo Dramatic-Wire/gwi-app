@@ -19,12 +19,10 @@ export default function RegisterBusiness({ navigation }) {
         // send token to header
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         if (!error && !categoryError) {
-            // console.log('ownerid: ' + owner_id);
             axios
                 .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, logo })
                 .then((result => {
                     const results = result.data
-                    console.log(results);
                     setBusinessID(results.id);
                     navigation.navigate('BusinessProfile')
 
@@ -36,7 +34,6 @@ export default function RegisterBusiness({ navigation }) {
             setError(true)
         }
         if (field2 == undefined) {
-            console.log('err')
             setCategoryError(true)
         }
         setTimeout(() => { setError(false) }, 3000);

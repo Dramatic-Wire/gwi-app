@@ -1,5 +1,5 @@
 import { Button, Text, Heading, Box, HStack, VStack, useTheme, AlertDialog } from "native-base";
-import { useContext, useState, useRef } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import BusinessContext from '../Contexts/BusinessContext';
 import UserContext from "../Contexts/UserContext";
 import styles from '../Styles/style';
@@ -11,7 +11,7 @@ import Loading from "./Loading";
 // import RemoveLP from "./DeleteLP";
 
 export default function BusinessProfile({ navigation }) {
-    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, LP_id, setLP_id, setBusinessID } = useContext(BusinessContext);
     const { colors } = useTheme();
     const [isEnabled, setIsEnabled] = useState(true);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -35,9 +35,6 @@ export default function BusinessProfile({ navigation }) {
             .then((result => {
                 const results = result.data
                 setLP_id();
-                console.log('deleted');
-                // navigation.navigate('NewLP')
-
             })).catch(error => console.log(error));
     }
 
@@ -47,8 +44,6 @@ export default function BusinessProfile({ navigation }) {
             .then((result => {
                 setBusinessID();
                 navigation.navigate('UserProfile')
-                console.log('business deleted');
-
             })).catch(error => console.log(error));
     }
       
@@ -57,11 +52,8 @@ export default function BusinessProfile({ navigation }) {
         <Loading></Loading>
     );
 
-    // console.log(loyaltyProgramme)
-    // console.log(members);
-
     return (
-        <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+        <Box safeArea bg='secondary.500' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
             <VStack space={3} safeArea='8' >
                 <Box variant='pageTitle'>
                     <Heading style={styles.pageTitle}>{businessName}</Heading>

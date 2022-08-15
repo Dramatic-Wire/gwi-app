@@ -38,12 +38,10 @@ export default function ({navigation}) {
             })).catch(error => console.log(error));
     }
   const handleSignUp = () => {
-      console.log('test')
         auth
             .createUserWithEmailAndPassword(formData.email, formData.password)
             .then(userCredentials => {
                 const user = userCredentials.user;
-                console.log('Registered with:', user.email);
                 registerUser()
                 navigation.navigate('UserProfile')
 
@@ -87,7 +85,7 @@ export default function ({navigation}) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <VStack
       safeArea
-      bg='secondary.500'
+      bg='primary.500'
       height='100%'
       px={3}
       py={10}
@@ -95,7 +93,7 @@ export default function ({navigation}) {
       justifyContent='start'
     >
       <Box height={50} width='100%' mb='5'>
-        <Logo fill={colors['primary'][500]} />
+        <Logo fill={colors['secondary'][500]} />
           </Box>
           {'failed' in errors && <Heading size={'md'} color='danger.600'>Registration failed. Please try again.</Heading>}
           <VStack variant='section' space={3} py={5}>
@@ -204,7 +202,7 @@ export default function ({navigation}) {
           )}
         </FormControl>
       </VStack>
-      <Button onPress={onSubmit}
+      <Button colorScheme={'secondary'} onPress={onSubmit}
       >
         Sign up
       </Button>

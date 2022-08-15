@@ -67,9 +67,7 @@ export default function ({ navigation }) {
   };
 
     const onSubmit = () => {
-      console.log(formData)
       if( validate()) {handleLogin()};
-      console.log(errors)
   };
 
     return (

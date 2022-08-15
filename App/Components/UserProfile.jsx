@@ -47,14 +47,14 @@ export default function UserProfile({ navigation }) {
 
   return (
     <>
-      <VStack space={4} alignItems='center' bg='primary.900' height={'100%'}>
+      <VStack space={4} alignItems='center' bg='primary.500' height={'100%'}>
       <Header navigation={navigation}></Header>
-          <Pressable justifySelf='flex-start'  rounded={'sm'} bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='92.5%' >
+          <Pressable justifySelf='flex-start'  rounded={'sm'}  shadow={5} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='92.5%' >
           <Boot height={150} width={150} alignSelf='center' />
-          <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text>  
+          <Text alignSelf='center' color={'white'} shadow={0} fontSize={'lg'} >stamp those stamps to earn rewards</Text>  
           </Pressable>
     
-        <VStack space={3} safeArea='8' width='92.5%' rounded={'sm'} bg='primary.200' justifyContent='center'>
+        <VStack space={3} safeArea='8' width='92.5%' rounded={'sm'} justifyContent='center'>
       <ScrollView width="100%" alignItems='center' horizontal={false} alwaysBounceHorizontal={false}>
           <Box>
             {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
