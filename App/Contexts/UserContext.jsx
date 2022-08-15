@@ -14,11 +14,12 @@ export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState();
   const [LP, setLP] = useState();
   const [updateStamps, setUpdateStamps] = useState(false);
+  const [focusLP, setFocusLP] = useState();
 
   useEffect(() => {
     const getUser = async () => {
       await axios.get(`/user?user_id=${userId}`).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         const { first_name, profile_picture, surname, username } = res.data
         setUsername(username);
         setFirst_name(first_name);
@@ -41,7 +42,6 @@ export const UserProvider = ({ children }) => {
     const getUserStamps = async () => {
       if (userId > 0) {
         await axios.get(`/stamps?customer_id=${userId}`).then(res => {
-          console.log(res.data)
           setLP(res.data)
         })
       }
@@ -58,7 +58,8 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name,
-        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP, setUpdateStamps
+        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP, setUpdateStamps,
+        focusLP, setFocusLP
       }}
     >
       {children}

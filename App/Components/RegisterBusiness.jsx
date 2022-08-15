@@ -1,32 +1,29 @@
-import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack } from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack, ScrollView } from "native-base";
 import { useState, useContext } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import BusinessContext from "../Contexts/BusinessContext";
 import UserContext from "../Contexts/UserContext";
+import AxiosInstance from "../Hooks/AxiosInstance";
 
 export default function RegisterBusiness({ navigation }) {
+    const axios = AxiosInstance();
     const { businessName, setBusinessName, category, setCategory, logo, setLogo ,setBusinessID } = useContext(BusinessContext)
     const {userId} = useContext(UserContext)
     const categortyList = ['Coffee Shop', 'Beauty', 'Restaurant', 'Groceries', 'Clothing', 'Health']
     const [error, setError] = useState(false);
     const [categoryError, setCategoryError] = useState(false);
     const owner_id = userId
-    const url = `https://gwi22-dramaticwire.herokuapp.com`
-    const registerBusiness = () => {
-        // get token from current user
-        // const token = await firebase.auth().currentUser.getIdToken();
 
-        // send token to header
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const registerBusiness = () => {
+      
         if (!error && !categoryError) {
             axios
-                .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, logo })
+                .post(`/register/business`, { businessName, owner_id, category, logo })
                 .then((result => {
                     const results = result.data
                     setBusinessID(results.id);
                     navigation.navigate('BusinessProfile')
-
-                })).catch(error => console.log(error));
+                })).catch(error => console.log(error))
         }
     }
     const validation = (field, field2) => {
@@ -44,6 +41,7 @@ export default function RegisterBusiness({ navigation }) {
     return (
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
             <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}  >
+            <ScrollView width="100%" horizontal={false} alwaysBounceHorizontal={false}>
 
                 <VStack space={3} safeArea='8' >
                     <Box variant='pageTitle'>
@@ -67,6 +65,7 @@ export default function RegisterBusiness({ navigation }) {
                     </Box>
                     <Button onPress={() => { registerBusiness(); validation(businessName, category) }} >Save</Button>
                 </VStack>
+                </ScrollView>
             </Box>
         </Box>
 

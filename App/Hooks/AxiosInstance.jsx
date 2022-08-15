@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { DATABASE_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function AxiosInstance() {
   
+  // const accessToken = await AsyncStorage.getItem('token')
   const axiosInstance = axios.create({
     baseURL: DATABASE_URL,
     headers: {
-     // Authorization: `Bearer ${user?.accessToken}`,
+      // Authorization: `Bearer ${accessToken}`,
       //'Access-Control-Allow-Origin': import.meta.env.VITE_SERVER_URL,
       'Content-Type': 'application/json'
     },
@@ -28,7 +30,7 @@ function AxiosInstance() {
   //           });
   //           const { accessToken } = refresh.data;
   //           user = { ...user, accessToken: accessToken },
-            
+
   //             localStorage.setItem("user", JSON.stringify({ ...user, accessToken: accessToken }))
   //           originalConfig.headers.Authorization = `Bearer ${accessToken}`
   //           return axiosInstance(originalConfig);

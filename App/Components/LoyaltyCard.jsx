@@ -5,19 +5,28 @@ import { useContext, useState, useRef } from 'react';
 import UserContext from '../Contexts/UserContext';
 import AxiosInstance from '../Hooks/AxiosInstance';
 
+
 export default function LoyaltyCard({ stampCount, validFor, reward, name = 'Suzie Salamandar', onClose, open, stamped = 2, color = 'emerald', LPCategory }) {
+
   const axios = AxiosInstance();
-  
-  const { userId, LP } = useContext(UserContext);
+  const { userId, focusLP, setFocusLP, LP, setLP } = useContext(UserContext);
   const [openAlert, setOpenAlert] = useState(false);
   const closeAlert = () => setOpenAlert(false);
   const cancelRef = useRef(null);
 
   const deleteCard = async () => {
-    await axios.post(`/deleteLoyaltyCard?id=${userId}&lp_id=${LP.id}`).then(res => {
+    console.log(focusLP)
+    await axios.delete(`/deleteLoyaltyCard?id=${userId}&lp_id=${focusLP.lp_id}`).then(async res => {
+      onClose(true)
+
+
+      await axios.get(`/stamps?customer_id=${userId}`).then(res => {
+        setLP(res.data)
+      }).catch(error => console.log(error));
     }).catch(error => console.log(error));
   }
   return (
+
     <Modal isOpen={open} size='lg' closeOnOverlayClick={true} onClose={() => onClose(false)} backdropVisible={true} overlayVisible={true} _backdrop={{ bg: 'muted[800]', opacity: 0.9 }} >
       <Box bgColor={`${color}.300`} rounded='lg' p="5" m='5' shadow='5'>
         <Box>
@@ -34,7 +43,7 @@ export default function LoyaltyCard({ stampCount, validFor, reward, name = 'Suzi
             </Text>
           </Box>
         </View>
-       <Button onPress={() => setOpenAlert(true)}>Delete Card</Button>
+        <Button onPress={() => setOpenAlert(true)}>Delete Card</Button>
       </Box>
       {/* Alert dialogue to confirm card delete */}
       <AlertDialog leastDestructiveRef={cancelRef} isOpen={openAlert} onClose={closeAlert}>
