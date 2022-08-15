@@ -13,17 +13,12 @@ export default function RegisterBusiness({ navigation }) {
     const [error, setError] = useState(false);
     const [categoryError, setCategoryError] = useState(false);
     const owner_id = userId
-    // const url = `https://gwi22-dramaticwire.herokuapp.com`
-    const registerBusiness = () => {
-        // get token from current user
-        // const token = await firebase.auth().currentUser.getIdToken();
 
-        // send token to header
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const registerBusiness = () => {
+      
         if (!error && !categoryError) {
             // console.log('ownerid: ' + owner_id);
             axios
-                // .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/business`, { businessName, owner_id, category, logo })
                 .post(`/register/business`, { businessName, owner_id, category, logo })
                 .then((result => {
                     const results = result.data

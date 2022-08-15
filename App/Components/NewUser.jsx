@@ -33,20 +33,20 @@ export default function ({ navigation }) {
 
     const { setUserId } = useContext(UserContext);
 
-    const registerUser = () => {
-        const { username, name, surname, email, password } = formData
-        axios
-            // .post(`https://gwi22-dramaticwire.herokuapp.com/api/register/user`, { username, first_name:name, surname, email, password })
-            .post(`/register/user`, { username, first_name: name, surname, email, password })
-            .then((result => {
-                setUserId(result.data.id)
-            })).catch(error => console.log(error));
-    }
+
     const handleSignUp = () => {
         console.log('test')
         auth
             .createUserWithEmailAndPassword(formData.email, formData.password)
             .then(userCredentials => {
+                const registerUser = async () => {
+                    const { username, name, surname, email, password } = formData
+                    await axios
+                        .post(`/register/user`, { username, first_name: name, surname, email, password })
+                        .then((result => {
+                            setUserId(result.data.id)
+                        })).catch(error => console.log(error));
+                }
                 const user = userCredentials.user;
                 console.log('Registered with:', user.email);
                 registerUser()
@@ -90,6 +90,8 @@ export default function ({ navigation }) {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <ScrollView bg='secondary.500' width="100%" horizontal={false} alwaysBounceHorizontal={false}>
+
                 <VStack
                     safeArea
                     bg='secondary.500'
@@ -99,7 +101,7 @@ export default function ({ navigation }) {
                     space={6}
                     justifyContent='start'
                 >
-                    <ScrollView>
+                  
 
                         <Box height={50} width='100%' mb='5'>
                             <Logo fill={colors['primary'][500]} />
@@ -211,13 +213,13 @@ export default function ({ navigation }) {
                                 )}
                             </FormControl>
                         </VStack>
-                    </ScrollView>
                     <Button onPress={onSubmit}
                     >
                         Sign up
                     </Button>
 
                 </VStack>
+                        </ScrollView>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );

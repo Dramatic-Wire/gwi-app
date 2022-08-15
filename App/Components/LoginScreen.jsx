@@ -6,7 +6,8 @@ import { auth } from '../firebase'
 import AxiosInstance from '../Hooks/AxiosInstance';
 import UserContext from "../Contexts/UserContext";
 import Logo from "./Icons/Logo";
-import AsyncStorageInstance from "../Hooks/AsyncStorage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from "react-native";
 
 export default function ({ navigation }) {
     const { colors } = useTheme()
@@ -26,29 +27,27 @@ export default function ({ navigation }) {
 
         const { email, password } = formData
 
-        await axios.post(`/login`, { email, password }).then(res => {
-            const { id } = res.data;
-            setUserId(id);
-            formData.email = ''
-            formData.password = ''
-            navigation.navigate('UserProfile');
-            // const status = res.status
-            // if (status == 200) {
 
-            auth
-                .signInWithEmailAndPassword(email, password)
-                .then(async userCredentials => {
-                    // const token = getIdToken(userCredentials)
-                    const user = userCredentials.user
-                    // console.log(user)
-                    setUserId(id);
-                    console.log(await user.getIdToken()) 
-                    navigation.navigate('UserProfile');
+        await axios
+            .post(`/login`, { email, password }).then(res => {
+                auth
+                    .signInWithEmailAndPassword(email, password)
+                    .then(async userCredentials => {
+                        const user = userCredentials.user
+                        const token = await user.getIdToken()
+        
+                        await AsyncStorage.setItem('token', token)
+                        const { id } = res.data;
+                        setUserId(id);
+                        formData.email = ''
+                        formData.password = ''
+                        // const status = res.status
+                        // if (status == 200) {
+                        }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
+                        navigation.navigate('UserProfile');
 
-                })
-            //         .catch(error => alert(error.message))
-            // }
-        }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
+            }).catch(error => { console.log(error); Alert.alert("Oops...", "Incorrect username or password. Please try again") })
+        // }
     }
 
     const validate = () => {
