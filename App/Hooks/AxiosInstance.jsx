@@ -1,14 +1,16 @@
 import axios from 'axios';
 import { DATABASE_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Auth from "../Hooks/FirebaseInstance";
 
 function AxiosInstance() {
-  
+  const auth = Auth();
   // const accessToken = await AsyncStorage.getItem('token')
+  if (auth.currentUser == undefined) return null
   const axiosInstance = axios.create({
     baseURL: DATABASE_URL,
     headers: {
-      // Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
       //'Access-Control-Allow-Origin': import.meta.env.VITE_SERVER_URL,
       'Content-Type': 'application/json'
     },

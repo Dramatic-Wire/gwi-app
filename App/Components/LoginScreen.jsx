@@ -7,7 +7,7 @@ import UserContext from "../Contexts/UserContext";
 import Logo from "./Icons/Logo";
 import { Alert } from "react-native";
 import Auth from "../Hooks/FirebaseInstance";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function ({ navigation }) {
     const { setUserId, userCredentials, setEmail } = useContext(UserContext);
@@ -15,7 +15,7 @@ export default function ({ navigation }) {
     const [formData, setData] = useState({});
     const [errors, setErrors] = useState({});
     const axios = AxiosInstance();
-    const auth = Auth();
+    
     const [show, setShow] = useState(false);
 
     // useEffect(() => {
