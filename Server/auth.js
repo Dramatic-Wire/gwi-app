@@ -1,36 +1,33 @@
-const initializeApp = require('firebase/app').initializeApp;
-const {getAuth, signInWithEmailAndPassword} = require('firebase/auth');
-const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG);
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const admin = require('firebase-admin');
+const {getAuth} = require('firebase-admin/auth');
+const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT);
 
-// const auth = require('firebase-admin');
-// const bcrypt = require('bcrypt');
-// const saltRounds = 10;
-// const {initializeApp} = require('firebase-admin/app');
-// // Initialize the default app
-// const defaultApp = initializeApp(process.env.FIREBASE_CONFIG);
-
-// // Retrieve services via the defaultApp variable...
-// let defaultAuth = getAuth(defaultApp);
-// let defaultDatabase = getDatabase(defaultApp);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 module.exports = function (db) {
-  // getAuth()
-  //   .verifyIdToken(idToken)
-  //   .then((decodedToken) => {
-  //     const {uid} = decodedToken;
-  //     if (uid) {
-  //       next();
-  //     } else {
-  //       res.status(403).json({
-  //         message: 'unauthorized',
-  //       });
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
+  const verifyToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const uid = req.headers['uid'];
+    if (!authHeader) return res.sendStatus(401);
+    const token = authHeader.split(' ')[1];
+    getAuth()
+      .verifyIdToken(idToken)
+      .then((decodedToken) => {
+        const uid = decodedToken.uid;
+        console.log(decodedToken);
+        if (uid == decodedToken.uid) {
+          next();
+        } else {
+          res.sendStatus(403);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        res.sendStatus(403);
+      });
+  };
 
   //app.post('/api/register/user')
   const registerUser = async (req, res) => {
@@ -54,7 +51,18 @@ module.exports = function (db) {
 
   //app.post('/api/login')
   const userLogin = async (req, res) => {
-    const {email, password} = req.body;
+    const {email, password, idToken} = req.body;
+    console.log(req.headers['uid']);
+    getAuth()
+      .verifyIdToken(idToken)
+      .then((decodedToken) => {
+        const uid = decodedToken.uid;
+        console.log(decodedToken);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     if (!email || !password) {
       res.sendStatus(400);
     } else {
@@ -73,30 +81,6 @@ module.exports = function (db) {
   return {
     registerUser,
     userLogin,
+    verifyToken,
   };
-};
-
-const verify = (req, res, next) => {
-  const idToken =
-    req.headers.authorization && req.headers.authorization.split(' ')[1];
-  if (!req.headers.authorization || !idToken) {
-    res.sendStatus(401);
-    return;
-  }
-
-  getAuth()
-    .verifyIdToken(idToken)
-    .then((decodedToken) => {
-      const {uid} = decodedToken;
-      if (uid) {
-        next();
-      } else {
-        res.status(403).json({
-          message: 'unauthorized',
-        });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 };
