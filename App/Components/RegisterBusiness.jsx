@@ -1,4 +1,4 @@
-import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack } from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack, ScrollView } from "native-base";
 import { useState, useContext } from 'react';
 // import axios from 'axios';
 import BusinessContext from "../Contexts/BusinessContext";
@@ -30,8 +30,7 @@ export default function RegisterBusiness({ navigation }) {
                     console.log(results);
                     setBusinessID(results.id);
                     navigation.navigate('BusinessProfile')
-
-                })).catch(error => console.log(error));
+                })).catch(error => console.log(error))
         }
     }
     const validation = (field, field2) => {
@@ -50,6 +49,7 @@ export default function RegisterBusiness({ navigation }) {
     return (
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
             <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}  >
+            <ScrollView width="100%" horizontal={false} alwaysBounceHorizontal={false}>
 
                 <VStack space={3} safeArea='8' >
                     <Box variant='pageTitle'>
@@ -73,6 +73,7 @@ export default function RegisterBusiness({ navigation }) {
                     </Box>
                     <Button onPress={() => { registerBusiness(); validation(businessName, category) }} >Save</Button>
                 </VStack>
+                </ScrollView>
             </Box>
         </Box>
 

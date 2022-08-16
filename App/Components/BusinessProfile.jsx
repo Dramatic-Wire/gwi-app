@@ -1,29 +1,26 @@
 import { Button, Text, Heading, Box, HStack, VStack, useTheme, AlertDialog } from "native-base";
-import { useContext, useState, useRef } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import BusinessContext from '../Contexts/BusinessContext';
 import UserContext from "../Contexts/UserContext";
 import styles from '../Styles/style';
 import QRCode from 'react-native-qrcode-svg';
-// import axios from "axios";
 import { ScrollView, Switch } from 'react-native';
 import Loading from "./Loading";
-import AxiosInstance from '../Hooks/AxiosInstance';
-
-// import RemoveLP from "./DeleteLP";
+import AxiosInstance from "../Hooks/AxiosInstance";
 
 export default function BusinessProfile({ navigation }) {
-    const axios = AxiosInstance();
-    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID } = useContext(BusinessContext);
+    const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID, LP_id } = useContext(BusinessContext);
     const { colors } = useTheme();
     const [isEnabled, setIsEnabled] = useState(true);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     // const [preview, setPreview] = useState(false)
     const { userId } = useContext(UserContext)
     const ownerID = userId
+    const axios = AxiosInstance();
 
-    const [isOpen, setIsOpen] = useState(false);
-    const onClose = () => setIsOpen(false);
-    const cancelRef = useRef(null);
+    const [deleteBusinessOpen, setDeleteBusiness] = useState(false);
+    const [deleteLPOpen, setDeleteLP] = useState(false);
+
 
 
     const toggleProfiles = () => {
@@ -31,38 +28,40 @@ export default function BusinessProfile({ navigation }) {
         navigation.navigate('UserProfile')
     }
 
-    const DeleteLP = () => {
-        axios
-            // .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/LP?businessID=${businessID}`)
-            .delete(`/delete/LP?businessID=${businessID}`)
-            .then((result => {
-                const results = result.data
-                setLP_id();
-                console.log('deleted');
-                // navigation.navigate('NewLP')
-
-            })).catch(error => console.log(error));
+    useEffect(() => {
+        console.log('------')
+        console.log(LP_id)
+        console.log('------')
+    })
+    const DeleteLP = async () => {
+        await axios.delete(`/delete/LP?businessID=${businessID}`).then(res => {
+            const results = res.data
+            setLP_id();
+            setDeleteLP(false)
+        }).catch(error => console.log(error))
     }
 
-    const DeleteBusiness = () => {
-        axios
-            // .delete(`https://gwi22-dramaticwire.herokuapp.com/api/delete/business?ownerID=${ownerID}`)
-            .delete(`/delete/business?ownerID=${ownerID}`)
-            .then((result => {
-                setBusinessID();
-                navigation.navigate('UserProfile')
-                console.log('business deleted');
 
-            })).catch(error => console.log(error));
+    const DeleteBusiness = async () => {
+
+        await axios.delete(`delete/business?ownerID=${ownerID}`).then(res => {
+            setBusinessID();
+            navigation.navigate('UserProfile')
+        }).catch(error => console.log(error));
     }
-      
 
+    const onClose = () => {
+        setDeleteLP(false)
+
+    }
+    const onCloseBusiness = () => {
+        setDeleteBusiness(false)
+
+    }
+    const cancelRef = useRef(null);
     if (!loyaltyProgramme) return (
         <Loading></Loading>
     );
-
-    console.log(loyaltyProgramme.id)
-    // console.log(members);
 
     return (
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
@@ -95,57 +94,57 @@ export default function BusinessProfile({ navigation }) {
                     <HStack space={3} justifyContent="center" >
                         <Button onPress={() => navigation.navigate('EditLP')}>Edit LP</Button>
                         {/* <Button onPress={DeleteLP}>Delete</Button> */}
-                            <Button colorScheme="danger" onPress={() => setIsOpen(!isOpen)}>
-                                Delete LP
-                            </Button>
-                            <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
-                                <AlertDialog.Content>
-                                    <AlertDialog.CloseButton />
-                                    <AlertDialog.Header>Delete Loyalty Programme</AlertDialog.Header>
-                                    <AlertDialog.Body>
-                                        This will remove all data relating to the business’ Loyalty Programme. This action cannot be
-                                        reversed. Deleted data can not be recovered.
-                                    </AlertDialog.Body>
-                                    <AlertDialog.Footer>
-                                        <Button.Group space={2}>
-                                            <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
-                                                Cancel
-                                            </Button>
-                                            <Button colorScheme="danger" onPress={() => {onClose; DeleteLP}}>
-                                                Delete
-                                            </Button>
-                                        </Button.Group>
-                                    </AlertDialog.Footer>
-                                </AlertDialog.Content>
-                            </AlertDialog>
+                        <Button colorScheme="danger" onPress={() => setDeleteLP(!deleteLPOpen)}>
+                            Delete LP
+                        </Button>
+                        <AlertDialog leastDestructiveRef={cancelRef} isOpen={deleteLPOpen} onClose={onClose}>
+                            <AlertDialog.Content>
+                                <AlertDialog.CloseButton />
+                                <AlertDialog.Header>Delete Loyalty Programme</AlertDialog.Header>
+                                <AlertDialog.Body>
+                                    This will remove all data relating to the business’ Loyalty Programme. This action cannot be
+                                    reversed. Deleted data can not be recovered.
+                                </AlertDialog.Body>
+                                <AlertDialog.Footer>
+                                    <Button.Group space={2}>
+                                        <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
+                                            Cancel
+                                        </Button>
+                                        <Button colorScheme="danger" onPress={DeleteLP}>
+                                            Delete
+                                        </Button>
+                                    </Button.Group>
+                                </AlertDialog.Footer>
+                            </AlertDialog.Content>
+                        </AlertDialog>
                     </HStack>
                 </Box>}
                 <HStack space={3} justifyContent="center" >
                     <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
                     {/* <Button onPress={DeleteBusiness}>Delete Business</Button> */}
-                    <Button colorScheme="danger" onPress={() => setIsOpen(!isOpen)}>
-                                Delete Business
-                            </Button>
-                            <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
-                                <AlertDialog.Content>
-                                    <AlertDialog.CloseButton />
-                                    <AlertDialog.Header>Delete Business</AlertDialog.Header>
-                                    <AlertDialog.Body>
-                                        This will remove all data relating to the business. This action cannot be
-                                        reversed. Deleted data can not be recovered.
-                                    </AlertDialog.Body>
-                                    <AlertDialog.Footer>
-                                        <Button.Group space={2}>
-                                            <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
-                                                Cancel
-                                            </Button>
-                                            <Button colorScheme="danger" onPress={() => {onClose; DeleteBusiness}}>
-                                                Delete
-                                            </Button>
-                                        </Button.Group>
-                                    </AlertDialog.Footer>
-                                </AlertDialog.Content>
-                            </AlertDialog>
+                    <Button colorScheme="danger" onPress={() => setDeleteBusiness(!deleteBusinessOpen)}>
+                        Delete Business
+                    </Button>
+                    <AlertDialog leastDestructiveRef={cancelRef} isOpen={deleteBusinessOpen} onClose={onCloseBusiness}>
+                        <AlertDialog.Content>
+                            <AlertDialog.CloseButton />
+                            <AlertDialog.Header>Delete Business</AlertDialog.Header>
+                            <AlertDialog.Body>
+                                This will remove all data relating to the business. This action cannot be
+                                reversed. Deleted data can not be recovered.
+                            </AlertDialog.Body>
+                            <AlertDialog.Footer>
+                                <Button.Group space={2}>
+                                    <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
+                                        Cancel
+                                    </Button>
+                                    <Button colorScheme="danger" onPress={DeleteBusiness}>
+                                        Delete
+                                    </Button>
+                                </Button.Group>
+                            </AlertDialog.Footer>
+                        </AlertDialog.Content>
+                    </AlertDialog>
                 </HStack>
 
             </VStack>

@@ -55,8 +55,6 @@ export const BusinessProvider = ({ children }) => {
     const getMembers = async () => {
       await axios.get(`/LP/${LP_id}/users`).then(res => {
         setMembers(res.data.count)
-        // console.log(res.data);
-        // console.log(res.data.count);
       
       })
       .catch(error => console.log(error))
@@ -65,31 +63,13 @@ export const BusinessProvider = ({ children }) => {
       // console.log('id')
       getMembers()
     } else {
+      console.log('lp useEffect')
       setMembers()
-      setLoyaltyProgramme()
+      setLoyaltyProgramme('none')
     }
     
   }, [LP_id])
 
-  // useEffect(() => {
-  //   const getReward= async () => {
-  //     await axios.post(`/LP/redeem/${userId}/${LP_id}`).then(res => {
-  //       setReward(res.data)
-  //       console.log('_______________');
-  //       console.log(res.data);
-  //       console.log('_______________');
-  //       // console.log(res.data.count);
-      
-  //     })
-  //     .catch(error => console.log(error))
-  //   }
-  //   if (LP_id > 0) {
-  //     // console.log('id')
-  //     getReward()
-  //   } 
-    
-  // }, [LP_id])
- 
 
   return (
     <BusinessContext.Provider

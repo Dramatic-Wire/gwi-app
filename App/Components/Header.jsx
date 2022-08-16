@@ -1,7 +1,7 @@
 import { ScrollView, Switch } from 'react-native';
 import { useContext, useState, useRef } from 'react';
 import UserContext from '../Contexts/UserContext';
-import { Button, Text, Heading, Box, VStack, useTheme, HStack, Pressable, Actionsheet, useDisclose, IconButton, AlertDialog } from "native-base";
+import { Button, Text, Heading, Box, VStack, useTheme, HStack, Pressable, Actionsheet, useDisclose, IconButton, AlertDialog, Divider, Spacer } from "native-base";
 import BusinessContext from '../Contexts/BusinessContext';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Logo from './Icons/Logo';
@@ -14,7 +14,7 @@ export default function Header({ navigation }) {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [openAlert, setOpenAlert] = useState(false);
   const { businessID, } = useContext(BusinessContext);
-  const { setUserId, setUsername, setSurname, setFirst_name, setProfile_picture, userId } = useContext(UserContext);
+  const { setUserId, setUsername, setSurname, setFirst_name, setProfile_picture, userId, first_name } = useContext(UserContext);
 
   const handleLogout = () => {
     setUserId();
@@ -26,6 +26,7 @@ export default function Header({ navigation }) {
   }
   const toggleProfiles = () => {
     toggleSwitch
+    onClose(true)
     navigation.navigate('BusinessProfile')
   }
 
@@ -48,23 +49,27 @@ export default function Header({ navigation }) {
       <HStack bgColor='primary.900' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'middle'}>
         <Box height={50} width='35%'>
           <Logo fill={colors['secondary'][500]} />
+        
         </Box>
         <IconButton height={50} icon={<Icon name='user-circle' size={30} color={colors['secondary'][500]} />} onPress={onOpen} />
       </HStack>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content onClose={onClose}>
-          <Button onPress={() => { navigation.navigate('RegisterBusiness') }} >Add a business</Button>
-          <Button colorScheme="danger" onPress={() => setOpenAlert(true)}>
-            Delete Account
-          </Button>
-
-          {businessID > 0 &&
+          <Heading>Hi {first_name}</Heading>
+          {businessID > 0 && <Text>Switch to business profile</Text>}
+          {businessID > 0 && 
             <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
               thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleProfiles}
-              value={isEnabled} />
+              value={isEnabled} /> 
           }
+          <Divider  style={{marginBottom: 9}}/>
+          {businessID == undefined && <Button onPress={() => { navigation.navigate('RegisterBusiness'); onClose(true) }} >Add a business</Button>}
+          <Button colorScheme="danger" onPress={() => setOpenAlert(true)}>
+            Delete Account 
+          </Button>
+          
           <Button onPress={handleLogout}>Logout</Button>
         </Actionsheet.Content>
       </Actionsheet>
