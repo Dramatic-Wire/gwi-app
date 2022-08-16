@@ -13,10 +13,8 @@ module.exports = function (db) {
     if (!authHeader) return res.sendStatus(401);
     const token = authHeader.split(' ')[1];
     getAuth()
-      .verifyIdToken(idToken)
+      .verifyIdToken(token)
       .then((decodedToken) => {
-        const uid = decodedToken.uid;
-        console.log(decodedToken);
         if (uid == decodedToken.uid) {
           next();
         } else {
