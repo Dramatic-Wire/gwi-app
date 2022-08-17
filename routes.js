@@ -7,17 +7,15 @@ module.exports = function (app, db) {
   const LP = LoyaltyProgrammes(db);
   const auth = Auth(db);
 
-  //Public Routes
-  app.post('/api/login', auth.userLogin);
-  app.post('/api/register/user', auth.registerUser);
+  app.use(auth.verifyToken);
 
   //User Routes
+  app.post('/api/register/user', auth.registerUser);
   app.get('/api/user', users.getUser);
   app.post('/api/register/business', users.registerBusiness);
   app.get('/api/business/:id', users.getBusiness);
   app.delete('/api/deleteLoyaltyCard', users.deleteLoyaltyCard);
   app.delete('/api/deleteAccount', users.deleteAccount);
-
 
   //Customer Routes
   app.get('/api/stamps', LP.updateStamps, LP.getCustomerStamps);
@@ -31,7 +29,7 @@ module.exports = function (app, db) {
   app.get('/api/LP/:LP_id/users', LP.getLoyaltyProgrammeUsers);
   app.post('/api/LP/redeem/:customer_id/:LP_id', LP.redeemReward);
   app.delete('/api/delete/business', users.deleteBusiness);
-  app.post('/api/edit/business', users.editBusiness)
+  app.post('/api/edit/business', users.editBusiness);
 
   //Developer Routes
   app.get('/api/users', users.getAllUsers);
