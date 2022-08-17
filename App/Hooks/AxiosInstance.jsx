@@ -11,7 +11,7 @@ function AxiosInstance() {
     baseURL: DATABASE_URL,
     headers: {
       Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-      //'Access-Control-Allow-Origin': import.meta.env.VITE_SERVER_URL,
+      uid: auth.currentUser.uid,
       'Content-Type': 'application/json'
     },
     // withCredentials: true

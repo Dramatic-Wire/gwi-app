@@ -15,14 +15,15 @@ export default function ({ navigation }) {
     const [formData, setData] = useState({});
     const [errors, setErrors] = useState({});
     const axios = AxiosInstance();
-    
+    const auth = Auth();
     const [show, setShow] = useState(false);
 
-    // useEffect(() => {
-    //     if (userCredentials) {
-    //         navigation.navigate('UserProfile');
-    //     }
-    // }, [userCredentials])
+    useEffect(() => {
+        if (auth.currentUser) {
+            setEmail(auth.currentUser.email);
+            navigation.navigate('UserProfile');
+        }
+    }, [auth.currentUser])
 
     const handleLogin = async () => {
         const { email, password } = formData
