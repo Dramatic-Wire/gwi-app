@@ -33,12 +33,10 @@ export default function RewardScanner({ navigation }) {
   // What happens when we scan the bar code
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    // setText(data)
-    console.log(data) 
+    
     const parseData = JSON.parse(data)
-    console.log(parseData.customer_id)
-    console.log(parseData.lp_id)
-    // console.log(LP_id)
+   
+   
     axios
     .post(`/LP/redeem/${parseData.customer_id}/${parseData.lp_id}`)
     .then(result => {

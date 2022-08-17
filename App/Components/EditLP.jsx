@@ -12,9 +12,9 @@ export default function EditLP({ navigation }) {
   const axios = AxiosInstance();
   const { setLoyaltyProgramme, businessID, loyaltyProgramme } = useContext(BusinessContext)
   // const { stamps, reward, setStamps, setReward } = useContext(UserContext)
-  const [stamps, setStamps] = useState(0);
-  const [valid_for, setValid_for] = useState('');
-  const [reward, setReward] = useState('');
+  const [stamps, setStamps] = useState(Number(loyaltyProgramme.stamps));
+  const [valid_for, setValid_for] = useState(loyaltyProgramme.valid_for);
+  const [reward, setReward] = useState(loyaltyProgramme.reward);
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
@@ -25,16 +25,12 @@ export default function EditLP({ navigation }) {
   }
 
   const missingInfo = stamps > 0 && reward !== '' && valid_for !== '';
-  // stamps, reward, valid_for, business_id
-
 
   const editLP = () => {
     axios
-        // .post(`https://gwi22-dramaticwire.herokuapp.com/api/edit/LP`, { stamps, reward, valid_for, business_id})
         .post(`/edit/LP`, { stamps, reward, valid_for, business_id})
         .then(
           axios
-            // .get(`https://gwi22-dramaticwire.herokuapp.com/api/LP?id=${businessID}`)
             .get(`/LP?id=${businessID}`)
             .then((result => {
               const results = result.data
@@ -64,7 +60,7 @@ export default function EditLP({ navigation }) {
 
           <Box variant='section'>
             <Text variant='section'>Customer reward</Text>
-            <Input placeholder='A free item or discount' onChangeText={text => setReward(text)} />
+            <Input value={reward} onChangeText={text => setReward(text)}></Input>
           </Box>
 
           <Box variant='section' >
@@ -77,6 +73,8 @@ export default function EditLP({ navigation }) {
           <HStack space={3} justifyContent="center" >
             <Button isDisabled={!missingInfo} onPress={() => setPreview(true)}>Preview</Button>
             <Button isDisabled={!missingInfo} onPress={editLP}>Save</Button>
+            <Button onPress={() => { navigation.navigate('BusinessProfile') }} >Cancel</Button>
+
           </HStack>
           {preview == true && <LoyaltyCard stamps={stamps} valid_for={valid_for} reward={reward} onClose={setPreview} open={preview} />}
         </VStack>
