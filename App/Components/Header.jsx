@@ -50,12 +50,12 @@ export default function Header({ navigation }) {
   const cancelRef = useRef(null);
   return (
     <>
-    
-      <HStack bgColor='primary.700' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'middle'}>
+
+      <HStack bgColor='primary.900' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'middle'}>
         <Box height={50} width='35%'>
           <Logo fill={colors['secondary'][500]} />
         </Box>
-        <IconButton height={50} icon={<Icon name='user-circle' size={30} color={colors['secondary'][500]} />} onPress={onOpen} />
+        <IconButton  height={50} icon={<Icon name='user-circle' size={30} color={colors['primary'][500]} />} onPress={onOpen} />
       </HStack>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content onClose={onClose}>

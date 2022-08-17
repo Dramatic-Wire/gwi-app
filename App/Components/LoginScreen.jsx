@@ -38,6 +38,7 @@ export default function ({ navigation }) {
                 auth
                     .signInWithEmailAndPassword(email, password)
                     .then(async userCredentials => {
+                        console.log(user)
                         const user = userCredentials.user
                         const token = await user.getIdToken()
                         await AsyncStorage.setItem('token', token)

@@ -26,15 +26,14 @@ export default function NewLP({ navigation }) {
 
 
   const registerLP = () => {
-    axios
-      // .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
-      .post(`/addLP`, { business_id, stamps, reward, validFor })
-      .then((res => {
-        setLoyaltyProgramme(res.data)
-        console.log(res.data)
-        navigation.navigate('BusinessProfile')
-
-      })).catch(error => console.log(error));
+     axios
+        // .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
+        .post(`/addLP`,  {business_id, stamps, reward, validFor})
+        .then((res => {
+          setLoyaltyProgramme(res.data)
+          navigation.navigate('BusinessProfile')
+          
+        })).catch(error => console.log(error));
   }
 
   return (

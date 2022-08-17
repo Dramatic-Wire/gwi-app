@@ -15,12 +15,13 @@ export default function RegisterBusiness({ navigation }) {
 
     const registerBusiness = () => {
         if (!error && !categoryError) {
-
-            axios.post(`/register/business`, { businessName, owner_id, category, logo }).then((result => {
-                const results = result.data
-                setBusinessID(results.id);
-                navigation.navigate('BusinessProfile')
-            })).catch(error => console.log(error))
+            axios
+                .post(`/register/business`, { businessName, owner_id, category, logo })
+                .then((result => {
+                    const results = result.data
+                    setBusinessID(results.id);
+                    navigation.navigate('BusinessProfile')
+                })).catch(error => console.log(error))
         }
     }
     const validation = (field, field2) => {
@@ -28,7 +29,6 @@ export default function RegisterBusiness({ navigation }) {
             setError(true)
         }
         if (field2 == undefined) {
-            console.log('err')
             setCategoryError(true)
         }
         setTimeout(() => { setError(false) }, 3000);

@@ -32,7 +32,6 @@ export default function EditBusiness({ navigation }) {
             setError(true)
         }
         if (field2 == undefined) {
-            console.log('err')
             setCategoryError(true)
         }
         setTimeout(() => { setError(false) }, 3000);

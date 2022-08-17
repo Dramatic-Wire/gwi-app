@@ -48,7 +48,6 @@ export default function ({ navigation }) {
                         })).catch(error => console.log(error));
                 }
                 const user = userCredentials.user;
-                console.log('Registered with:', user.email);
                 registerUser()
                 navigation.navigate('UserProfile')
 
