@@ -12,16 +12,24 @@ import BusinessContext from '../Contexts/BusinessContext';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Header from './Header';
 import Boot from './Icons/Boot';
+import AxiosInstance from '../Hooks/AxiosInstance';
 
 export default function UserProfile({ navigation }) {
+  const axios = AxiosInstance();
   const { colors } = useTheme()
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isVisible, setIsVisible] = useState(false);
 
   const { businessName, loyaltyProgramme, businessID, setBusinessID } = useContext(BusinessContext);
-  const { first_name, LP, userId, setUserId, setUsername, setSurname, setFirst_name, setProfile_picture, focusLP, setFocusLP } = useContext(UserContext);
+  const {  userId, setUserId, setUsername, setSurname, setFirst_name, setProfile_picture, focusLP, setFocusLP } = useContext(UserContext);
+  const first_name = 'Sylvia'
+  const [LP, setLP] = useState()
 
+  axios.get(`/stamps?customer_id=62`).then(res => {
+    setLP(res.data)
+    // LP = res.data
+  })
   const handleLogout = () => {
     setBusinessID()
     setUserId();
@@ -42,7 +50,7 @@ export default function UserProfile({ navigation }) {
     onClose
   } = useDisclose();
 
-  if (!first_name || !LP) return (<Loading></Loading>);
+  // if (!first_name || !LP) return (<Loading></Loading>);
 
   return (
     <>
@@ -64,12 +72,12 @@ export default function UserProfile({ navigation }) {
           {focusLP && focusLP.stampsneeded <= focusLP.stamps && <RewardCode onClose={() => { setFocusLP() }} LP={focusLP} customer_id={userId} open={focusLP != undefined} />}
           {focusLP && console.log(Number(focusLP.stampsneeded) <= Number(focusLP.stamps))}
           {focusLP && console.log(focusLP.stampsneeded <= focusLP.stamps)}
-          
+
         </ScrollView>
         <Pressable justifySelf='flex-start' rounded={'sm'} bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='92.5%' >
-            <Boot height={150} width={150} alignSelf='center' />
-            <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text>
-          </Pressable>
+          <Boot height={150} width={150} alignSelf='center' />
+          <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text>
+        </Pressable>
       </VStack>
     </>)
 }

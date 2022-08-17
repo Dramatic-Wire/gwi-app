@@ -64,7 +64,7 @@ export default function BusinessProfile({ navigation }) {
     );
 
     return (
-        <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+        <Box safeArea bg='secondary.500' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
             <VStack space={3} safeArea='8' >
                 <Box variant='pageTitle'>
                     <Heading style={styles.pageTitle}>{businessName}</Heading>

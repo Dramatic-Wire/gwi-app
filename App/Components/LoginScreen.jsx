@@ -1,4 +1,4 @@
-import { Button, Input, Text, Heading, Box, KeyboardAvoidingView, Flex, Spacer, useTheme, VStack, FormControl,HStack, Alert } from "native-base";
+import { Button, Input, Text, Heading, Box, KeyboardAvoidingView, Flex, Spacer, useTheme, VStack, FormControl, HStack } from "native-base";
 import { useState, useContext } from 'react';
 import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -6,7 +6,8 @@ import { auth } from '../firebase'
 import AxiosInstance from '../Hooks/AxiosInstance';
 import UserContext from "../Contexts/UserContext";
 import Logo from "./Icons/Logo";
-import AsyncStorageInstance from "../Hooks/AsyncStorage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { Alert } from "react-native";
 
 export default function ({ navigation }) {
     const { colors } = useTheme()
@@ -31,29 +32,28 @@ export default function ({ navigation }) {
 
         const { email, password } = formData
 
-        await axios.post(`/login`, { email, password }).then(res => {
-            const { id } = res.data;
-            setUserId(id);
-            formData.email = ''
-            formData.password = ''
-            navigation.navigate('UserProfile');
-            // const status = res.status
-            // if (status == 200) {
 
-            auth
-                .signInWithEmailAndPassword(email, password)
-                .then(async userCredentials => {
-                    // const token = getIdToken(userCredentials)
-                    const user = userCredentials.user
-                    // console.log(user)
-                    setUserId(id);
-                    console.log(await user.getIdToken()) 
-                    navigation.navigate('UserProfile');
+        await axios
+            .post(`/login`, { email, password }).then(res => {
+                auth
+                    .signInWithEmailAndPassword(email, password)
+                    .then(async userCredentials => {
+                        console.log(user)
+                        const user = userCredentials.user
+                        const token = await user.getIdToken()
+        
+                        await AsyncStorage.setItem('token', token)
+                        const { id } = res.data;
+                        setUserId(id);
+                        formData.email = ''
+                        formData.password = ''
+                        // const status = res.status
+                        // if (status == 200) {
+                        }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
+                        navigation.navigate('UserProfile');
 
-                })
-            //         .catch(error => alert(error.message))
-            // }
-        }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
+            }).catch(error => { console.log(error); Alert.alert("Oops...", "Incorrect username or password. Please try again") })
+        // }
     }
 
     const validate = () => {
@@ -88,20 +88,7 @@ export default function ({ navigation }) {
                 <Logo fill={colors['primary'][500]} />
             </Box>
             {'failed' in errors && <Heading size={'md'} color='danger.600'>Login failed. Please try again.</Heading>}
-            {/* {'failed' in errors && alert('Login failed. Please try again.')} */}
-            {/* {'failed' in errors && <Alert w="100%" status='error' >
-              <VStack space={2} flexShrink={1} w="100%">
-                <HStack flexShrink={1} space={2} justifyContent="space-between">
-                  <HStack space={2} flexShrink={1}>
-                    <Alert.Icon mt="1" />
-                    <Text fontSize="md" color="coolGray.800">
-                      Registration failed. Please try again.
-                    </Text>
-                  </HStack>
-                  <Icon name="triangle-exclamation" variant="unstyled" />
-                </HStack>
-              </VStack>
-            </Alert>} */}
+           
 
             <VStack variant='section' space={10} py={5}>
 
