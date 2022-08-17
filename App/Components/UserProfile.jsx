@@ -13,9 +13,12 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Header from './Header';
 import Boot from './Icons/Boot';
 
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import LoginScreen from './LoginScreen';
+import BusinessProfile from './BusinessProfile';
 
 export default function UserProfile({ navigation }) {
-  
+  const Drawer = createDrawerNavigator();
   const { colors } = useTheme()
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -25,12 +28,11 @@ export default function UserProfile({ navigation }) {
   const  [searchResults, setSearchResults] = useState()
   //
   const { businessName, loyaltyProgramme, businessID, setBusinessID } = useContext(BusinessContext);
-  const { first_name, LP, setLP, userId, setUserId, setUsername, setSurname, setFirst_name, setProfile_picture, focusLP, setFocusLP } = useContext(UserContext);
+  const { first_name, LP, setLP, userId, setUserId, setSurname, setFirst_name, setProfile_picture, focusLP, setFocusLP } = useContext(UserContext);
 
   const handleLogout = () => {
     setBusinessID()
-    //setUserId();
-    setUsername();
+    setUserId();
     setFirst_name();
     setSurname();
     setProfile_picture();
@@ -63,6 +65,10 @@ export default function UserProfile({ navigation }) {
   //if (!first_name || !LP) return (<Loading></Loading>);
   return (
     <>
+    <Drawer.Navigator bgColor='white'>
+      <Drawer.Screen name="Home" component={LoginScreen} />
+      <Drawer.Screen name="Profile" component={BusinessProfile} />
+    </Drawer.Navigator>
       <VStack space={4} alignItems='center' bg='primary.700' height={'100%'}>
         <Header navigation={navigation}></Header>
         <LoyaltyCard navigation={navigation}></LoyaltyCard>
@@ -83,6 +89,8 @@ export default function UserProfile({ navigation }) {
             </Box>
             <HStack maxW={'100%'} flexWrap='wrap' alignItems={'flex-end'} justifyContent='space-evenly'>
               {Array.isArray(searchResults) && searchResults.map((element, index) => { return <Pressable key={index} onPress={() => { setFocusLP({ ...element }) }}><CardIcon card={element} /></Pressable> })}
+              {!Array.isArray(searchResults) && Array.isArray(LP) && LP.map((element, index) => { return <Pressable key={index} onPress={() => { setFocusLP({ ...element }) }}><CardIcon card={element} /></Pressable> })}
+
             </HStack>
           </VStack>
           {focusLP && Number(focusLP.stampsneeded) > Number(focusLP.stamps) && <LoyaltyCard stampCount={parseInt(focusLP.stampsneeded)} stamped={parseInt(focusLP.stamps)} name={focusLP.business_name} validFor={focusLP.valid_for} reward={focusLP.reward} LPCategory={focusLP.category} onClose={() => { setFocusLP() }} open={focusLP != undefined} />}

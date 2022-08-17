@@ -1,55 +1,44 @@
 import { Button, Input, Text, Heading, Box, KeyboardAvoidingView, Flex, Spacer, useTheme, VStack, FormControl } from "native-base";
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import styles from '../Styles/style';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { auth } from '../firebase'
 import AxiosInstance from '../Hooks/AxiosInstance';
 import UserContext from "../Contexts/UserContext";
 import Logo from "./Icons/Logo";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from "react-native";
+import Auth from "../Hooks/FirebaseInstance";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function ({ navigation }) {
+    const { setUserId, userCredentials, setEmail } = useContext(UserContext);
     const { colors } = useTheme()
     const [formData, setData] = useState({});
     const [errors, setErrors] = useState({});
     const axios = AxiosInstance();
-
+    const auth = Auth();
     const [show, setShow] = useState(false);
 
-    const { setUserId } = useContext(UserContext);
+    useEffect(() => {
+        if (auth.currentUser) {
+            setEmail(auth.currentUser.email);
+            navigation.navigate('UserProfile');
+        }
+    }, [auth.currentUser])
 
     const handleLogin = async () => {
-        // get token from current user
-
-        // send token to header
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
         const { email, password } = formData
+       console.log(email)
+    signInWithEmailAndPassword(auth, email, password)
+          .then(async (userCredentials) => {
+            const user = userCredentials.user;
+            setEmail(user.email);
+            navigation.navigate('UserProfile');
 
-
-        await axios
-            .post(`/login`, { email, password }).then(res => {
-                const { id } = res.data;
-                // setUserId(id);
-                formData.email = ''
-                formData.password = ''
-                navigation.navigate('UserProfile');
-                auth
-                    .signInWithEmailAndPassword(email, password)
-                    .then(async userCredentials => {
-                        console.log(user)
-                        const user = userCredentials.user
-                        const token = await user.getIdToken()
-                        await AsyncStorage.setItem('token', token)
-
-
-                        // const status = res.status
-                        // if (status == 200) {
-                    }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
-
-            }).catch(error => { console.log(error); Alert.alert("Oops...", "Incorrect username or password. Please try again") })
-        // }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        
     }
 
     const validate = () => {

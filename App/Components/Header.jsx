@@ -17,14 +17,14 @@ export default function Header({ navigation }) {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [openAlert, setOpenAlert] = useState(false);
   const { businessID, } = useContext(BusinessContext);
-  const { setUserId, setUsername, setSurname, setFirst_name, setProfile_picture, userId, first_name } = useContext(UserContext);
+  const { setUserId, setSurname, setFirst_name, setProfile_picture, userId, first_name } = useContext(UserContext);
 
   const handleLogout = () => {
     setUserId();
-    setUsername();
+   
     setFirst_name();
     setSurname();
-    setProfile_picture();
+  
     navigation.navigate('LoginScreen')
   }
   const toggleProfiles = () => {
@@ -51,7 +51,7 @@ export default function Header({ navigation }) {
   return (
     <>
 
-      <HStack bgColor='primary.900' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'middle'}>
+      <HStack bgColor='primary.600' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'middle'}>
         <Box height={50} width='35%'>
           <Logo fill={colors['secondary'][500]} />
         </Box>
