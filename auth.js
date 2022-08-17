@@ -35,6 +35,7 @@ let defaultAuth = getAuth(defaultApp);
 let defaultDatabase = getDatabase(defaultApp);
 
 module.exports = function (db) {
+  
   getAuth()
   .verifyIdToken(idToken)
   .then((decodedToken) => {

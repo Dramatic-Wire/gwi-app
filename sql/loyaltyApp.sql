@@ -19,7 +19,7 @@ create table businesses(
 create table loyalty_programmes(
 	id serial not null primary key,
 	business_id int not null,
-	stamps text not null,
+	stamps int not null,
     reward text not null,
     valid_for text not null,
     foreign key (business_id) references businesses(id) on delete cascade
