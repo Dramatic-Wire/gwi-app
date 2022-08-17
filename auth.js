@@ -29,22 +29,20 @@ module.exports = function (db) {
 
   //app.post('/api/register/user')
   const registerUser = async (req, res) => {
-    const {username, first_name, surname, email, password, profile_picture} =
-      req.body;
-    bcrypt.hash(password, saltRounds).then(async function (hash) {
-      await db
-        .one(
-          'insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, $5, $6) returning id',
-          [username, first_name, surname, email, hash, profile_picture],
-        )
-        .then((result) => {
-          res.status(201);
-          res.json(result);
-        })
-        .catch((err) => {
-          res.status(400).send(err.message);
-        });
-    });
+    const {username, first_name, surname, email, profile_picture} = req.body;
+    await db
+      .one(
+        'insert into users (username, first_name, surname, email, password, profile_picture) values ($1, $2, $3, $4, ' -
+          ', $6) returning id',
+        [username, first_name, surname, email, hash, profile_picture],
+      )
+      .then((result) => {
+        res.status(201);
+        res.json(result);
+      })
+      .catch((err) => {
+        res.status(400).send(err.message);
+      });
   };
 
   //app.post('/api/login')
