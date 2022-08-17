@@ -33,6 +33,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "runtimeVersion": "2.0.0"
+    "runtimeVersion": "1.0.0"
   }
 }
