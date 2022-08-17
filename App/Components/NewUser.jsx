@@ -22,6 +22,8 @@ import UserContext from '../Contexts/UserContext';
 import Logo from './Icons/Logo';
 // import { AxiosInstance } from 'axios';
 import AxiosInstance from '../Hooks/AxiosInstance';
+import { signUp } from '../Hooks/FirebaseInstance'
+
 
 export default function ({ navigation }) {
     const { colors } = useTheme();
@@ -35,9 +37,7 @@ export default function ({ navigation }) {
 
 
     const handleSignUp = () => {
-        console.log('test')
-        auth
-            .createUserWithEmailAndPassword(formData.email, formData.password)
+        signUp(formData.email, formData.password)
             .then(userCredentials => {
                 const registerUser = async () => {
                     const { username, name, surname, email, password } = formData

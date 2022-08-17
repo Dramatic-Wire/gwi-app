@@ -1,22 +1,42 @@
 import { createContext, useState, useEffect } from 'react';
 import AxiosInstance from '../Hooks/AxiosInstance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const axios = AxiosInstance();
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
   const [first_name, setFirst_name] = useState();
   const [surname, setSurname] = useState();
-  const [profile_picture, setProfile_picture] = useState();
-  // const [userId, setUserId] = useState();
-  const userId = 62
-  let setUserId
+  const [userId, setUserId] = useState();
   const [LP, setLP] = useState();
   const [updateStamps, setUpdateStamps] = useState(false);
   const [focusLP, setFocusLP] = useState();
+
+
+
+
+  useEffect(() => {
+    const getUser = async () => {
+      console.log('email')
+      console.log(email)
+      await axios.get(`/user?email=${email}`).then(res => {
+        console.log(res.data)
+        const { first_name, id, surname,} = res.data
+        setUserId(id);
+        setFirst_name(first_name);
+        setSurname(surname);
+      }).catch(e => console.log(e))
+    }
+
+    if (email !== undefined && (userId == 0 || !userId)) {   
+        getUser();
+    }
+
+  }, [email])
+
 
   useEffect(() => {
     const getUser = async () => {
@@ -30,12 +50,10 @@ export const UserProvider = ({ children }) => {
       })
     }
     if (userId == 0 || !userId) {
-      setUsername();
       setFirst_name();
       setSurname();
-      setProfile_picture();
     } else {
-      getUser();
+      //getUser();
       setUpdateStamps(true)
     }
   }, [userId])
@@ -59,8 +77,8 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        email, setEmail, password, setPassword, username, setUsername, first_name, setFirst_name,
-        surname, setSurname, profile_picture, setProfile_picture, userId, setUserId, LP, setLP, setUpdateStamps,
+        setEmail, first_name, setFirst_name,
+        surname, setSurname, userId, setUserId, LP, setLP, setUpdateStamps,
         focusLP, setFocusLP
       }}
     >
