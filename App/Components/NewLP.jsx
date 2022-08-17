@@ -24,17 +24,17 @@ export default function NewLP({ navigation }) {
   const missingInfo = stamps > 0 && reward !== '' && validFor !== '';
 
 
-  
+
   const registerLP = () => {
-     axios
-        // .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
-        .post(`/addLP`,  {business_id, stamps, reward, validFor})
-        .then((res => {
-          setLoyaltyProgramme(res.data)
-          console.log(res.data)
-          navigation.navigate('BusinessProfile')
-          
-        })).catch(error => console.log(error));
+    axios
+      // .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
+      .post(`/addLP`, { business_id, stamps, reward, validFor })
+      .then((res => {
+        setLoyaltyProgramme(res.data)
+        console.log(res.data)
+        navigation.navigate('BusinessProfile')
+
+      })).catch(error => console.log(error));
   }
 
   return (
@@ -45,7 +45,7 @@ export default function NewLP({ navigation }) {
             <Heading size='md'>Create a new loyalty programme</Heading>
           </Box>
           <Box variant='section'>
-            <Text variant='section' >Number of stamps on each card</Text>
+            <Text variant='section'>Number of stamps on each card</Text>
             <Box style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }} >
               <IconButton icon={<Icon name='minus-circle' size={20} color='black' />} onPress={() => { if (stamps > 0) setStamps(stamps - 1) }} disabled={stamps == 0 ? true : false} />
               <Text style={{ margin: 5, fontSize: 20 }}>{stamps}</Text>
@@ -69,6 +69,7 @@ export default function NewLP({ navigation }) {
             <Button isDisabled={!missingInfo} onPress={() => setPreview(true)}>Preview</Button>
             <Button isDisabled={!missingInfo} onPress={registerLP}>Save</Button>
           </HStack>
+          <Button onPress={() => { navigation.navigate('BusinessProfile') }} >Cancel</Button>
           {preview == true && <LoyaltyCard stampCount={stamps} validFor={validFor} reward={reward} onClose={setPreview} open={preview} />}
         </VStack>
       </Box>

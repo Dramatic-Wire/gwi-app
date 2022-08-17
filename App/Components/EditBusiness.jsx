@@ -65,6 +65,8 @@ export default function EditBusiness({ navigation }) {
                         <Input placeholder='Image URL' value={logo} onChangeText={text => setLogo(text)}></Input>
                     </Box>
                     <Button onPress={() => { edit(); validation(businessName, category) }} >Save</Button>
+                    <Button onPress={() => { navigation.navigate('BusinessProfile') }} >Cancel</Button>
+
                 </VStack>
             </Box>
         </Box>

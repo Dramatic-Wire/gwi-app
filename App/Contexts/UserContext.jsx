@@ -11,15 +11,17 @@ export const UserProvider = ({ children }) => {
   const [first_name, setFirst_name] = useState();
   const [surname, setSurname] = useState();
   const [profile_picture, setProfile_picture] = useState();
-  const [userId, setUserId] = useState();
+  // const [userId, setUserId] = useState();
+  const userId = 62
+  let setUserId
   const [LP, setLP] = useState();
   const [updateStamps, setUpdateStamps] = useState(false);
   const [focusLP, setFocusLP] = useState();
 
   useEffect(() => {
     const getUser = async () => {
-      await axios.get(`/user?user_id=${userId}`).then(res => {
-        // console.log(res.data)
+      await axios.get(`/user?user_id=${62}`).then(res => {
+        console.log(res.data)
         const { first_name, profile_picture, surname, username } = res.data
         setUsername(username);
         setFirst_name(first_name);

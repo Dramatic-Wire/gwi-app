@@ -30,21 +30,22 @@ export default function ({ navigation }) {
 
         await axios
             .post(`/login`, { email, password }).then(res => {
+                const { id } = res.data;
+                // setUserId(id);
+                formData.email = ''
+                formData.password = ''
+                navigation.navigate('UserProfile');
                 auth
                     .signInWithEmailAndPassword(email, password)
                     .then(async userCredentials => {
                         const user = userCredentials.user
                         const token = await user.getIdToken()
-        
                         await AsyncStorage.setItem('token', token)
-                        const { id } = res.data;
-                        setUserId(id);
-                        formData.email = ''
-                        formData.password = ''
+
+
                         // const status = res.status
                         // if (status == 200) {
-                        }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
-                        navigation.navigate('UserProfile');
+                    }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
 
             }).catch(error => { console.log(error); Alert.alert("Oops...", "Incorrect username or password. Please try again") })
         // }
