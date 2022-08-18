@@ -32,7 +32,7 @@ export default function ({ navigation }) {
             .then(async (userCredentials) => {
                 const user = userCredentials.user;
                 setEmail(user.email);
-                navigation.navigate('UserProfile');
+              navigation.navigate('UserProfile');
 
             })
             .catch((err) => {
@@ -73,6 +73,7 @@ export default function ({ navigation }) {
                 <Logo fill={colors['primary'][500]} />
             </Box>
             {'failed' in errors && <Heading size={'md'} color='danger.600'>Login failed. Please try again.</Heading>}
+           
 
             <VStack variant='section' space={10} py={5}>
 

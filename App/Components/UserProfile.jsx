@@ -1,7 +1,7 @@
 import { ScrollView, Switch } from 'react-native';
 import { useContext, useState } from 'react';
 import UserContext from '../Contexts/UserContext';
-import { Button, Text, Heading, Box, VStack, useTheme, HStack, Pressable, Actionsheet, useDisclose, IconButton, Input } from "native-base";
+import { Button, Text, Heading, Box, VStack, useTheme, HStack, Pressable, Actionsheet, useDisclose, IconButton } from "native-base";
 import styles from '../Styles/style';
 import CardIcon from './CardIcon';
 import Loading from './Loading';
@@ -45,7 +45,7 @@ export default function UserProfile({ navigation }) {
   //if (!first_name || !LP) return (<Loading></Loading>);
   return (
     <>
-      <VStack space={4} alignItems='center' bg='primary.700' height={'100%'}>
+      <VStack space={4} alignItems='center' bg='primary.900' height={'100%'}>
         <Header navigation={navigation}></Header>
         <LoyaltyCard navigation={navigation}></LoyaltyCard>
         {Array.isArray(LP) && <Input bgColor='white'
@@ -58,7 +58,8 @@ export default function UserProfile({ navigation }) {
           onChangeText={(text) => searchCards(text)} />}
 
         <ScrollView width="100%" alignItems='center' horizontal={false} alwaysBounceHorizontal={false}>
-          <VStack space={3} safeArea='3' width='92.5%' rounded={'sm'} bg='primary.200' justifyContent='center'>
+
+          <VStack space={3} safeArea='8' width='92.5%' rounded={'sm'} bg='primary.200' justifyContent='center'>
             <Box>
               {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
               {/* */}
@@ -69,13 +70,15 @@ export default function UserProfile({ navigation }) {
 
             </HStack>
           </VStack>
-          {focusLP && Number(focusLP.stampsneeded) > Number(focusLP.stamps) && <LoyaltyCard stampCount={parseInt(focusLP.stampsneeded)} stamped={parseInt(focusLP.stamps)} name={focusLP.business_name} validFor={focusLP.valid_for} reward={focusLP.reward} LPCategory={focusLP.category} onClose={() => { setFocusLP() }} open={focusLP != undefined} />}
-          {focusLP && Number(focusLP.stampsneeded) <= Number(focusLP.stamps) && <RewardCode onClose={() => { setFocusLP() }} LP={focusLP} customer_id={userId} open={focusLP != undefined} />}
+          {focusLP && focusLP.stampsneeded > focusLP.stamps && <LoyaltyCard stampCount={parseInt(focusLP.stampsneeded)} stamped={parseInt(focusLP.stamps)} name={focusLP.business_name} validFor={focusLP.valid_for} reward={focusLP.reward} LPCategory={focusLP.category} onClose={() => { setFocusLP() }} open={focusLP != undefined} />}
+          {focusLP && focusLP.stampsneeded <= focusLP.stamps && <RewardCode onClose={() => { setFocusLP() }} LP={focusLP} customer_id={userId} open={focusLP != undefined} />}
           {focusLP && console.log(Number(focusLP.stampsneeded) <= Number(focusLP.stamps))}
+          {focusLP && console.log(focusLP.stampsneeded <= focusLP.stamps)}
+
         </ScrollView>
-        <Pressable justifySelf='flex-start' rounded={'full'} bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='42.5%' >
-          <Boot height={90} width={90} alignSelf='center' />
-          {/* <Text alignSelf='center' fontSize={'sm'} >stamp those stamps to earn rewards</Text> */}
+        <Pressable justifySelf='flex-start' rounded={'sm'} bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='92.5%' >
+          <Boot height={150} width={150} alignSelf='center' />
+          <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text>
         </Pressable>
       </VStack>
     </>

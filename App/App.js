@@ -44,11 +44,7 @@ export default function App() {
                 name='BusinessProfile'
                 component={BusinessProfile}
               />
-              <Stack.Screen name='UserProfile' component={UserProfile} options={{
-                headerLeft: () => (
-                  <DrawerButton onPress={() => navigation.toggleDrawer()} />
-                )
-              }} />
+              <Stack.Screen name='UserProfile' component={UserProfile} />
               <Stack.Screen name='NewLP' component={NewLP} />
               <Stack.Screen name='NewUser' component={NewUser} />
               <Stack.Screen
