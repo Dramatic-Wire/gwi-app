@@ -23,31 +23,11 @@ export default function UserProfile({ navigation }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [isVisible, setIsVisible] = useState(false);
-  //
   const [search, setSearch] = useState('');
-  const  [searchResults, setSearchResults] = useState()
-  //
+  const [searchResults, setSearchResults] = useState()
   const { businessName, loyaltyProgramme, businessID, setBusinessID } = useContext(BusinessContext);
   const { first_name, LP, setLP, userId, setUserId, setSurname, setFirst_name, setProfile_picture, focusLP, setFocusLP } = useContext(UserContext);
 
-  const handleLogout = () => {
-    setBusinessID()
-    setUserId();
-    setFirst_name();
-    setSurname();
-    setProfile_picture();
-    navigation.navigate('LoginScreen')
-  }
-  const toggleProfiles = () => {
-    toggleSwitch
-    navigation.navigate('BusinessProfile')
-  }
-
-  const {
-    isOpen,
-    onOpen,
-    onClose
-  } = useDisclose();
 
   const searchCards = (e) => {
     if (e) {
@@ -61,25 +41,21 @@ export default function UserProfile({ navigation }) {
       setSearchResults(LP)
     }
   }
-  
+
   //if (!first_name || !LP) return (<Loading></Loading>);
   return (
     <>
-    <Drawer.Navigator bgColor='white'>
-      <Drawer.Screen name="Home" component={LoginScreen} />
-      <Drawer.Screen name="Profile" component={BusinessProfile} />
-    </Drawer.Navigator>
       <VStack space={4} alignItems='center' bg='primary.700' height={'100%'}>
         <Header navigation={navigation}></Header>
         <LoyaltyCard navigation={navigation}></LoyaltyCard>
-        <Input bgColor='white'
+        {Array.isArray(LP) && <Input bgColor='white'
           placeholder="Search loyalty cards"
           width="92%"
           borderRadius="4"
           py="3"
           px="1"
           InputLeftElement={<Icon name="search" m="5" ml="3" size="16" color="gray.400" />}
-          onChangeText={(text) => searchCards(text)} />
+          onChangeText={(text) => searchCards(text)} />}
 
         <ScrollView width="100%" alignItems='center' horizontal={false} alwaysBounceHorizontal={false}>
           <VStack space={3} safeArea='3' width='92.5%' rounded={'sm'} bg='primary.200' justifyContent='center'>
@@ -103,5 +79,5 @@ export default function UserProfile({ navigation }) {
         </Pressable>
       </VStack>
     </>
-    )
+  )
 }

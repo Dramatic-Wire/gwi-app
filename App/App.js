@@ -18,7 +18,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserProvider } from './Contexts/UserContext';
 import { BusinessProvider } from './Contexts/BusinessContext';
 import RewardScanner from './Components/RewardScanner';
-import DrawerComponent from './Components/DrawerComponent'; 
+import DrawerComponent from './Components/DrawerComponent';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,17 +29,17 @@ export default function App() {
         <NativeBaseProvider theme={Theme}>
           <NavigationContainer>
             <Stack.Navigator
-              initialRouteName='Drawer'
+              initialRouteName='LoginScreen'
               screenOptions={{ headerShown: false }}
             >
 
               <Stack.Screen
-                name='BusinessProfile'
-                component={BusinessProfile}
-              />
-              <Stack.Screen
                 name='Drawer'
                 component={DrawerComponent}
+              />
+              <Stack.Screen
+                name='BusinessProfile'
+                component={BusinessProfile}
               />
               <Stack.Screen name='UserProfile' component={UserProfile} />
               <Stack.Screen name='NewLP' component={NewLP} />

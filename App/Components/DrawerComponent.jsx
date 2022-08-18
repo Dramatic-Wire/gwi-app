@@ -11,8 +11,8 @@ export default function DrawerComponent(){
     return (
     
         <Drawer.Navigator bgColor='white'>
-            <Drawer.Screen name="Home" component={LoginScreen} />
             <Drawer.Screen name="Profile" component={BusinessProfile} />
+            <Drawer.Screen name="Logout" component={LoginScreen} />
         </Drawer.Navigator>
     )
 } 

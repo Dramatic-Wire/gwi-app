@@ -27,18 +27,18 @@ export default function ({ navigation }) {
 
     const handleLogin = async () => {
         const { email, password } = formData
-       console.log(email)
-    signInWithEmailAndPassword(auth, email, password)
-          .then(async (userCredentials) => {
-            const user = userCredentials.user;
-            setEmail(user.email);
-            navigation.navigate('UserProfile');
+        console.log(email)
+        signInWithEmailAndPassword(auth, email, password)
+            .then(async (userCredentials) => {
+                const user = userCredentials.user;
+                setEmail(user.email);
+                navigation.navigate('UserProfile');
 
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
     }
 
     const validate = () => {

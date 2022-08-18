@@ -8,8 +8,10 @@ import { ScrollView, Switch } from 'react-native';
 import Loading from "./Loading";
 import AxiosInstance from "../Hooks/AxiosInstance";
 import Header from './Header';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function BusinessProfile({ navigation }) {
+    const isFocused = useIsFocused();
     const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID, LP_id } = useContext(BusinessContext);
     const { colors } = useTheme();
     const [isEnabled, setIsEnabled] = useState(true);
@@ -26,6 +28,8 @@ export default function BusinessProfile({ navigation }) {
 
     const toggleProfiles = () => {
         toggleSwitch
+        console.log(isFocused)
+
         navigation.navigate('UserProfile')
     }
 

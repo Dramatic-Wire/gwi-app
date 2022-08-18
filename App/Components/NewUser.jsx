@@ -54,8 +54,8 @@ export default function ({ navigation }) {
                 setSurname()
                 setEmail()
                 setPassword()
-                setUsername()
-                setProfile_picture()
+            
+            
                 navigation.navigate('LoginScreen')
             })
             .catch(err => { console.log(err); setErrors({ ...errors, failed: 'registration' }) })
