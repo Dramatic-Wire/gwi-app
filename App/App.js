@@ -1,7 +1,7 @@
-import {useState, useEffect, useCallback} from 'react';
-import {View, SafeAreaView} from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
+import { View, SafeAreaView } from 'react-native';
 import NewLP from './Components/NewLP';
-import {NativeBaseProvider, Text, Box, Container} from 'native-base';
+import { NativeBaseProvider, Text, Box, Container, Drawer } from 'native-base';
 import Theme from './Styles/Theme';
 import RegisterBusiness from './Components/RegisterBusiness';
 import NewUser from './Components/NewUser';
@@ -13,11 +13,12 @@ import EditLP from './Components/EditLP';
 import Success from './Components/Success';
 import Error from './Components/Error';
 import EditBusiness from './Components/EditBusiness';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {UserProvider} from './Contexts/UserContext';
-import {BusinessProvider} from './Contexts/BusinessContext';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { UserProvider } from './Contexts/UserContext';
+import { BusinessProvider } from './Contexts/BusinessContext';
 import RewardScanner from './Components/RewardScanner';
+import DrawerComponent from './Components/DrawerComponent';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,8 +30,13 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator
               initialRouteName='LoginScreen'
-              screenOptions={{headerShown: false}}
+              screenOptions={{ headerShown: false }}
             >
+
+              <Stack.Screen
+                name='Drawer'
+                component={DrawerComponent}
+              />
               <Stack.Screen
                 name='BusinessProfile'
                 component={BusinessProfile}

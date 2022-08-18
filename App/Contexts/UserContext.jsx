@@ -43,10 +43,10 @@ export const UserProvider = ({ children }) => {
       await axios.get(`/user?user_id=${62}`).then(res => {
         console.log(res.data)
         const { first_name, profile_picture, surname, username } = res.data
-        setUsername(username);
+       
         setFirst_name(first_name);
         setSurname(surname);
-        setProfile_picture(profile_picture);
+       
       })
     }
     if (userId == 0 || !userId) {

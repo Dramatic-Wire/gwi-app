@@ -27,37 +27,18 @@ export default function ({ navigation }) {
 
     const handleLogin = async () => {
         const { email, password } = formData
-       console.log(email)
-    signInWithEmailAndPassword(auth, email, password)
-          .then(async (userCredentials) => {
-            const user = userCredentials.user;
-            setEmail(user.email);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        // await axios
-        //     .post(`/login`, { email, password }).then(async res => {
-        //         await AsyncStorage.setItem('user', JSON.stringify(res.data)).then(() => console.log('set')).catch(err => console.log(err))
-        //         // auth
-        //         //     .signInWithEmailAndPassword(email, password)
-        //         //     .then(async userCredentials => {
-        //         //         console.log(user)
-        //         //         const user = userCredentials.user
-        //         //         const token = await user.getIdToken()
-        
-        //         //         await AsyncStorage.setItem('token', token)
-        //         //         const { id } = res.data;
-        //         //         setUserId(id);
-        //         //         formData.email = ''
-        //         //         formData.password = ''
-        //         //         // const status = res.status
-        //         //         // if (status == 200) {
-        //         //         }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'login' }) })
-        //         //         navigation.navigate('UserProfile');
+        console.log(email)
+        signInWithEmailAndPassword(auth, email, password)
+            .then(async (userCredentials) => {
+                const user = userCredentials.user;
+                setEmail(user.email);
+                navigation.navigate('UserProfile');
 
-        //     }).catch(error => { console.log(error); Alert.alert("Oops...", "Incorrect username or password. Please try again") })
-        // }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
     }
 
     const validate = () => {
