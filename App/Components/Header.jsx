@@ -33,16 +33,16 @@ export default function Header({ navigation }) {
   }
   const toggleProfiles = () => {
     toggleSwitch
+    navigation.navigate('BusinessProfile')
     onClose(true)
     console.log(route.name);
 
-    navigation.navigate('BusinessProfile')
   }
   const toggleProfiles2 = () => {
     toggleSwitch
-    onClose(true)
-    
     navigation.navigate('UserProfile')
+    onClose(true)
+
   }
   console.log(route.name);
 
@@ -74,28 +74,24 @@ export default function Header({ navigation }) {
         <Actionsheet.Content onClose={onClose}>
           <Heading>Hi {first_name}</Heading>
 
-          {route.name == 'UserProfile'  ? <Text>User Profile</Text> &&
-           <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
+          {route.name == 'UserProfile' && <Text>User Profile</Text>}
+          {route.name == 'BusinessProfile' && <Text>Business Profile</Text>}
+
+          {route.name == 'UserProfile' &&
+            <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleProfiles }
+              value={isEnabled}
+
+            />}
+          {route.name == 'BusinessProfile' && <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
             thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={() => { navigation.navigate('BusinessProfile') }}
-            value={isEnabled}
-            
-          /> 
-          : <Text>Business Profile</Text> &&
-          <Switch trackColor={{ false: "#81b0ff", true: "#767577" }}
-          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={() => { navigation.navigate('UserProfile') }}
-          value={isEnabled}
-        />
-        }
-           {route.name == 'BusinessProfile' && businessID > 0 &&  <Switch trackColor={{ false: "#81b0ff", true: "#767577" }}
-            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={() => { navigation.navigate('UserProfile') }}
-            value={isEnabled}
-          />}
+            onValueChange={toggleProfiles2}
+            value={isEnabled} />
+          }
+
 
           <Divider style={{ marginBottom: 9 }} />
           {businessID == undefined && <Button onPress={() => { navigation.navigate('RegisterBusiness'); onClose(true) }} >Add a business</Button>}

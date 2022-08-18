@@ -32,7 +32,8 @@ export default function ({ navigation }) {
             .then(async (userCredentials) => {
                 const user = userCredentials.user;
                 setEmail(user.email);
-                navigation.navigate('UserProfile');
+                navigation.navigate('Root', { screen: 'Home' });
+                // navigation.navigate('UserProfile');
 
             })
             .catch((err) => {
