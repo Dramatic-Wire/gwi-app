@@ -14,8 +14,8 @@ export default function BusinessProfile({ navigation }) {
     const isFocused = useIsFocused();
     const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID, LP_id } = useContext(BusinessContext);
     const { colors } = useTheme();
-    const [isEnabled, setIsEnabled] = useState(true);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    // const [isEnabled, setIsEnabled] = useState(true);
+    // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     // const [preview, setPreview] = useState(false)
     const { userId } = useContext(UserContext)
     const ownerID = userId
@@ -26,12 +26,12 @@ export default function BusinessProfile({ navigation }) {
 
 
 
-    const toggleProfiles = () => {
-        toggleSwitch
-        console.log(isFocused)
+    // const toggleProfiles = () => {
+    //     toggleSwitch
+    //     console.log(isFocused)
 
-        navigation.navigate('UserProfile')
-    }
+    //     navigation.navigate('UserProfile')
+    // }
 
     useEffect(() => {
         console.log('------')
@@ -75,11 +75,11 @@ export default function BusinessProfile({ navigation }) {
                 <VStack space={3} safeArea='8' >
                     <Box variant='pageTitle'>
                         <Heading style={styles.pageTitle}>{businessName}</Heading>
-                        <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        {/* <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
                             thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={toggleProfiles}
-                            value={isEnabled} />
+                            value={isEnabled} /> */}
                     </Box>
 
                     {loyaltyProgramme == 'none' && members == undefined && <Box variant='section'>

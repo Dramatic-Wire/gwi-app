@@ -7,18 +7,23 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Logo from './Icons/Logo';
 import AxiosInstance from '../Hooks/AxiosInstance';
 import DrawerComponent from './DrawerComponent';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-export default function Header({ navigation }) {
+
+
+export default function Header() {
   const route = useRoute();
+  const navigation = useNavigation();
 
   const axios = AxiosInstance();
   const { colors } = useTheme()
   const [isEnabled, setIsEnabled] = useState(false);
+  // const [isEnabled2, setIsEnabled2] = useState(false);
   const [viewSettings, setViewSettings] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
   const [openAlert, setOpenAlert] = useState(false);
-  const { businessID, } = useContext(BusinessContext);
+  const { businessID, LP_id } = useContext(BusinessContext);
   const { setUserId, setSurname, setFirst_name, setProfile_picture, userId, first_name } = useContext(UserContext);
 
   const handleLogout = () => {
@@ -31,14 +36,12 @@ export default function Header({ navigation }) {
     toggleSwitch
     navigation.navigate('BusinessProfile')
     onClose(true)
-    console.log(route.name);
 
   }
   const toggleProfiles2 = () => {
-    toggleSwitch
+    toggleSwitch2
     navigation.navigate('UserProfile')
     onClose(true)
-
   }
   console.log(route.name);
 
@@ -70,22 +73,24 @@ export default function Header({ navigation }) {
         <Actionsheet.Content onClose={onClose}>
           <Heading>Hi {first_name}</Heading>
 
-          {route.name == 'UserProfile' && <Text>User Profile</Text>}
-          {route.name == 'BusinessProfile' && <Text>Business Profile</Text>}
+          {route.name == 'UserProfile' && <Text>Switch to Business Profile</Text>}
+          {route.name == 'BusinessProfile' && <Text>Switch to User Profile</Text>}
 
           {route.name == 'UserProfile' &&
             <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
               thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleProfiles }
+              onValueChange={toggleProfiles}
               value={isEnabled}
+            />
+          }
 
-            />}
-          {route.name == 'BusinessProfile' && <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleProfiles2}
-            value={isEnabled} />
+          {route.name == 'BusinessProfile' &&
+            <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
+              thumbColor={isEnabled ? "#f4f3f4" : "#f5dd4b"}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleProfiles2}
+              value={isEnabled} />
           }
 
 
