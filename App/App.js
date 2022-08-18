@@ -13,12 +13,15 @@ import EditLP from './Components/EditLP';
 import Success from './Components/Success';
 import Error from './Components/Error';
 import EditBusiness from './Components/EditBusiness';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { UserProvider } from './Contexts/UserContext';
 import { BusinessProvider } from './Contexts/BusinessContext';
 import RewardScanner from './Components/RewardScanner';
 import DrawerComponent from './Components/DrawerComponent';
+import { DrawerButton } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome'
+
 
 const Stack = createNativeStackNavigator();
 
@@ -34,14 +37,18 @@ export default function App() {
             >
 
               <Stack.Screen
-                name='Drawer'
+                name="DrawerNav"
                 component={DrawerComponent}
               />
               <Stack.Screen
                 name='BusinessProfile'
                 component={BusinessProfile}
               />
-              <Stack.Screen name='UserProfile' component={UserProfile} />
+              <Stack.Screen name='UserProfile' component={UserProfile} options={{
+                headerLeft: () => (
+                  <DrawerButton onPress={() => navigation.toggleDrawer()} />
+                )
+              }} />
               <Stack.Screen name='NewLP' component={NewLP} />
               <Stack.Screen name='NewUser' component={NewUser} />
               <Stack.Screen
