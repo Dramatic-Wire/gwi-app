@@ -50,7 +50,7 @@ export default function RegisterBusiness({ navigation }) {
                             <Input placeholder='Business Name' value={businessName} onChangeText={text => setBusinessName(text)}></Input>
                             {error ? (<Text style={{ color: 'red' }}>Business name required</Text>) : null}
                         </Box>
-                        <Box variant='section'>
+                        <Box variant='section' >
                             <Text variant='section'>Business category</Text>
                             <HStack space={2} flexWrap='wrap'>
                                 {categortyList.map((business, index) => <Button size={'sm'} key={business} value={index} onPress={() => { setCategory(business) }} variant={business == category ? 'chipSelected' : 'chip'} >{business}</Button>)}

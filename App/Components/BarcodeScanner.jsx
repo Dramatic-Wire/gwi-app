@@ -3,9 +3,7 @@ import { Text, View, Button, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import styles from '../Styles/style';
 import { Box } from 'native-base';
-import axios from 'axios';
 import UserContext from '../Contexts/UserContext';
-import UserProfile from './UserProfile';
 import AxiosInstance from '../Hooks/AxiosInstance';
 
 
@@ -64,7 +62,7 @@ export default function BarcodeScanner({ navigation }) {
   // Return the View
   return (
     <Box safeArea bg='primary.800' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
-      <Box style={styles.barcodebox} w='90%' height='90%'>
+      <Box style={styles.barcodebox} w='90%' height='60%'>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{ height: '100%', width: '100%' }} />
@@ -72,7 +70,7 @@ export default function BarcodeScanner({ navigation }) {
 
       </Box>
 
-      {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
+      {/* {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />} */}
     </Box>
   );
 }

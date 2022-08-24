@@ -81,6 +81,7 @@ export default function ({ navigation }) {
     const onSubmit = () => {
         if (validate()) {
             handleSignUp();
+            setData('')
         }
     };
 

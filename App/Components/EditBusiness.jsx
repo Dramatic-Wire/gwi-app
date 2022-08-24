@@ -1,4 +1,4 @@
-import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack } from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack, ScrollView } from "native-base";
 import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
 import UserContext from "../Contexts/UserContext";
@@ -41,33 +41,36 @@ export default function EditBusiness({ navigation }) {
 
     return (
         <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
-            <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}  >
+            <ScrollView width="100%" horizontal={false} alwaysBounceHorizontal={false}>
 
-                <VStack space={3} safeArea='8' >
-                    <Box variant='pageTitle'>
-                        <Heading size='md'>Edit your Business</Heading>
-                    </Box>
-                    <Box variant='section'>
-                        <Text variant='section'>Business name</Text>
-                        <Input placeholder='Business Name' value={businessName} onChangeText={text => setBusinessName(text)}></Input>
-                        {error ? (<Text style={{ color: 'red' }}>Business name required</Text>) : null}
-                    </Box>
-                    <Box variant='section'>
-                        <Text variant='section'>Business category</Text>
-                        <HStack space={2} flexWrap='wrap'>
-                            {categortyList.map((business, index) => <Button size={'sm'} key={business} value={index} onPress={() => { setCategory(business) }} variant={business == category ? 'chipSelected' : 'chip'} >{business}</Button>)}
-                            {categoryError ? (<Text style={{ color: 'red' }}>Business category required</Text>) : null}
-                        </HStack>
-                    </Box>
-                    <Box variant='section'>
-                        <Text variant='section'>Business logo</Text>
-                        <Input placeholder='Image URL' value={logo} onChangeText={text => setLogo(text)}></Input>
-                    </Box>
-                    <Button onPress={() => { edit(); validation(businessName, category) }} >Save</Button>
-                    <Button onPress={() => { navigation.navigate('BusinessProfile') }} >Cancel</Button>
+                <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}  >
 
-                </VStack>
-            </Box>
+                    <VStack space={3} safeArea='8' >
+                        <Box variant='pageTitle'>
+                            <Heading size='md'>Edit your Business</Heading>
+                        </Box>
+                        <Box variant='section'>
+                            <Text variant='section'>Business name</Text>
+                            <Input placeholder='Business Name' value={businessName} onChangeText={text => setBusinessName(text)}></Input>
+                            {error ? (<Text style={{ color: 'red' }}>Business name required</Text>) : null}
+                        </Box>
+                        <Box variant='section'>
+                            <Text variant='section'>Business category</Text>
+                            <HStack space={2} flexWrap='wrap'>
+                                {categortyList.map((business, index) => <Button size={'sm'} key={business} value={index} onPress={() => { setCategory(business) }} variant={business == category ? 'chipSelected' : 'chip'} >{business}</Button>)}
+                                {categoryError ? (<Text style={{ color: 'red' }}>Business category required</Text>) : null}
+                            </HStack>
+                        </Box>
+                        <Box variant='section'>
+                            <Text variant='section'>Business logo</Text>
+                            <Input placeholder='Image URL' value={logo} onChangeText={text => setLogo(text)}></Input>
+                        </Box>
+                        <Button onPress={() => { edit(); validation(businessName, category) }} >Save</Button>
+                        <Button onPress={() => { navigation.goBack()}} >Cancel</Button>
+
+                    </VStack>
+                </Box>
+            </ScrollView>
         </Box>
 
     );

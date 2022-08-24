@@ -35,9 +35,8 @@ export default function App() {
               initialRouteName='LoginScreen'
               screenOptions={{ headerShown: false }}
             >
-
               <Stack.Screen
-                name="DrawerNav"
+                name="DrawerComponent"
                 component={DrawerComponent}
               />
               <Stack.Screen

@@ -10,7 +10,7 @@ import Auth from "../Hooks/FirebaseInstance";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function ({ navigation }) {
-    const { setUserId, userCredentials, setEmail } = useContext(UserContext);
+    const { setUserId, userCredentials, setEmail, email  } = useContext(UserContext);
     const { colors } = useTheme()
     const [formData, setData] = useState({});
     const [errors, setErrors] = useState({});
@@ -25,15 +25,17 @@ export default function ({ navigation }) {
         }
     }, [auth.currentUser])
 
+   
     const handleLogin = async () => {
         const { email, password } = formData
-        console.log(email)
+        // console.log(email)
         signInWithEmailAndPassword(auth, email, password)
             .then(async (userCredentials) => {
                 const user = userCredentials.user;
                 setEmail(user.email);
-              navigation.navigate('UserProfile');
-
+                navigation.navigate('UserProfile');
+                setData('')
+                
             })
             .catch((err) => {
                 console.log(err);
@@ -73,7 +75,7 @@ export default function ({ navigation }) {
                 <Logo fill={colors['primary'][500]} />
             </Box>
             {'failed' in errors && <Heading size={'md'} color='danger.600'>Login failed. Please try again.</Heading>}
-           
+
 
             <VStack variant='section' space={10} py={5}>
 

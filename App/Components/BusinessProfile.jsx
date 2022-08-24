@@ -14,24 +14,15 @@ export default function BusinessProfile({ navigation }) {
 
     const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID, LP_id } = useContext(BusinessContext);
     const { colors } = useTheme();
-    // const [isEnabled, setIsEnabled] = useState(true);
-    // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    // const [preview, setPreview] = useState(false)
+    
     const { userId } = useContext(UserContext)
     const ownerID = userId
     const axios = AxiosInstance();
 
-    const [deleteBusinessOpen, setDeleteBusiness] = useState(false);
+    // const [deleteBusinessOpen, setDeleteBusiness] = useState(false);
     const [deleteLPOpen, setDeleteLP] = useState(false);
 
 
-
-    // const toggleProfiles = () => {
-    //     toggleSwitch
-    //     console.log(isFocused)
-
-    //     navigation.navigate('UserProfile')
-    // }
 
     useEffect(() => {
         console.log('------')
@@ -47,22 +38,22 @@ export default function BusinessProfile({ navigation }) {
     }
 
 
-    const DeleteBusiness = async () => {
+    // const DeleteBusiness = async () => {
 
-        await axios.delete(`delete/business?ownerID=${ownerID}`).then(res => {
-            setBusinessID();
-            navigation.navigate('UserProfile')
-        }).catch(error => console.log(error));
-    }
+    //     await axios.delete(`delete/business?ownerID=${ownerID}`).then(res => {
+    //         setBusinessID();
+    //         navigation.navigate('UserProfile')
+    //     }).catch(error => console.log(error));
+    // }
 
     const onClose = () => {
         setDeleteLP(false)
 
     }
-    const onCloseBusiness = () => {
-        setDeleteBusiness(false)
+    // const onCloseBusiness = () => {
+    //     setDeleteBusiness(false)
 
-    }
+    // }
     const cancelRef = useRef(null);
     if (!loyaltyProgramme) return (
         <Loading></Loading>
@@ -94,17 +85,17 @@ export default function BusinessProfile({ navigation }) {
                         {loyaltyProgramme.stamps !== undefined && <Text>{`${loyaltyProgramme.stamps} stamps for ${loyaltyProgramme.reward}`}</Text>}
                         {loyaltyProgramme.stamps == undefined && <Text>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>}
                         <HStack space={3} justifyContent="center" >
-                            <Button onPress={() => navigation.navigate('EditLP')}>Edit LP</Button>
+                            <Button onPress={() => navigation.navigate('EditLP')}>Edit</Button>
                             {/* <Button onPress={DeleteLP}>Delete</Button> */}
                             <Button colorScheme="danger" onPress={() => setDeleteLP(!deleteLPOpen)}>
-                                Delete LP
+                                Delete
                             </Button>
                             <AlertDialog leastDestructiveRef={cancelRef} isOpen={deleteLPOpen} onClose={onClose}>
                                 <AlertDialog.Content>
                                     <AlertDialog.CloseButton />
                                     <AlertDialog.Header>Delete Loyalty Programme</AlertDialog.Header>
                                     <AlertDialog.Body>
-                                        This will remove all data relating to the business’ Loyalty Programme. This action cannot be
+                                        This will remove all data relating to this loyalty programme. This action cannot be
                                         reversed. Deleted data can not be recovered.
                                     </AlertDialog.Body>
                                     <AlertDialog.Footer>
@@ -122,12 +113,12 @@ export default function BusinessProfile({ navigation }) {
                         </HStack>
                     </Box>}
                     <HStack space={3} justifyContent="center" >
-                        <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
+                        {/* <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
 
                         <Button colorScheme="danger" onPress={() => setDeleteBusiness(!deleteBusinessOpen)}>
                             Delete Business
-                        </Button>
-                        <AlertDialog leastDestructiveRef={cancelRef} isOpen={deleteBusinessOpen} onClose={onCloseBusiness}>
+                        </Button> */}
+                        {/* <AlertDialog leastDestructiveRef={cancelRef} isOpen={deleteBusinessOpen} onClose={onCloseBusiness}>
                             <AlertDialog.Content>
                                 <AlertDialog.CloseButton />
                                 <AlertDialog.Header>Delete Business</AlertDialog.Header>
@@ -146,12 +137,12 @@ export default function BusinessProfile({ navigation }) {
                                     </Button.Group>
                                 </AlertDialog.Footer>
                             </AlertDialog.Content>
-                        </AlertDialog>
+                        </AlertDialog> */}
                     </HStack>
 
                 </VStack>
 
-                <Button colorScheme="success" onPress={() => navigation.navigate('RewardScanner')}>Redeem Reward</Button>
+                <Button colorScheme="success" onPress={() => navigation.navigate('RewardScanner')}>Redeem Customer Reward</Button>
 
             </Box>
         </>

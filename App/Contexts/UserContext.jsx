@@ -16,14 +16,12 @@ export const UserProvider = ({ children }) => {
   const [focusLP, setFocusLP] = useState();
 
 
-
-
   useEffect(() => {
     const getUser = async () => {
-      console.log('email')
-      console.log(email)
+      // console.log('email')
+      // console.log(email)
       await axios.get(`/user?email=${email}`).then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         const { first_name, id, surname,} = res.data
         setUserId(id);
         setFirst_name(first_name);
@@ -39,21 +37,10 @@ export const UserProvider = ({ children }) => {
 
 
   useEffect(() => {
-    const getUser = async () => {
-      await axios.get(`/user?user_id=${62}`).then(res => {
-        console.log(res.data)
-        const { first_name, profile_picture, surname, username } = res.data
-       
-        setFirst_name(first_name);
-        setSurname(surname);
-       
-      })
-    }
     if (userId == 0 || !userId) {
       setFirst_name();
       setSurname();
     } else {
-      //getUser();
       setUpdateStamps(true)
     }
   }, [userId])

@@ -1,7 +1,7 @@
 import { ScrollView, Switch } from 'react-native';
 import { useContext, useState } from 'react';
 import UserContext from '../Contexts/UserContext';
-import { Button, Text, Heading, Box, VStack, useTheme, HStack, Pressable, Actionsheet, useDisclose, IconButton } from "native-base";
+import { Button, Text, Heading, Box, VStack, useTheme, HStack, Pressable, Actionsheet, useDisclose, IconButton, Input } from "native-base";
 import styles from '../Styles/style';
 import CardIcon from './CardIcon';
 import Loading from './Loading';
@@ -41,28 +41,34 @@ export default function UserProfile({ navigation }) {
       setSearchResults(LP)
     }
   }
+// console.log('++++++++')
+// console.log(first_name)
+// console.log(LP)
+// console.log('++++++++')
 
-  //if (!first_name || !LP) return (<Loading></Loading>);
+
+  if (!first_name || !LP) return (<Loading></Loading>);
   return (
     <>
       <VStack space={4} alignItems='center' bg='primary.900' height={'100%'}>
         <Header navigation={navigation}></Header>
         <LoyaltyCard navigation={navigation}></LoyaltyCard>
-        {Array.isArray(LP) && <Input bgColor='white'
+        {Array.isArray(LP) && 
+        <Input 
+          bgColor='white'
           placeholder="Search loyalty cards"
           width="92%"
           borderRadius="4"
           py="3"
           px="1"
-          InputLeftElement={<Icon name="search" m="5" ml="3" size="16" color="gray.400" />}
-          onChangeText={(text) => searchCards(text)} />}
-
+          InputLeftElement={<Icon name="search" m="5" ml="3" size="16" color="gray.400" style={{marginLeft: 5}}/>}
+          onChangeText={(text) => searchCards(text)} />
+          }
         <ScrollView width="100%" alignItems='center' horizontal={false} alwaysBounceHorizontal={false}>
 
-          <VStack space={3} safeArea='8' width='92.5%' rounded={'sm'} bg='primary.200' justifyContent='center'>
+          <VStack space={3} safeArea='8' width='92.5%' rounded={'sm'} bg='primary.700' justifyContent='center'>
             <Box>
-              {!Array.isArray(LP) && <Text variant='section'>You are currently not part of any loyalty programmes</Text>}
-              {/* */}
+              {!Array.isArray(LP) && <Text variant='section' color={'white'}>You are currently not part of any loyalty programmes</Text>}
             </Box>
             <HStack maxW={'100%'} flexWrap='wrap' alignItems={'flex-end'} justifyContent='space-evenly'>
               {Array.isArray(searchResults) && searchResults.map((element, index) => { return <Pressable key={index} onPress={() => { setFocusLP({ ...element }) }}><CardIcon card={element} /></Pressable> })}
@@ -76,9 +82,9 @@ export default function UserProfile({ navigation }) {
           {focusLP && console.log(focusLP.stampsneeded <= focusLP.stamps)}
 
         </ScrollView>
-        <Pressable justifySelf='flex-start' rounded={'sm'} bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='92.5%' >
-          <Boot height={150} width={150} alignSelf='center' />
-          <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text>
+        <Pressable justifySelf='flex-start'  rounded={'full'}  bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='30%' >
+          <Boot height={80} width={70} alignSelf='center' />
+          {/* <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text> */}
         </Pressable>
       </VStack>
     </>
