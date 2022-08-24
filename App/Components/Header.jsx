@@ -54,7 +54,7 @@ export default function Header() {
   const cancelRef = useRef(null);
   return (
     <>
-      <HStack bgColor='primary.700' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'middle'}>
+      <HStack bgColor='primary.700' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'center'}>
         <Box height={50} width='35%'>
           <Logo fill={colors['secondary'][500]} />
         </Box>

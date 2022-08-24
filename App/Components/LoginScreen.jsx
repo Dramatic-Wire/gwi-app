@@ -70,7 +70,7 @@ export default function ({ navigation }) {
     };
 
     return (
-        <VStack safeArea bg='secondary.500' height='100%' px={3} py={10} space={6} justifyContent='start'>
+        <VStack safeArea bg='secondary.500' height='100%' px={3} py={10} space={6} justifyContent='flex-start'>
             <Box height={50} width='100%' mb='5'>
                 <Logo fill={colors['primary'][500]} />
             </Box>

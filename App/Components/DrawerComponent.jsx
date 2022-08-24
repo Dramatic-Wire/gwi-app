@@ -56,7 +56,7 @@ export default function DrawerComponent() {
     return (
         <>
             <View bgColor='white'>
-                <HStack width='100%' pt='5' pb='2' paddingX='2' alignItems={'middle'}>
+                <HStack width='100%' pt='5' pb='2' paddingX='2' alignItems={'center'}>
                     <IconButton icon={<Icon name='angle-left' size={30} color={'blue.900'} />} onPress={() => navigation.goBack()} />
                     <Icon name='user-circle' size={25} color={colors['primary'][500]} style={{ marginTop: 13, marginRight: 5 }} />
 
