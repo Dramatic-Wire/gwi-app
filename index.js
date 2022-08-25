@@ -10,8 +10,8 @@ const {createServer} = require('http');
 const {Server} = require('socket.io');
 
 const app = express();
-const httpsServer = createServer(app);
-const io = new Server(httpsServer);
+const httpServer = createServer(app);
+const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
   console.log('io');
@@ -47,6 +47,7 @@ routes(app, db);
 //configure the port number using and environment number
 var portNumber = process.env.PORT || 4000;
 
+httpServer.listen(portNumber);
 //start everything up
 app.listen(portNumber, async function () {
   console.log('server listening on:', portNumber);
