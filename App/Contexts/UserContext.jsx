@@ -61,6 +61,12 @@ export const UserProvider = ({ children }) => {
 
   }, [updateStamps])
 
+
+  socket.on("success", () => {
+    console.log('success sent from socket')
+  })
+
+
   return (
     <UserContext.Provider
       value={{
