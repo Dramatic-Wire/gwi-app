@@ -16,7 +16,7 @@ export default function RegisterBusiness({ navigation }) {
     const registerBusiness = () => {
         if (!error && !categoryError) {
             axios
-                .post(`/register/business`, { businessName, owner_id, category, logo })
+                .post(`/api/register/business`, { businessName, owner_id, category, logo })
                 .then((result => {
                     const results = result.data
                     setBusinessID(results.id);

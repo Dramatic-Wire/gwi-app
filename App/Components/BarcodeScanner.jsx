@@ -32,7 +32,7 @@ export default function BarcodeScanner({ navigation }) {
     setScanned(true);
     // setText(data)
     axios
-      .post(`/add/stamp`, { UserId: userId, LPid: data })
+      .post(`/api/add/stamp`, { UserId: userId, LPid: data })
       .then(result => {
         if (result.status == 201) {
           setUpdateStamps(true)

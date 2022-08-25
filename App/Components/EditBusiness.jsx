@@ -21,7 +21,7 @@ export default function EditBusiness({ navigation }) {
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         if (!error && !categoryError) {
             // console.log('ownerid: ' + owner_id);
-            await axios.post(`/edit/business`, { businessName, category, logo, owner_id }).then((res => {
+            await axios.post(`/api/edit/business`, { businessName, category, logo, owner_id }).then((res => {
                 navigation.navigate('BusinessProfile')
 
             })).catch(error => console.log(error));

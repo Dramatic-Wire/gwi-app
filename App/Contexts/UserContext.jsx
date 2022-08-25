@@ -1,13 +1,12 @@
 import { createContext, useState, useEffect } from 'react';
 import AxiosInstance from '../Hooks/AxiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Socket from '../Hooks/Socket';
+import socket from '../Hooks/Socket';
 
 const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const axios = AxiosInstance();
-  const socket = Socket();
   const [email, setEmail] = useState();
   const [first_name, setFirst_name] = useState();
   const [surname, setSurname] = useState();
@@ -19,14 +18,14 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const getUser = async () => {
-      // console.log('email')
-      // console.log(email)
-      await axios.get(`/user?email=${email}`).then(res => {
-        // console.log(res.data)
+      await axios.get(`/api/user?email=${email}`).then(res => {
+        console.log(res.data)
         const { first_name, id, surname,} = res.data
         setUserId(id);
         setFirst_name(first_name);
         setSurname(surname);
+        socket.auth = { id };
+        socket.connect();
       }).catch(e => console.log(e))
     }
 
@@ -49,7 +48,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const getUserStamps = async () => {
       if (userId > 0) {
-        await axios.get(`/stamps?customer_id=${userId}`).then(res => {
+        await axios.get(`/api/stamps?customer_id=${userId}`).then(res => {
           setLP(res.data)
         })
       }

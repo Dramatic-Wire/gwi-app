@@ -36,7 +36,7 @@ export default function ({ navigation }) {
     const [show, setShow] = useState(false);
 
 
-    const { setUserId } = useContext(UserContext);
+    const { setEmail } = useContext(UserContext);
 
 
     const handleSignUp = () => {
@@ -45,10 +45,10 @@ export default function ({ navigation }) {
                 const axios = AxiosInstance();
                     const { username, name, surname, email, password } = formData
                     axios
-                        .post(`/register/user`, { username, first_name: name, surname, email, password })
+                        .post(`/api/register/user`, { username, first_name: name, surname, email, password })
                         .then((result => {
-                            console.log(result)
-                            setUserId(result.data.id)
+                            setEmail(result.data.email);
+                            navigation.navigate('UserProfile');
                         })).catch(error => console.log(error));
             }).catch(err => { console.log(err); setErrors({ ...errors, failed: 'registration' }) })
     }

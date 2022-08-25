@@ -20,7 +20,7 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getBusiness = async () => {
-      await axios.get(`/business/${userId}`).then(res => {
+      await axios.get(`/api/business/${userId}`).then(res => {
         setBusinessID(res.data.id)
         setBusinessName(res.data.business_name)
         setCategory(res.data.category)
@@ -36,7 +36,7 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getLP = async () => {
-      await axios.get(`/LP?id=${businessID}`).then(res => {
+      await axios.get(`/api/LP?id=${businessID}`).then(res => {
         setLoyaltyProgramme(res.data)
         setLP_id(res.data.id)
       })
@@ -53,7 +53,7 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getMembers = async () => {
-      await axios.get(`/LP/${LP_id}/users`).then(res => {
+      await axios.get(`/api/LP/${LP_id}/users`).then(res => {
         setMembers(res.data.count)
       
       })
