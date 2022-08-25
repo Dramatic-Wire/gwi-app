@@ -18,6 +18,12 @@ io.on('connection', (socket) => {
   socket.user_id = socket.handshake.auth.id;
   console.log(socket.user_id);
   console.log(socket.id);
+
+  for (let [id, socket] of io.of('/').sockets) {
+    if (socket.user_id == 62) {
+      socket.to(socket.id).emit('success');
+    }
+  }
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
