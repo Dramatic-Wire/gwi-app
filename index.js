@@ -14,13 +14,9 @@ const httpServer = createServer(app);
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
-  console.log('_____________');
-  console.log('_____________');
-  console.log('_____________');
-  console.log(socket.handshake.auth.id);
-  console.log('_____________');
-  console.log('_____________');
-  console.log('_____________');
+  console.log();
+
+  io.to(socket.handshake.auth.id).emit('success');
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -43,7 +39,7 @@ app.use(cors());
 
 const routes = require('./routes');
 
-routes(app, db);
+routes(app, db, io);
 
 //configure the port number using and environment number
 var portNumber = process.env.PORT || 4000;
