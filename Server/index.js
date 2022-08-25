@@ -16,7 +16,7 @@ const io = new Server(httpServer);
 io.on('connection', (socket) => {
   console.log();
 
-  io.to(socket.handshake.auth.id).emit('success');
+  io.to(socket).emit('success');
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
