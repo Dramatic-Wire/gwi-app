@@ -15,7 +15,7 @@ const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
   console.log('user connected');
-  console.log(socket);
+  console.log(socket.clients);
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
