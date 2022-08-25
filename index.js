@@ -15,7 +15,9 @@ const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
   console.log('user connected');
-  console.log(io.of('/').sockets);
+  socket.user_id = socket.handshake.auth.username;
+  console.log(socket.user_id);
+  console.log(socket.id);
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
