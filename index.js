@@ -47,9 +47,8 @@ routes(app, db);
 //configure the port number using and environment number
 var portNumber = process.env.PORT || 4000;
 
-httpServer.listen(portNumber);
 //start everything up
-app.listen(portNumber, async function () {
+httpServer.listen(portNumber, async function () {
   console.log('server listening on:', portNumber);
   async function testConnection() {
     const c = await db.connect(); // try to connect
