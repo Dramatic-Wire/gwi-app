@@ -21,39 +21,10 @@ import RewardScanner from './Components/RewardScanner';
 import DrawerComponent from './Components/DrawerComponent';
 import {DrawerButton} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import io from 'socket.io-client';
 
 const Stack = createNativeStackNavigator();
-const socket = io('https://gwi22-dramaticwire.herokuapp.com/api');
 
 export default function App() {
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [lastPong, setLastPong] = useState(null);
-
-  useEffect(() => {
-    socket.on('connection', () => {
-      setIsConnected(true);
-    });
-
-    socket.on('disconnect', () => {
-      setIsConnected(false);
-    });
-
-    socket.on('pong', () => {
-      setLastPong(new Date().toISOString());
-    });
-
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('pong');
-    };
-  }, []);
-
-  const sendPing = () => {
-    socket.emit('ping');
-  };
-
   return (
     <UserProvider>
       <BusinessProvider>
