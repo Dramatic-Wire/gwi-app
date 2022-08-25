@@ -14,7 +14,13 @@ const httpServer = createServer(app);
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('_____________');
+  console.log('_____________');
+  console.log('_____________');
+  console.log(socket.handshake.auth.id);
+  console.log('_____________');
+  console.log('_____________');
+  console.log('_____________');
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
