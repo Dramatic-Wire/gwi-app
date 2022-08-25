@@ -1,12 +1,13 @@
 import { createContext, useState, useEffect } from 'react';
 import AxiosInstance from '../Hooks/AxiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Socket from '../Hooks/Socket';
 
 const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const axios = AxiosInstance();
+  const socket = Socket();
   const [email, setEmail] = useState();
   const [first_name, setFirst_name] = useState();
   const [surname, setSurname] = useState();

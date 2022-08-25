@@ -1,53 +1,14 @@
-import { useState, useEffect } from 'react'
 import axios from 'axios';
 import { DATABASE_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Auth from "../Hooks/FirebaseInstance";
 
-import io from 'socket.io-client';
-
-const auth = Auth();
-const socket = io('https://gwi22-dramaticwire.herokuapp.com/api', {extraHeaders:{ Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-  uid: auth.currentUser.uid,
-}
-});
-
 function AxiosInstance() {
+  const auth = Auth();
   // const accessToken = await AsyncStorage.getItem('token')
   if (auth.currentUser == undefined) return null
-  
-  
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [lastPong, setLastPong] = useState(null);
-
-  useEffect(() => {
-    if(auth.currentUser !== undefined) {
-    socket.on('connect', () => {
-      setIsConnected(true);
-    });
-
-    socket.on('disconnect', () => {
-      setIsConnected(false);
-    });
-
-    socket.on('pong', () => {
-      setLastPong(new Date().toISOString());
-    });
-
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('pong');
-    };}
-  }, []);
-
-  const sendPing = () => {
-    socket.emit('ping');
-  };
-
-
   const axiosInstance = axios.create({
-    baseURL: DATABASE_URL,
+    baseURL: `${DATABASE_URL}/api`,
     headers: {
       Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
       uid: auth.currentUser.uid,
