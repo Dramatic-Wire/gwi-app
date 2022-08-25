@@ -8,6 +8,7 @@ admin.initializeApp({
 
 module.exports = function (db) {
   const verifyToken = (req, res, next) => {
+    console.log('middleware');
     const authHeader = req.headers['authorization'];
     const uid = req.headers['uid'];
     if (!authHeader) return res.sendStatus(401);
