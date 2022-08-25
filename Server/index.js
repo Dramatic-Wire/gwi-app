@@ -15,7 +15,7 @@ const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
   console.log('user connected');
-  socket.user_id = socket.handshake.auth.username;
+  socket.user_id = socket.handshake.auth.id;
   console.log(socket.user_id);
   console.log(socket.id);
 });
