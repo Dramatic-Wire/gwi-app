@@ -31,7 +31,7 @@ export default function App() {
   const [lastPong, setLastPong] = useState(null);
 
   useEffect(() => {
-    socket.on('connect', () => {
+    socket.on('connection', () => {
       setIsConnected(true);
     });
 

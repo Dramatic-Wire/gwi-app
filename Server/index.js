@@ -11,7 +11,6 @@ const {Server} = require('socket.io');
 
 const app = express();
 const httpsServer = createServer(app);
-console.log(httpsServer);
 const io = new Server(httpsServer, {rejectUnauthorized: false});
 
 io.on('connection', (socket) => {
