@@ -26,6 +26,7 @@ export const UserProvider = ({ children }) => {
         setSurname(surname);
         socket.auth = { id };
         socket.connect();
+        
       }).catch(e => console.log(e))
     }
 
@@ -62,9 +63,7 @@ export const UserProvider = ({ children }) => {
   }, [updateStamps])
 
 
-  socket.on("success", () => {
-    console.log('success sent from socket')
-  })
+  
 
 
   return (
