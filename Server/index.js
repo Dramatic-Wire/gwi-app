@@ -15,7 +15,11 @@ console.log(httpsServer);
 const io = new Server(httpsServer, {rejectUnauthorized: false});
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  try {
+    console.log('a user connected');
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
