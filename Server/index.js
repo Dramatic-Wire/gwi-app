@@ -14,12 +14,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
-  console.log('io');
-  try {
-    console.log('a user connected');
-  } catch (e) {
-    console.log(e);
-  }
+  console.log('a user connected');
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;

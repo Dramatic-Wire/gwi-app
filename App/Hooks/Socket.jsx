@@ -4,14 +4,7 @@ import Auth from "../Hooks/FirebaseInstance";
 import { DATABASE_URL } from '@env';
 
 function Socket() {
-  const auth = Auth();
-  if (auth.currentUser !== undefined) {
-    const socket = io(DATABASE_URL, {
-      extraHeaders: {
-        Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
-        uid: auth.currentUser.uid,
-      }
-    });
+    const socket = io(DATABASE_URL);
     const [isConnected, setIsConnected] = useState(socket.connected);
     const [lastPong, setLastPong] = useState(null);
 
@@ -47,6 +40,6 @@ function Socket() {
       </div>
     );
   }
-}
+
 
 export default Socket;

@@ -16,7 +16,6 @@ module.exports = function (db) {
       .verifyIdToken(token)
       .then((decodedToken) => {
         if (uid == decodedToken.uid) {
-          console.log('middleware');
           next();
         } else {
           res.sendStatus(403);
