@@ -62,7 +62,7 @@ export default function UserProfile({ navigation }) {
           borderRadius="4"
           py="3"
           px="1"
-          InputLeftElement={<Icon name="search" m="5" ml="3" size="16" color="gray.400" style={{marginLeft: 5}}/>}
+          InputLeftElement={<Icon name="search" m="5" ml="3" size={16} color="gray.400" style={{marginLeft: 5}}/>}
           onChangeText={(text) => searchCards(text)} />
           }
         <ScrollView width="100%" alignItems='center' horizontal={false} alwaysBounceHorizontal={false}>
