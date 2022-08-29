@@ -75,7 +75,7 @@ export default function RewardScanner({ navigation }) {
 
       </Box>
 
-      {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
+      {/* {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />} */}
     </Box>
   );
 }

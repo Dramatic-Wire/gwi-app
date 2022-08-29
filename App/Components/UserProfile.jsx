@@ -41,6 +41,7 @@ export default function UserProfile({ navigation }) {
       setSearchResults(LP)
     }
   }
+  
 // console.log('++++++++')
 // console.log(first_name)
 // console.log(LP)
