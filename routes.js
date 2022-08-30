@@ -7,8 +7,6 @@ module.exports = function (app, db, io) {
   const LP = LoyaltyProgrammes(db, io);
   const auth = Auth(db);
 
-  app.use(auth.verifyToken);
-
   //User Routes
   app.post('/api/register/user', auth.registerUser);
   app.get('/api/user', users.getUser);
