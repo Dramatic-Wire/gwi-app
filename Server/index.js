@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const PgPromise = require('pg-promise');
+const Auth = require('./auth');
+
 require('dotenv').config();
 const initOptions = {
   /* initialization options */
@@ -62,9 +64,12 @@ if (process.env.NODE_ENV == 'production') {
 
 const db = pgp(config);
 
+const auth = Auth(db);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cors());
+app.use(auth.verifyToken);
 
 const routes = require('./routes');
 
