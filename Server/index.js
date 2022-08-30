@@ -38,9 +38,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('add loyalty programme', ({LP_id}) => {
+    const userIndex = users.findIndex((user) => socket.id == user.socket_id);
+    users[userIndex]['LP_id'] = LP_id;
     console.log(LP_id);
     socket.emit('LP added', {
-      LP_id,
+      users,
     });
   });
 });
