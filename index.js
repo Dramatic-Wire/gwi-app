@@ -13,19 +13,21 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
+io.use((socket, next) => {
+  const app_id = socket.handshake.auth.id;
+  if (!app_id) {
+    return next(new Error('invalid id'));
+  }
+  socket.app_id = app_id;
+  next();
+});
+
 io.on('connection', (socket) => {
   console.log('user connected');
-  socket.user_id = socket.handshake.auth.id;
-  console.log(socket.user_id);
+  console.log(socket.app_id);
   console.log(socket.id);
 
-  socket.emit('connected', socket.id);
-
-  // for (let [id, socket] of io.of('/').sockets) {
-  //   // if (socket.user_id == 62) {
-  //   socket.to(id).emit('success');
-  //   // }
-  // }
+  socket.emit('connected', [socket.id, socket.app_id]);
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
