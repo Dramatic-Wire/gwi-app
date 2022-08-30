@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 defaults:
       run:
-        working-directory: Server
+        working-directory: ./Server
 jobs:
   build:
 
@@ -29,7 +29,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-      working-directory: Server
     - run: npm run build --if-present
-      working-directory: Server
     - run: npm test
