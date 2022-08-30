@@ -31,6 +31,11 @@ io.on('connection', (socket) => {
     });
   }
   socket.emit('users', users);
+
+  socket.broadcast.emit('user connected', {
+    userID: socket.id,
+    username: socket.username,
+  });
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
