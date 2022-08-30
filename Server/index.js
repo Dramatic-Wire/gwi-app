@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
   console.log(socket.user_id);
   console.log(socket.id);
 
-  socket.emit('connected', socket);
+  socket.emit('connected', 'user is connected');
 
   // for (let [id, socket] of io.of('/').sockets) {
   //   // if (socket.user_id == 62) {
