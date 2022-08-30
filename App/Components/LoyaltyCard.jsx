@@ -16,11 +16,11 @@ export default function LoyaltyCard({ stampCount, validFor, reward, name = 'Suzi
 
   const deleteCard = async () => {
     console.log(focusLP)
-    await axios.delete(`/deleteLoyaltyCard?id=${userId}&lp_id=${focusLP.lp_id}`).then(async res => {
+    await axios.delete(`/api/deleteLoyaltyCard?id=${userId}&lp_id=${focusLP.lp_id}`).then(async res => {
       onClose(true)
 
 
-      await axios.get(`/stamps?customer_id=${userId}`).then(res => {
+      await axios.get(`/api/stamps?customer_id=${userId}`).then(res => {
         setLP(res.data)
       }).catch(error => console.log(error));
     }).catch(error => console.log(error));

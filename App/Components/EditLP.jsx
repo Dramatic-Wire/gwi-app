@@ -29,10 +29,10 @@ export default function EditLP({ navigation }) {
 
   const editLP = () => {
     axios
-        .post(`/edit/LP`, { stamps, reward, valid_for, business_id})
+        .post(`/api/edit/LP`, { stamps, reward, valid_for, business_id})
         .then(
           axios
-            .get(`/LP?id=${businessID}`)
+            .get(`/api/LP?id=${businessID}`)
             .then((result => {
               const results = result.data
               setLoyaltyProgramme({ stampsRequired: stamps, reward: reward, timeFrame: valid_for, members:0 });

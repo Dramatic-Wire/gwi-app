@@ -22,15 +22,8 @@ export default function BusinessProfile({ navigation }) {
     // const [deleteBusinessOpen, setDeleteBusiness] = useState(false);
     const [deleteLPOpen, setDeleteLP] = useState(false);
 
-
-
-    useEffect(() => {
-        console.log('------')
-        console.log(LP_id)
-        console.log('------')
-    })
     const DeleteLP = async () => {
-        await axios.delete(`/delete/LP?businessID=${businessID}`).then(res => {
+        await axios.delete(`/api/delete/LP?businessID=${businessID}`).then(res => {
             const results = res.data
             setLP_id();
             setDeleteLP(false)

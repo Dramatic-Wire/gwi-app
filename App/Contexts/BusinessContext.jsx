@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import AxiosInstance from '../Hooks/AxiosInstance';
 import UserContext from './UserContext';
+import socket from '../Hooks/Socket';
 
 const BusinessContext = createContext({});
 
@@ -20,7 +21,7 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getBusiness = async () => {
-      await axios.get(`/business/${userId}`).then(res => {
+      await axios.get(`/api/business/${userId}`).then(res => {
         setBusinessID(res.data.id)
         setBusinessName(res.data.business_name)
         setCategory(res.data.category)
@@ -36,7 +37,7 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getLP = async () => {
-      await axios.get(`/LP?id=${businessID}`).then(res => {
+      await axios.get(`/api/LP?id=${businessID}`).then(res => {
         setLoyaltyProgramme(res.data)
         setLP_id(res.data.id)
       })
@@ -53,7 +54,7 @@ export const BusinessProvider = ({ children }) => {
 
   useEffect(() => {
     const getMembers = async () => {
-      await axios.get(`/LP/${LP_id}/users`).then(res => {
+      await axios.get(`/api/LP/${LP_id}/users`).then(res => {
         setMembers(res.data.count)
       
       })
@@ -61,9 +62,11 @@ export const BusinessProvider = ({ children }) => {
     }
     if (LP_id > 0) {
       // console.log('id')
+      socket.emit("add loyalty programme", {
+      LP_id
+    });
       getMembers()
     } else {
-      console.log('lp useEffect')
       setMembers()
       setLoyaltyProgramme('none')
     }

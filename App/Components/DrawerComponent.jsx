@@ -43,7 +43,7 @@ export default function DrawerComponent() {
 
 
     const deleteAccount = async () => {
-        await axios.delete(`/deleteAccount?id=${userId}`).then(res => {
+        await axios.delete(`/api/deleteAccount?id=${userId}`).then(res => {
             navigation.navigate('LoginScreen')
         })
     }

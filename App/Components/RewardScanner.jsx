@@ -38,7 +38,7 @@ export default function RewardScanner({ navigation }) {
    
    
     axios
-    .post(`/LP/redeem/${parseData.customer_id}/${parseData.lp_id}`)
+    .post(`/api/LP/redeem/${parseData.customer_id}/${parseData.lp_id}`)
     .then(result => {
         if (result.status == 200) {
             navigation.navigate('Success')

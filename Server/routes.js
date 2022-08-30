@@ -2,12 +2,10 @@ const Users = require('./Logic/Users');
 const LoyaltyProgrammes = require('./Logic/LoyaltyProgrammes');
 const Auth = require('./auth');
 
-module.exports = function (app, db) {
+module.exports = function (app, db, io) {
   const users = Users(db);
-  const LP = LoyaltyProgrammes(db);
+  const LP = LoyaltyProgrammes(db, io);
   const auth = Auth(db);
-
-  app.use(auth.verifyToken);
 
   //User Routes
   app.post('/api/register/user', auth.registerUser);

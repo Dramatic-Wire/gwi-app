@@ -28,7 +28,7 @@ export default function NewLP({ navigation }) {
   const registerLP = () => {
      axios
         // .post(`https://gwi22-dramaticwire.herokuapp.com/api/addLP`,  {business_id, stamps, reward, validFor})
-        .post(`/addLP`,  {business_id, stamps, reward, validFor})
+        .post(`/api/addLP`,  {business_id, stamps, reward, validFor})
         .then((res => {
           setLoyaltyProgramme(res.data)
           navigation.navigate('BusinessProfile')

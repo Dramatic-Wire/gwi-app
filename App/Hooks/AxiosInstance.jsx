@@ -8,7 +8,7 @@ function AxiosInstance() {
   // const accessToken = await AsyncStorage.getItem('token')
   if (auth.currentUser == undefined) return null
   const axiosInstance = axios.create({
-    baseURL: DATABASE_URL,
+    baseURL: `${DATABASE_URL}`,
     headers: {
       Authorization: `Bearer ${auth.currentUser.stsTokenManager.accessToken}`,
       uid: auth.currentUser.uid,

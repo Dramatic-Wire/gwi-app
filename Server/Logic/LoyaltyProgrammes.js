@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-module.exports = function (db) {
+module.exports = function (db, io) {
   const updateStamps = async (req, res, next) => {
     const {customer_id} = req.query;
     if (!customer_id) {
@@ -178,6 +178,7 @@ module.exports = function (db) {
               ORDER BY timestamp ASC LIMIT $3)`,
             [LP_id, customer_id, stamps_needed],
           );
+          io.to(customer_id).emit('reward redeemed');
           res.sendStatus(200);
         } catch (err) {
           res.send(err);
