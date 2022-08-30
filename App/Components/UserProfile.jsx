@@ -51,7 +51,7 @@ export default function UserProfile({ navigation }) {
         <LoyaltyCard navigation={navigation}></LoyaltyCard>
         {Array.isArray(LP) && 
         <Input 
-          bgColor='white'
+          variant="outline"
           placeholder="Search loyalty cards"
           width="92%"
           borderRadius="4"
@@ -78,7 +78,7 @@ export default function UserProfile({ navigation }) {
           {focusLP && console.log(focusLP.stampsneeded <= focusLP.stamps)}
 
         </ScrollView>
-        <Pressable justifySelf='flex-start'  rounded={'full'}  bg='#b8dbbb' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='30%' marginBottom={'9px'} >
+        <Pressable justifySelf='flex-start'  rounded={'full'}  bg='#b8dbbb' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='30%' marginBottom={'30px'} >
           <Boot height={80} width={70} alignSelf='center' />
         </Pressable>
       </VStack>

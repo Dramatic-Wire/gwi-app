@@ -4,6 +4,7 @@ import Stamp from './Stamp';
 import { useContext, useState, useRef } from 'react';
 import UserContext from '../Contexts/UserContext';
 import AxiosInstance from '../Hooks/AxiosInstance';
+import { useRoute } from '@react-navigation/native';
 
 
 export default function LoyaltyCard({ stampCount, validFor, reward, name = 'Suzie Salamandar', onClose, open, stamped = 2, color = 'emerald', LPCategory }) {
@@ -13,6 +14,7 @@ export default function LoyaltyCard({ stampCount, validFor, reward, name = 'Suzi
   const [openAlert, setOpenAlert] = useState(false);
   const closeAlert = () => setOpenAlert(false);
   const cancelRef = useRef(null);
+  const route = useRoute();
 
   const deleteCard = async () => {
     console.log(focusLP)
@@ -43,7 +45,7 @@ export default function LoyaltyCard({ stampCount, validFor, reward, name = 'Suzi
             </Text>
           </Box>
         </View>
-        <Button onPress={() => setOpenAlert(true)}>Delete Card</Button>
+       {route.name == 'UserProfile' ?  <Button onPress={() => setOpenAlert(true)} variant={'subtle'}>Delete Card</Button> : null}
       </Box>
       {/* Alert dialogue to confirm card delete */}
       <AlertDialog leastDestructiveRef={cancelRef} isOpen={openAlert} onClose={closeAlert}>

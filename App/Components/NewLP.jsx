@@ -1,4 +1,4 @@
-import { Button, Input, Text, IconButton, Heading, Box, HStack, VStack } from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, HStack, VStack, ScrollView, useTheme } from "native-base";
 import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
 import LoyaltyCard from './LoyaltyCard';
@@ -16,6 +16,7 @@ export default function NewLP({ navigation }) {
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
+  const { colors } = useTheme();
 
   const handleTimeFrameSelection = (timeFrame) => {
     setValidFor(timeFrame);
@@ -37,10 +38,12 @@ export default function NewLP({ navigation }) {
   }
 
   return (
-    <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+    <Box safeArea bg='#b8dbbb' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+      <ScrollView>
+
       <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}  >
         <VStack space={3} safeArea='8'>
-          <Box variant='pageTitle'>
+          <Box variant='pageTitle' style={{backgroundColor: colors.primary['200']}}>
             <Heading size='md'>Create a new loyalty programme</Heading>
           </Box>
           <Box variant='section'>
@@ -65,13 +68,15 @@ export default function NewLP({ navigation }) {
 
           </Box>
           <HStack space={3} justifyContent="center" >
-            <Button isDisabled={!missingInfo} onPress={() => setPreview(true)}>Preview</Button>
-            <Button isDisabled={!missingInfo} onPress={registerLP}>Save</Button>
+            <Button isDisabled={!missingInfo} onPress={() => setPreview(true)} variant={'subtle'}>Preview</Button>
+            <Button isDisabled={!missingInfo} onPress={registerLP} variant={'subtle'}>Save</Button>
           </HStack>
-          <Button onPress={() => { navigation.navigate('BusinessProfile') }} >Cancel</Button>
+          <Button onPress={() => { navigation.navigate('BusinessProfile') }} variant={'subtle'}>Cancel</Button>
           {preview == true && <LoyaltyCard stampCount={stamps} validFor={validFor} reward={reward} onClose={setPreview} open={preview} />}
         </VStack>
       </Box>
+      </ScrollView>
+
     </Box>
   );
 }

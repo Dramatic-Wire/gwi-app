@@ -1,4 +1,4 @@
-import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack, ScrollView } from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, Select, VStack, HStack, ScrollView, useTheme } from "native-base";
 import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
 import UserContext from "../Contexts/UserContext";
@@ -12,6 +12,7 @@ export default function RegisterBusiness({ navigation }) {
     const [error, setError] = useState(false);
     const [categoryError, setCategoryError] = useState(false);
     const owner_id = userId
+    const { colors } = useTheme();
 
     const registerBusiness = () => {
         if (!error && !categoryError) {
@@ -37,12 +38,12 @@ export default function RegisterBusiness({ navigation }) {
     }
 
     return (
-        <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+        <Box safeArea bg='#b8dbbb' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
             <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}  >
                 <ScrollView width="100%" horizontal={false} alwaysBounceHorizontal={false}>
 
                     <VStack space={3} safeArea='8' >
-                        <Box variant='pageTitle'>
+                        <Box variant='pageTitle' style={{backgroundColor: colors.primary['200']}}>
                             <Heading size='md'>Register a New Business</Heading>
                         </Box>
                         <Box variant='section'>
@@ -57,12 +58,12 @@ export default function RegisterBusiness({ navigation }) {
                                 {categoryError ? (<Text style={{ color: 'red' }}>Business category required</Text>) : null}
                             </HStack>
                         </Box>
-                        <Box variant='section'>
+                        {/* <Box variant='section'>
                             <Text variant='section'>Business logo</Text>
                             <Input placeholder='Image URL' value={logo} onChangeText={text => setLogo(text)}></Input>
-                        </Box>
-                        <Button onPress={() => { registerBusiness(); validation(businessName, category) }} >Save</Button>
-                        <Button onPress={() => { navigation.navigate('UserProfile') }} >Cancel</Button>
+                        </Box> */}
+                        <Button onPress={() => { registerBusiness(); validation(businessName, category) }} variant={'subtle'} >Save</Button>
+                        <Button onPress={() => { navigation.navigate('UserProfile') }} variant={'subtle'} >Cancel</Button>
 
                     </VStack>
                 </ScrollView>

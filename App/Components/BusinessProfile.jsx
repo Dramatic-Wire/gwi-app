@@ -14,12 +14,11 @@ export default function BusinessProfile({ navigation }) {
 
     const { businessName, loyaltyProgramme, businessID, setLoyaltyProgramme, members, setMembers, setLP_id, setBusinessID, LP_id } = useContext(BusinessContext);
     const { colors } = useTheme();
-    
+
     const { userId } = useContext(UserContext)
     const ownerID = userId
     const axios = AxiosInstance();
 
-    // const [deleteBusinessOpen, setDeleteBusiness] = useState(false);
     const [deleteLPOpen, setDeleteLP] = useState(false);
 
     const DeleteLP = async () => {
@@ -30,23 +29,11 @@ export default function BusinessProfile({ navigation }) {
         }).catch(error => console.log(error))
     }
 
-
-    // const DeleteBusiness = async () => {
-
-    //     await axios.delete(`delete/business?ownerID=${ownerID}`).then(res => {
-    //         setBusinessID();
-    //         navigation.navigate('UserProfile')
-    //     }).catch(error => console.log(error));
-    // }
-
     const onClose = () => {
         setDeleteLP(false)
 
     }
-    // const onCloseBusiness = () => {
-    //     setDeleteBusiness(false)
 
-    // }
     const cancelRef = useRef(null);
     if (!loyaltyProgramme) return (
         <Loading></Loading>
@@ -55,28 +42,29 @@ export default function BusinessProfile({ navigation }) {
     return (
         <>
             <Header />
-            <Box safeArea bg='white' style={{ flex: 1, alignItems: 'center',  }}>
+            <Box safeArea bg='white' style={{ flex: 1, alignItems: 'center', }}>
                 <VStack space={3} safeArea='7' >
-                    <Box variant='pageTitle' style={{backgroundColor: colors.primary['200']}}>
+                    <Box variant='pageTitle' style={{ backgroundColor: colors.primary['200'] }}>
                         <Heading style={styles.pageTitle}>{businessName}</Heading>
                     </Box>
 
                     {loyaltyProgramme == 'none' && members == undefined && <Box variant='section'>
                         <Text variant='section'>You currently have no loyalty programme for your business</Text>
-                        <Button onPress={() => { navigation.navigate('NewLP') }}>Add Loyalty Programme</Button>
+                        <Button onPress={() => { navigation.navigate('NewLP') }} variant={'subtle'}>Add Loyalty Programme</Button>
                     </Box>}
 
-                    {loyaltyProgramme !== 'none' && <Box variant='section'  style={{ alignItems: 'center', justifyContent: 'center', }}>
+                    {loyaltyProgramme !== 'none' && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
                         <QRCode
+                            size={170}
                             color={colors.primary['700']}
                             backgroundColor={colors.light['50']}
                             value={JSON.stringify(loyaltyProgramme.id)}
                         />
-                        <Text variant='section' style={{width: '100%', fontSize: '17rem', fontWeight: '700'}}>{'Scan to stamp customer loyalty card'}</Text>
-                        {members == undefined && <Text style={{ fontSize: '17rem', fontWeight: '500'}}>{`${0} active members on programme`}</Text>}
-                        {members !== undefined && <Text style={{ fontSize: '17rem', fontWeight: '500'}}>{`${members} active members on programme`}</Text>}
-                        {loyaltyProgramme.stamps !== undefined && <Text style={{ fontSize: '17rem', fontWeight: '500', marginBottom: '5%'}}>{`${loyaltyProgramme.stamps} stamps for ${loyaltyProgramme.reward}`}</Text>}
-                        {loyaltyProgramme.stamps == undefined && <Text style={{ fontSize: '17rem', fontWeight: '500', marginBottom: '5%'}}>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>}
+                        <Text variant='section' style={{ width: '100%', fontSize: '17rem', fontWeight: '700' }}>{'Scan to stamp customer loyalty card'}</Text>
+                        {members == undefined && <Text style={{ fontSize: '17rem', fontWeight: '500' }}>{`${0} active members on programme`}</Text>}
+                        {members !== undefined && <Text style={{ fontSize: '17rem', fontWeight: '500' }}>{`${members} active members on programme`}</Text>}
+                        {loyaltyProgramme.stamps !== undefined && <Text style={{ fontSize: '17rem', fontWeight: '500', marginBottom: '5%' }}>{`${loyaltyProgramme.stamps} stamps for ${loyaltyProgramme.reward}`}</Text>}
+                        {loyaltyProgramme.stamps == undefined && <Text style={{ fontSize: '17rem', fontWeight: '500', marginBottom: '5%' }}>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>}
                         <HStack space={3} justifyContent="center" >
                             <Button variant={'subtle'} onPress={() => navigation.navigate('EditLP')}>Edit</Button>
                             {/* <Button onPress={DeleteLP}>Delete</Button> */}
@@ -106,34 +94,9 @@ export default function BusinessProfile({ navigation }) {
                         </HStack>
                     </Box>}
                     <HStack space={3} justifyContent="center" >
-                        {/* <Button onPress={() => navigation.navigate('EditBusiness')}>Edit Business</Button>
-
-                        <Button colorScheme="danger" onPress={() => setDeleteBusiness(!deleteBusinessOpen)}>
-                            Delete Business
-                        </Button> */}
-                        {/* <AlertDialog leastDestructiveRef={cancelRef} isOpen={deleteBusinessOpen} onClose={onCloseBusiness}>
-                            <AlertDialog.Content>
-                                <AlertDialog.CloseButton />
-                                <AlertDialog.Header>Delete Business</AlertDialog.Header>
-                                <AlertDialog.Body>
-                                    This will remove all data relating to the business. This action cannot be
-                                    reversed. Deleted data can not be recovered.
-                                </AlertDialog.Body>
-                                <AlertDialog.Footer>
-                                    <Button.Group space={2}>
-                                        <Button variant="unstyled" colorScheme="coolGray" onPress={onCloseBusiness} ref={cancelRef}>
-                                            Cancel
-                                        </Button>
-                                        <Button colorScheme="danger" onPress={DeleteBusiness}>
-                                            Delete
-                                        </Button>
-                                    </Button.Group>
-                                </AlertDialog.Footer>
-                            </AlertDialog.Content>
-                        </AlertDialog> */}
                     </HStack>
 
-                <Button colorScheme="success" variant={'subtle'} onPress={() => navigation.navigate('RewardScanner')}>Redeem Customer Reward</Button>
+                    <Button colorScheme="success" variant={'subtle'} onPress={() => navigation.navigate('RewardScanner')}>Redeem Customer Reward</Button>
                 </VStack>
 
 

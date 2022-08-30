@@ -77,7 +77,7 @@ export default function EditLP({ navigation }) {
             <Button onPress={() => { navigation.navigate('BusinessProfile') }} variant={'subtle'} >Cancel</Button>
 
           </HStack>
-          {preview == true && <LoyaltyCard stamps={stamps} valid_for={valid_for} reward={reward} onClose={setPreview} open={preview} />}
+          {preview == true && <LoyaltyCard stamps={stamps} validFor={valid_for} reward={reward} onClose={setPreview} open={preview} />}
         </VStack>
       </Box>
     </Box>

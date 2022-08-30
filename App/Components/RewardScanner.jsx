@@ -2,17 +2,19 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, Button, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import styles from '../Styles/style';
-import { Box } from 'native-base';
+import { Box, useTheme } from 'native-base';
 import UserContext from '../Contexts/UserContext';
 import BusinessContext from '../Contexts/BusinessContext';
 import UserProfile from './UserProfile';
 import AxiosInstance from '../Hooks/AxiosInstance';
+import Loading from './Loading';
 
 
 export default function RewardScanner({ navigation }) {
   const axios = AxiosInstance();
 //   const { userId } = useContext(UserContext);
   const { LP_id,  } = useContext(BusinessContext);
+  const { colors } = useTheme();
 
   const [hasPermission, setHasPermission] = useState(null); 
   const [scanned, setScanned] = useState(false);
@@ -31,6 +33,7 @@ export default function RewardScanner({ navigation }) {
   }, []);
 
   // What happens when we scan the bar code
+  
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     
@@ -41,10 +44,10 @@ export default function RewardScanner({ navigation }) {
     .post(`/api/LP/redeem/${parseData.customer_id}/${parseData.lp_id}`)
     .then(result => {
         if (result.status == 200) {
-            navigation.navigate('Success')
+            navigation.navigate('RewardSuccess')
         }
         else {
-          navigation.navigate('Error')
+          navigation.navigate('RewardError')
         }
       }).catch(error => console.log(error));
   };
@@ -65,9 +68,10 @@ export default function RewardScanner({ navigation }) {
   }
 
   // Return the View
+  if (scanned == true) return (<Loading></Loading>);
   return (
-    <Box safeArea bg='primary.800' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
-      <Box style={styles.barcodebox} w='90%' height='90%'>
+    <Box safeArea bg={colors.primary['200']} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+      <Box style={styles.barcodebox} w='90%' height='60%'>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{ height: '100%', width: '100%' }} />

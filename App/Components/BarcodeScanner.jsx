@@ -2,14 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, Button, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import styles from '../Styles/style';
-import { Box } from 'native-base';
+import { Box, useTheme } from 'native-base';
 import UserContext from '../Contexts/UserContext';
 import AxiosInstance from '../Hooks/AxiosInstance';
 import socket from '../Hooks/Socket';
+import Loading from './Loading';
 
 export default function BarcodeScanner({ navigation }) {
   const axios = AxiosInstance();
   const { userId, setUpdateStamps } = useContext(UserContext);
+  const { colors } = useTheme();
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -61,8 +63,9 @@ export default function BarcodeScanner({ navigation }) {
   }
 
   // Return the View
+  if (scanned == true) return (<Loading></Loading>);
   return (
-    <Box safeArea bg='primary.800' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+    <Box safeArea bg={colors.primary['200']} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
       <Box style={styles.barcodebox} w='90%' height='60%'>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

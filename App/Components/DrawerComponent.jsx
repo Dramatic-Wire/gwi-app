@@ -6,16 +6,18 @@ import UserContext from '../Contexts/UserContext';
 import BusinessContext from '../Contexts/BusinessContext';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import AxiosInstance from '../Hooks/AxiosInstance';
 
 
 
 export default function DrawerComponent() {
 
 
+    const axios = AxiosInstance();
     let isEnabled = false
     const route = useRoute();
-    const { first_name, surname, setUserId, setFirst_name, setSurname, setLP, setEmail } = useContext(UserContext);
-    const { businessID, LP_id } = useContext(BusinessContext);
+    const { first_name, surname, setUserId, setFirst_name, setSurname, setLP, setEmail, userId } = useContext(UserContext);
+    const { setBusinessID,  businessID, LP_id } = useContext(BusinessContext);
     const [openAlert, setOpenAlert] = useState(false);
     const { colors } = useTheme()
     const [deleteBusinessOpen, setDeleteBusiness] = useState(false);
@@ -31,8 +33,8 @@ export default function DrawerComponent() {
     }
     const DeleteBusiness = async () => {
 
-        await axios.delete(`delete/business?ownerID=${ownerID}`).then(res => {
-            setBusinessID();
+        await axios.delete(`api/delete/business?ownerID=${userId}`).then(res => {
+            setBusinessID()
             navigation.navigate('UserProfile')
         }).catch(error => console.log(error));
     }
@@ -44,6 +46,11 @@ export default function DrawerComponent() {
 
     const deleteAccount = async () => {
         await axios.delete(`/api/deleteAccount?id=${userId}`).then(res => {
+            setUserId();
+            setFirst_name();
+            setEmail();
+            setSurname();
+            setLP();
             navigation.navigate('LoginScreen')
         })
     }
@@ -58,15 +65,14 @@ export default function DrawerComponent() {
         <>
             <View bgColor='#5f9cda'>
                 <HStack width='100%' pt='5' pb='2' paddingX='2' alignItems={'center'}>
-                    <IconButton icon={<Icon name='angle-left' size={30} color={'blue.900'} />} onPress={() => navigation.goBack()} />
-                    <Icon name='user-circle' size={25} color={'#b8dbbb'} style={{ marginTop: 13, marginRight: 5 }} />
+                    <IconButton icon={<Icon name='angle-left' size={30} color={'blue.900'} />} onPress={() => navigation.goBack()} marginTop={'10px'} />
+                    <Icon name='user-circle' size={25} color={'#b8dbbb'} style={{ marginTop: 13, marginRight: 5, marginLeft: 5 }} />
 
-                    <Heading marginTop={2.5} textAlign='left'>{first_name} {surname}</Heading>
+                    <Heading marginTop={2.5} marginLeft={2.5} textAlign='left'>{first_name} {surname}</Heading>
                 </HStack>
             </View>
-            <Box >
 
-            </Box>
+
             <VStack space={3} safeArea='8' >
                 <Text fontSize="lg">Business Settings</Text>
                 {businessID > 0 ? <Button onPress={() => navigation.navigate('EditBusiness')} variant={'subtle'}>Edit business</Button> : <Button onPress={() => { navigation.navigate('RegisterBusiness'); onClose(true) }} variant={'subtle'}>Add a business</Button>}
@@ -118,7 +124,7 @@ export default function DrawerComponent() {
                     </AlertDialog.Footer>
                 </AlertDialog.Content>
             </AlertDialog>
-            <Button style={{ position: 'absolute', bottom: 10, width: '95%' }} onPress={handleLogout} variant={'subtle'}>Logout</Button>
+            <Button style={{ position: 'absolute', bottom: 30, width: '95%' }} onPress={handleLogout} variant={'subtle'}>Logout</Button>
         </>
     )
 } 

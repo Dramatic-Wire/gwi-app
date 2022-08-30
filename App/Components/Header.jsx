@@ -60,7 +60,7 @@ export default function Header() {
         </Box>
         <HStack>
 
-          <IconButton height={50} icon={<Icon name='user-circle' size={30} color={'#b8dbbb'} />} onPress={() => { navigation.navigate('DrawerComponent') }} />
+          <IconButton icon={<Icon name='user-circle' size={30} color={'#b8dbbb'} />} onPress={() => { navigation.navigate('DrawerComponent') }} />
           {/* {businessID > 0 && route.name == 'UserProfile' ? <Text>Switch to Business Profile</Text> : <Text>Switch to User Profile</Text>} */}
 
           {businessID > 0 &&
@@ -68,7 +68,7 @@ export default function Header() {
               trackColor={{ false: "#767577", true: "#81b0ff" }}
               thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
-              
+              marginTop={9}
               onValueChange={toggleProfiles}
               value={isEnabled}
             />

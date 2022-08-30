@@ -36,7 +36,7 @@ export default function ({ navigation }) {
     const [show, setShow] = useState(false);
 
 
-    const { setEmail } = useContext(UserContext);
+    const { setEmail, setFirstName } = useContext(UserContext);
 
 
     const handleSignUp = () => {
@@ -47,6 +47,7 @@ export default function ({ navigation }) {
                     axios
                         .post(`/api/register/user`, { username, first_name: name, surname, email, password })
                         .then((result => {
+                            setFirstName(result.data.first_name)
                             setEmail(result.data.email);
                             navigation.navigate('UserProfile');
                         })).catch(error => console.log(error));
@@ -82,11 +83,11 @@ export default function ({ navigation }) {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ScrollView bg='secondary.500' width="100%" horizontal={false} alwaysBounceHorizontal={false}>
+            <ScrollView bg='#b8dbbb' width="100%" horizontal={false} alwaysBounceHorizontal={false}>
 
                 <VStack
                     safeArea
-                    bg='secondary.500'
+                    bg='#b8dbbb'
                     height='100%'
                     px={3}
                     py={10}
@@ -205,8 +206,8 @@ export default function ({ navigation }) {
                                 )}
                             </FormControl>
                         </VStack>
-                    <Button onPress={onSubmit}> Sign up</Button>
-                    <Button onPress={() => navigation.navigate('LoginScreen')}>Back to log in</Button>
+                    <Button onPress={onSubmit} variant={'subtle'}> Sign up</Button>
+                    <Button onPress={() => navigation.navigate('LoginScreen')} variant={'subtle'}>Back to log in</Button>
 
                 </VStack>
                         </ScrollView>

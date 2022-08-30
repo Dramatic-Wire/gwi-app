@@ -62,10 +62,10 @@ export default function EditBusiness({ navigation }) {
                                 {categoryError ? (<Text style={{ color: 'red' }}>Business category required</Text>) : null}
                             </HStack>
                         </Box>
-                        <Box variant='section'>
+                        {/* <Box variant='section'>
                             <Text variant='section'>Business logo</Text>
                             <Input placeholder='Image URL' value={logo} onChangeText={text => setLogo(text)}></Input>
-                        </Box>
+                        </Box> */}
                         <Button onPress={() => { edit(); validation(businessName, category) }} variant={'subtle'} >Save</Button>
                         <Button onPress={() => { navigation.goBack()}} variant={'subtle'} >Cancel</Button>
 

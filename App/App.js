@@ -12,6 +12,8 @@ import BarcodeScanner from './Components/BarcodeScanner';
 import EditLP from './Components/EditLP';
 import Success from './Components/Success';
 import Error from './Components/Error';
+import RewardSuccess from './Components/RewardSuccess';
+import RewardError from './Components/RewardError';
 import EditBusiness from './Components/EditBusiness';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -53,7 +55,9 @@ export default function App() {
               <Stack.Screen name='BarcodeScanner' component={BarcodeScanner} />
               <Stack.Screen name='EditLP' component={EditLP} />
               <Stack.Screen name='Success' component={Success} />
+              <Stack.Screen name='RewardSuccess' component={RewardSuccess} />
               <Stack.Screen name='Error' component={Error} />
+              <Stack.Screen name='RewardError' component={RewardError} />
               <Stack.Screen name='EditBusiness' component={EditBusiness} />
               <Stack.Screen name='RewardScanner' component={RewardScanner} />
             </Stack.Navigator>
