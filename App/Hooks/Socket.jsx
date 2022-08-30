@@ -8,4 +8,10 @@ socket.onAny((event, ...args) => {
   console.log(event, args);
 });
 
+socket.on("connect_error", (err) => {
+  if (err.message === "invalid id") {
+   console.log('not connected')
+  }
+});
+
 export default socket;

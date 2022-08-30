@@ -23,11 +23,14 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('user connected');
-  console.log(socket.app_id);
-  console.log(socket.id);
-
-  socket.emit('connected', [socket.id, socket.app_id]);
+  const users = [];
+  for (let [id, socket] of io.of('/').sockets) {
+    users.push({
+      socket_id: id,
+      app_id: socket.app_id,
+    });
+  }
+  socket.emit('users', users);
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
