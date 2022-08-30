@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import AxiosInstance from '../Hooks/AxiosInstance';
 import UserContext from './UserContext';
+import socket from '../Hooks/Socket';
 
 const BusinessContext = createContext({});
 
@@ -61,9 +62,11 @@ export const BusinessProvider = ({ children }) => {
     }
     if (LP_id > 0) {
       // console.log('id')
+      socket.emit("add loyalty programme", {
+      LP_id
+    });
       getMembers()
     } else {
-      console.log('lp useEffect')
       setMembers()
       setLoyaltyProgramme('none')
     }
