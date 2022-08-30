@@ -5,6 +5,7 @@ import styles from '../Styles/style';
 import { Box } from 'native-base';
 import UserContext from '../Contexts/UserContext';
 import AxiosInstance from '../Hooks/AxiosInstance';
+import socket from '../Hooks/Socket';
 
 
 export default function BarcodeScanner({ navigation }) {
@@ -35,7 +36,8 @@ export default function BarcodeScanner({ navigation }) {
       .post(`/api/add/stamp`, { UserId: userId, LPid: data })
       .then(result => {
         if (result.status == 201) {
-          setUpdateStamps(true)
+          setUpdateStamps(true);
+          socket.emit("new stamp", {LP_id: data})
           navigation.navigate('Success')
         }
         else {
