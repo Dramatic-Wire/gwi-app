@@ -36,6 +36,13 @@ io.on('connection', (socket) => {
     userID: socket.id,
     username: socket.username,
   });
+
+  socket.on('add loyalty programme', ({LP_id}) => {
+    console.log(LP_id);
+    socket.emit('LP added', {
+      LP_id,
+    });
+  });
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
