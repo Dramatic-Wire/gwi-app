@@ -40,8 +40,11 @@ io.on('connection', (socket) => {
   socket.on('add loyalty programme', ({LP_id}) => {
     const userIndex = users.findIndex((user) => socket.id == user.socket_id);
     users[userIndex]['LP_id'] = LP_id;
-    console.log(LP_id);
-    socket.emit('LP added', users);
+    socket.emit('LP added');
+  });
+  socket.on('new stamp', ({LP_id}) => {
+    const lpIndex = users.findIndex((user) => LP_id == user.LP_id);
+    socket.to(users[lpIndex]).emit('customer stamped');
   });
 });
 
