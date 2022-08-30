@@ -14,7 +14,7 @@ export default function DrawerComponent() {
 
     let isEnabled = false
     const route = useRoute();
-    const { first_name, surname, setUserId, setFirst_name, setSurname, setLP } = useContext(UserContext);
+    const { first_name, surname, setUserId, setFirst_name, setSurname, setLP, setEmail } = useContext(UserContext);
     const { businessID, LP_id } = useContext(BusinessContext);
     const [openAlert, setOpenAlert] = useState(false);
     const { colors } = useTheme()
@@ -24,6 +24,7 @@ export default function DrawerComponent() {
     const handleLogout = () => {
         setUserId();
         setFirst_name();
+        setEmail();
         setSurname();
         setLP();
         navigation.navigate('LoginScreen')
@@ -55,10 +56,10 @@ export default function DrawerComponent() {
     const cancelRef = useRef(null);
     return (
         <>
-            <View bgColor='white'>
+            <View bgColor='#5f9cda'>
                 <HStack width='100%' pt='5' pb='2' paddingX='2' alignItems={'center'}>
                     <IconButton icon={<Icon name='angle-left' size={30} color={'blue.900'} />} onPress={() => navigation.goBack()} />
-                    <Icon name='user-circle' size={25} color={colors['primary'][500]} style={{ marginTop: 13, marginRight: 5 }} />
+                    <Icon name='user-circle' size={25} color={'#b8dbbb'} style={{ marginTop: 13, marginRight: 5 }} />
 
                     <Heading marginTop={2.5} textAlign='left'>{first_name} {surname}</Heading>
                 </HStack>
@@ -68,10 +69,10 @@ export default function DrawerComponent() {
             </Box>
             <VStack space={3} safeArea='8' >
                 <Text fontSize="lg">Business Settings</Text>
-                {businessID > 0 ? <Button onPress={() => navigation.navigate('EditBusiness')}>Edit business</Button> : <Button onPress={() => { navigation.navigate('RegisterBusiness'); onClose(true) }}>Add a business</Button>}
-                {businessID > 0 && <Button colorScheme="danger" onPress={() => setDeleteBusiness(!deleteBusinessOpen)}>Delete business</Button>}
+                {businessID > 0 ? <Button onPress={() => navigation.navigate('EditBusiness')} variant={'subtle'}>Edit business</Button> : <Button onPress={() => { navigation.navigate('RegisterBusiness'); onClose(true) }} variant={'subtle'}>Add a business</Button>}
+                {businessID > 0 && <Button colorScheme="danger" onPress={() => setDeleteBusiness(!deleteBusinessOpen)} variant={'subtle'}>Delete business</Button>}
                 <Text fontSize="lg">Account Settings</Text>
-                <Button colorScheme="danger" onPress={() => setOpenAlert(true)}>Delete Account</Button>
+                <Button colorScheme="danger" onPress={() => setOpenAlert(true)} variant={'subtle'}>Delete Account</Button>
             </VStack>
 
             {/* Delete business alert */}
@@ -117,7 +118,7 @@ export default function DrawerComponent() {
                     </AlertDialog.Footer>
                 </AlertDialog.Content>
             </AlertDialog>
-            <Button style={{ position: 'absolute', bottom: 10, width: '95%' }} onPress={handleLogout}>Logout</Button>
+            <Button style={{ position: 'absolute', bottom: 10, width: '95%' }} onPress={handleLogout} variant={'subtle'}>Logout</Button>
         </>
     )
 } 

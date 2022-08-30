@@ -54,13 +54,13 @@ export default function Header() {
   const cancelRef = useRef(null);
   return (
     <>
-      <HStack bgColor='primary.700' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'center'}>
+      <HStack bgColor='#5f9cda' width='100%' pt='10' pb='2' paddingX='5' justifyContent={'space-between'} alignItems={'center'}>
         <Box height={50} width='35%'>
-          <Logo fill={colors['secondary'][500]} />
+          <Logo fill={'#ffff4f'} />
         </Box>
-        <VStack>
+        <HStack>
 
-          <IconButton height={50} icon={<Icon name='user-circle' size={30} color={colors['primary'][500]} />} onPress={() => { navigation.navigate('DrawerComponent') }} />
+          <IconButton height={50} icon={<Icon name='user-circle' size={30} color={'#b8dbbb'} />} onPress={() => { navigation.navigate('DrawerComponent') }} />
           {/* {businessID > 0 && route.name == 'UserProfile' ? <Text>Switch to Business Profile</Text> : <Text>Switch to User Profile</Text>} */}
 
           {businessID > 0 &&
@@ -73,7 +73,7 @@ export default function Header() {
               value={isEnabled}
             />
           }
-        </VStack>
+        </HStack>
       </HStack>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content onClose={onClose}>

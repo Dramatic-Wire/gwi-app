@@ -70,9 +70,9 @@ export default function ({ navigation }) {
     };
 
     return (
-        <VStack safeArea bg='secondary.500' height='100%' px={3} py={10} space={6} justifyContent='flex-start'>
+        <VStack safeArea bg='#b8dbbb' height='100%' px={3} py={10} space={6} justifyContent='flex-start'>
             <Box height={50} width='100%' mb='5'>
-                <Logo fill={colors['primary'][500]} />
+                <Logo fill={'#ffff4f'} />
             </Box>
             {'failed' in errors && <Heading size={'md'} color='danger.600'>Login failed. Please try again.</Heading>}
 
@@ -106,8 +106,8 @@ export default function ({ navigation }) {
                 </FormControl>
 
             </VStack>
-            <Button onPress={onSubmit}>Log in</Button>
-            <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')}>Sign up</Button>
+            <Button onPress={onSubmit}  variant={'subtle'} >Log in</Button>
+            <Button style={{ marginTop: 3 }} onPress={() => navigation.navigate('NewUser')} variant={'subtle'}>Sign up</Button>
         </VStack >
     );
 }

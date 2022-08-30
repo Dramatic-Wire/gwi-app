@@ -41,17 +41,12 @@ export default function UserProfile({ navigation }) {
       setSearchResults(LP)
     }
   }
-  
-// console.log('++++++++')
-// console.log(first_name)
-// console.log(LP)
-// console.log('++++++++')
 
 
   if (!first_name || !LP) return (<Loading></Loading>);
   return (
     <>
-      <VStack space={4} alignItems='center' bg='primary.900' height={'100%'}>
+      <VStack space={4} alignItems='center' bg='white' height={'100%'}>
         <Header navigation={navigation}></Header>
         <LoyaltyCard navigation={navigation}></LoyaltyCard>
         {Array.isArray(LP) && 
@@ -67,9 +62,9 @@ export default function UserProfile({ navigation }) {
           }
         <ScrollView width="100%" alignItems='center' horizontal={false} alwaysBounceHorizontal={false}>
 
-          <VStack space={3} safeArea='8' width='92.5%' rounded={'sm'} bg='primary.700' justifyContent='center'>
+          <VStack space={3} safeArea='8' width='92.5%' rounded={'sm'} bg='#5f9cda' justifyContent='center'>
             <Box>
-              {!Array.isArray(LP) && <Text variant='section' color={'white'}>You are currently not part of any loyalty programmes</Text>}
+              {!Array.isArray(LP) && <Text variant='section' color={'white'} style={{textAlign: 'center'}}>You are currently not part of any loyalty programmes</Text>}
             </Box>
             <HStack maxW={'100%'} flexWrap='wrap' alignItems={'flex-end'} justifyContent='space-evenly'>
               {Array.isArray(searchResults) && searchResults.map((element, index) => { return <Pressable key={index} onPress={() => { setFocusLP({ ...element }) }}><CardIcon card={element} /></Pressable> })}
@@ -83,9 +78,8 @@ export default function UserProfile({ navigation }) {
           {focusLP && console.log(focusLP.stampsneeded <= focusLP.stamps)}
 
         </ScrollView>
-        <Pressable justifySelf='flex-start'  rounded={'full'}  bg='primary.200' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='30%' >
+        <Pressable justifySelf='flex-start'  rounded={'full'}  bg='#b8dbbb' shadow={2} p={2} onPress={() => { navigation.navigate('BarcodeScanner') }} width='30%' marginBottom={'9px'} >
           <Boot height={80} width={70} alignSelf='center' />
-          {/* <Text alignSelf='center' fontSize={'lg'} >stamp those stamps to earn rewards</Text> */}
         </Pressable>
       </VStack>
     </>

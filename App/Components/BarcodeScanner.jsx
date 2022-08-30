@@ -7,7 +7,6 @@ import UserContext from '../Contexts/UserContext';
 import AxiosInstance from '../Hooks/AxiosInstance';
 
 export default function BarcodeScanner({ navigation }) {
-  const db = firebase.database();
   const axios = AxiosInstance();
   const { userId, setUpdateStamps } = useContext(UserContext);
 

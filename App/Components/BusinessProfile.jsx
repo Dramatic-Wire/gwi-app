@@ -62,9 +62,9 @@ export default function BusinessProfile({ navigation }) {
     return (
         <>
             <Header />
-            <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center',  }}>
-                <VStack space={3} safeArea='8' >
-                    <Box variant='pageTitle'>
+            <Box safeArea bg='white' style={{ flex: 1, alignItems: 'center',  }}>
+                <VStack space={3} safeArea='7' >
+                    <Box variant='pageTitle' style={{backgroundColor: colors.primary['200']}}>
                         <Heading style={styles.pageTitle}>{businessName}</Heading>
                     </Box>
 
@@ -73,21 +73,21 @@ export default function BusinessProfile({ navigation }) {
                         <Button onPress={() => { navigation.navigate('NewLP') }}>Add Loyalty Programme</Button>
                     </Box>}
 
-                    {loyaltyProgramme !== 'none' && <Box variant='section' style={{ alignItems: 'center', justifyContent: 'center', }}>
+                    {loyaltyProgramme !== 'none' && <Box variant='section'  style={{ alignItems: 'center', justifyContent: 'center', }}>
                         <QRCode
                             color={colors.primary['700']}
                             backgroundColor={colors.light['50']}
                             value={JSON.stringify(loyaltyProgramme.id)}
                         />
-                        <Text variant='section'>{'Scan to stamp customer loyalty card'}</Text>
-                        {members == undefined && <Text>{`${0} active members on programme`}</Text>}
-                        {members !== undefined && <Text>{`${members} active members on programme`}</Text>}
-                        {loyaltyProgramme.stamps !== undefined && <Text>{`${loyaltyProgramme.stamps} stamps for ${loyaltyProgramme.reward}`}</Text>}
-                        {loyaltyProgramme.stamps == undefined && <Text>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>}
+                        <Text variant='section' style={{width: '100%', fontSize: '17rem', fontWeight: '700'}}>{'Scan to stamp customer loyalty card'}</Text>
+                        {members == undefined && <Text style={{ fontSize: '17rem', fontWeight: '500'}}>{`${0} active members on programme`}</Text>}
+                        {members !== undefined && <Text style={{ fontSize: '17rem', fontWeight: '500'}}>{`${members} active members on programme`}</Text>}
+                        {loyaltyProgramme.stamps !== undefined && <Text style={{ fontSize: '17rem', fontWeight: '500', marginBottom: '5%'}}>{`${loyaltyProgramme.stamps} stamps for ${loyaltyProgramme.reward}`}</Text>}
+                        {loyaltyProgramme.stamps == undefined && <Text style={{ fontSize: '17rem', fontWeight: '500', marginBottom: '5%'}}>{`${loyaltyProgramme.stampsRequired} stamps for ${loyaltyProgramme.reward}`}</Text>}
                         <HStack space={3} justifyContent="center" >
-                            <Button onPress={() => navigation.navigate('EditLP')}>Edit</Button>
+                            <Button variant={'subtle'} onPress={() => navigation.navigate('EditLP')}>Edit</Button>
                             {/* <Button onPress={DeleteLP}>Delete</Button> */}
-                            <Button colorScheme="danger" onPress={() => setDeleteLP(!deleteLPOpen)}>
+                            <Button colorScheme={'danger'} variant={'subtle'} onPress={() => setDeleteLP(!deleteLPOpen)}>
                                 Delete
                             </Button>
                             <AlertDialog leastDestructiveRef={cancelRef} isOpen={deleteLPOpen} onClose={onClose}>
@@ -140,9 +140,9 @@ export default function BusinessProfile({ navigation }) {
                         </AlertDialog> */}
                     </HStack>
 
+                <Button colorScheme="success" variant={'subtle'} onPress={() => navigation.navigate('RewardScanner')}>Redeem Customer Reward</Button>
                 </VStack>
 
-                <Button colorScheme="success" onPress={() => navigation.navigate('RewardScanner')}>Redeem Customer Reward</Button>
 
             </Box>
         </>

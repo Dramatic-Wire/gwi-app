@@ -205,10 +205,8 @@ export default function ({ navigation }) {
                                 )}
                             </FormControl>
                         </VStack>
-                    <Button onPress={onSubmit}
-                    >
-                        Sign up
-                    </Button>
+                    <Button onPress={onSubmit}> Sign up</Button>
+                    <Button onPress={() => navigation.navigate('LoginScreen')}>Back to log in</Button>
 
                 </VStack>
                         </ScrollView>

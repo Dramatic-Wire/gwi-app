@@ -1,4 +1,4 @@
-import { Button, Input, Text, IconButton, Heading, Box, HStack, VStack } from "native-base";
+import { Button, Input, Text, IconButton, Heading, Box, HStack, VStack, useTheme } from "native-base";
 import { useState, useContext } from 'react';
 import BusinessContext from "../Contexts/BusinessContext";
 import UserContext from "../Contexts/UserContext";
@@ -18,6 +18,7 @@ export default function EditLP({ navigation }) {
   const [preview, setPreview] = useState(false)
   const timeframeOptions = ['1 month', '3 months', '6 months', '1 year'];
   const business_id = businessID
+  const { colors } = useTheme();
 
 
   const handleTimeFrameSelection = (timeFrame) => {
@@ -43,10 +44,10 @@ export default function EditLP({ navigation }) {
   }
 
   return (
-    <Box safeArea bg='primary.700' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+    <Box safeArea bg='#b8dbbb' style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
       <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}  >
         <VStack space={3} safeArea='8'>
-          <Box variant='pageTitle'>
+          <Box variant='pageTitle' style={{backgroundColor: colors.primary['200']}}>
             <Heading size='md'>Edit your loyalty programme</Heading>
           </Box>
           <Box variant='section'>
@@ -71,9 +72,9 @@ export default function EditLP({ navigation }) {
 
           </Box>
           <HStack space={3} justifyContent="center" >
-            <Button isDisabled={!missingInfo} onPress={() => setPreview(true)}>Preview</Button>
-            <Button isDisabled={!missingInfo} onPress={editLP}>Save</Button>
-            <Button onPress={() => { navigation.navigate('BusinessProfile') }} >Cancel</Button>
+            <Button isDisabled={!missingInfo} onPress={() => setPreview(true)} variant={'subtle'}>Preview</Button>
+            <Button isDisabled={!missingInfo} onPress={editLP} variant={'subtle'}>Save</Button>
+            <Button onPress={() => { navigation.navigate('BusinessProfile') }} variant={'subtle'} >Cancel</Button>
 
           </HStack>
           {preview == true && <LoyaltyCard stamps={stamps} valid_for={valid_for} reward={reward} onClose={setPreview} open={preview} />}
