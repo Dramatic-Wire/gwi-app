@@ -20,9 +20,9 @@ io.on('connection', (socket) => {
   console.log(socket.id);
 
   for (let [id, socket] of io.of('/').sockets) {
-    if (socket.user_id == 62) {
-      socket.to(socket.id).emit('success');
-    }
+    // if (socket.user_id == 62) {
+    socket.to(id).emit('success');
+    // }
   }
 });
 
