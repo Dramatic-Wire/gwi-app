@@ -41,9 +41,7 @@ io.on('connection', (socket) => {
     const userIndex = users.findIndex((user) => socket.id == user.socket_id);
     users[userIndex]['LP_id'] = LP_id;
     console.log(LP_id);
-    socket.emit('LP added', {
-      users,
-    });
+    socket.emit('LP added', users);
   });
 });
 
