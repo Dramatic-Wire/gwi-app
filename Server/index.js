@@ -19,11 +19,13 @@ io.on('connection', (socket) => {
   console.log(socket.user_id);
   console.log(socket.id);
 
-  for (let [id, socket] of io.of('/').sockets) {
-    // if (socket.user_id == 62) {
-    socket.to(id).emit('success');
-    // }
-  }
+  socket.emit('connected', socket);
+
+  // for (let [id, socket] of io.of('/').sockets) {
+  //   // if (socket.user_id == 62) {
+  //   socket.to(id).emit('success');
+  //   // }
+  // }
 });
 
 const DATABASE_URL = process.env.DATABASE_URL;
